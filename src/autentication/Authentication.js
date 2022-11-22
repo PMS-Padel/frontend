@@ -19,11 +19,11 @@ const Background = styled.div`
 
 const Container = styled.div`
     background-color: ${props => props.register ? "#052F53" : "#007370"};
-    max-width: 1080px;
+    max-width: 995px;
     margin: 10rem;
-    height: 600px;
+    height: 500px;
     padding: 30px;
-    border-radius: 50px;
+    border-radius: 40px;
     display: flex;
     position: relative;
     flex-direction: row;
@@ -32,6 +32,7 @@ const Container = styled.div`
     justify-content: space-around;
     align-items: center;
     transition: all 1s ease-in-out;
+    
 
     & .modeChanger {
         display: flex;
@@ -39,6 +40,7 @@ const Container = styled.div`
         flex-direction: column;
         width: 35%;
         gap: 50px;
+
         
         & .MuiButtonBase-root {
             color: #000;
@@ -48,15 +50,17 @@ const Container = styled.div`
             font-family: 'Reem Kufi', sans-serif;
 
         }
+    
     }
 `
 
 const MovingContainer = styled.div`
     background-color: #E5E5E5;
     position: absolute;
-    width: 40%;
-    height: 120%;
-    left: 5%;
+    width: 41%;
+    height: 110%;
+    left: 3%;
+    border-radius: 30px;
     transition: all 1s ease-in-out;
 `
 
@@ -66,19 +70,19 @@ function Authentication() {
         <Background>
             <Container register={mode === 0}>
                 <div className='modeChanger'>
-                    <h2>Possui conta?</h2>
+                    <h2 style={{color:'white', fontSize:'30px'}}>Possui conta?</h2>
                     <Button onClick={() => {
                         setMode(1)
                     }}>Entrar</Button>
                 </div>
                 <div className='modeChanger'>
-                    <h2>Possui conta?</h2>
+                    <h2 style={{color:'white', fontSize:'30px'}}>Não possui conta?</h2>
                     <Button onClick={() => {
                         setMode(0)
-                    }}>Entrar</Button>
+                    }}>Registar-se</Button>
                 </div>
                 <MovingContainer style={mode === 0 ? {transform: "translateX(125%)"} : null}>
-                    {mode === 0 ? <LoginForm /> : <RegisterForm />}
+                    {mode === 0 ? <RegisterForm /> : <LoginForm />}
                 </MovingContainer>
             </Container>
         </Background >
