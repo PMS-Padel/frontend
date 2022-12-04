@@ -36,14 +36,16 @@ function LoginForm() {
       <TextField 
             required
             id="email"
-            defaultValue="Email"
+            label="Email"
+            placeholder="Email"
           />
       </div>
       <div> 
       <TextField 
             required
             id="password"
-            defaultValue="Password"
+            label="Password"
+            type="Password"
           />
       </div>
       <div>
