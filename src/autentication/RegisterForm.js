@@ -33,6 +33,7 @@ function RegisterForm() {
       <div> 
       <TextField 
             required
+            variant="outlined"
             id="nome"
             label="Nome"
             placeholder="Nome"
@@ -41,6 +42,7 @@ function RegisterForm() {
       <div> 
       <TextField 
             required
+            variant="outlined"
             id="email"
             label="Email"
             placeholder="Email"
@@ -49,6 +51,7 @@ function RegisterForm() {
       <div> 
       <TextField 
             required
+            variant="outlined"
             id="password"
             label="Password"
             type="Password"
