@@ -2,35 +2,61 @@ import React from 'react'
 import styled from 'styled-components'
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
+import { Button, Checkbox } from '@mui/material';
 
 
 
 const Container = styled.div`
-  display:'flex';
-  
+  margin-left: 10px;
+  text-align: center;
 `
 
 
 function LoginForm() {
   return (
-    <Box
-    component="form"
-    sx={{
-      '& .MuiTextField-root': { m: 1, width: '25ch' },
-    }}
-    noValidate
-    autoComplete="off"
-  >
-    <div> 
-    <TextField 
-          required
-          id="username"
-          label="Required"
-          defaultValue="Username"
-        />
-    </div>
-    </Box>
+    <>
+    <Container>
+      <h5 style={{fontWeight: 'bold'}}>Entrar</h5>
+      <Box
+      marginTop={"50px"}
+
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div> 
+      <TextField 
+            required
+            id="email"
+            defaultValue="Email"
+          />
+      </div>
+      <div> 
+      <TextField 
+            required
+            id="password"
+            defaultValue="Password"
+          />
+      </div>
+      <div>
+      <FormGroup style={{marginLeft:'55px'}}>
+        <FormControlLabel control={<Checkbox defaultChecked />} label="Lembrar-se de mim" />
+      </FormGroup>
+      </div>
+      <div>
+        <Button style={{marginTop:'20px', backgroundColor:'blue', color:'white', width:'74%'}}>Entrar</Button>
+        <Button >Esqueceu-se da password?</Button>
+        <Button >Sou organizador!</Button>
+      </div>
+      </Box>
+      </Container>
+      </>
   )
 }
 
