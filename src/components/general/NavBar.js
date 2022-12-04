@@ -51,7 +51,7 @@ function NavBar() {
             </nav>
             <div onClick={() => {
                 setShowMenu(true)
-            }}><AccountCircleIcon fontSize="large" style={{ color: 'white' }} />
+            }}><AccountCircleIcon fontSize="large" style={{ color: 'white', cursor:'pointer' }} />
             </div>
             {showMenu && <Authentication />}
         </Container>
