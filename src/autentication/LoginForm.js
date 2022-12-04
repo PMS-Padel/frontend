@@ -6,6 +6,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import { Button, Checkbox } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -19,7 +20,8 @@ function LoginForm() {
   return (
     <>
     <Container>
-      <h5 style={{fontWeight: 'bold'}}>Entrar</h5>
+      <Button style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
+      <h5 style={{fontWeight:'bold',fontSize:'2rem'}}>Entrar</h5>
       <Box
       marginTop={"50px"}
 
@@ -51,7 +53,7 @@ function LoginForm() {
       </div>
       <div>
         <Button style={{marginTop:'20px', backgroundColor:'blue', color:'white', width:'74%'}}>Entrar</Button>
-        <Button >Esqueceu-se da password?</Button>
+        <Button style={{color:'black',fontSize:'.7rem',paddingTop:'15px'}}>Esqueceu-se da password?</Button>
         <Button >Sou organizador!</Button>
       </div>
       </Box>
