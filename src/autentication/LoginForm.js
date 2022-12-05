@@ -16,11 +16,11 @@ const Container = styled.div`
 `
 
 
-function LoginForm() {
+function LoginForm({showMenu}) {
   return (
     <>
     <Container>
-      <Button style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
+      <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
       <h5 style={{fontWeight:'bold',fontSize:'2rem'}}>Entrar</h5>
       <Box
       marginTop={"50px"}
@@ -32,8 +32,8 @@ function LoginForm() {
       noValidate
       autoComplete="off"
     >
-      <div> 
-      <TextField 
+      <div>
+      <TextField
             required
             id="email"
             label="Email"
@@ -41,8 +41,8 @@ function LoginForm() {
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
           />
       </div>
-      <div> 
-      <TextField 
+      <div>
+      <TextField
             required
             id="password"
             label="Password"
@@ -56,9 +56,9 @@ function LoginForm() {
       </FormGroup>
       </div>
       <div>
-        <Button style={{marginTop:'20px', backgroundColor:'blue', color:'white', width:'74%', borderRadius: '5px'}}>Entrar</Button>
+        <Button style={{marginTop:'20px', backgroundColor:'#052F53', color:'white', width:'74%', borderRadius: '5px', textTransform: 'none'}}>Entrar</Button>
         <Button style={{color:'black',fontSize:'.7rem',paddingTop:'15px',textTransform:'none',width:'74%'}}>Esqueceu-se da password?</Button>
-        <Button style={{textTransform:'none',width:'74%'}}>Sou organizador!</Button>
+        <Button style={{textTransform:'none',width:'74%', color:'#007370'}}>Sou organizador!</Button>
       </div>
       </Box>
       </Container>

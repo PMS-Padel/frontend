@@ -64,7 +64,7 @@ const MovingContainer = styled.div`
     transition: all 1s ease-in-out;
 `
 
-function Authentication() {
+function Authentication({showMenu}) {
     const [mode, setMode] = useState(1) // 0-> login 1-> register
     return (
         <Background>
@@ -82,10 +82,10 @@ function Authentication() {
                     }}>Registar-se</Button>
                 </div>
                 <MovingContainer style={mode === 0 ? {transform: "translateX(125%)"} : null}>
-                    {mode === 0 ? <RegisterForm /> : <LoginForm />}
+                    {mode === 0 ? <RegisterForm showMenu={showMenu}/> : <LoginForm showMenu={showMenu}/>}
                 </MovingContainer>
             </Container>
-        </Background >
+        </Background>
     )
 }
 

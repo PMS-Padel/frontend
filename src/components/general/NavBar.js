@@ -42,6 +42,9 @@ const Container = styled.div`
 function NavBar() {
     const [showMenu, setShowMenu] = useState(false)
 
+    const disableMenu = () =>
+        setShowMenu(false);
+
     return (
         <Container>
             <div></div>
@@ -54,7 +57,7 @@ function NavBar() {
                 setShowMenu(true)
             }}><AccountCircleIcon fontSize="large" style={{ color: 'white', cursor:'pointer' }} />
             </div>
-            {showMenu && <Authentication />}
+            {showMenu && <Authentication showMenu={disableMenu}/>}
         </Container>
     )
 }

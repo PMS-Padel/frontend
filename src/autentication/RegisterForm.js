@@ -14,11 +14,11 @@ const Container = styled.div`
   text-align: center;
 `
 
-function RegisterForm() {
+function RegisterForm({showMenu}) {
   return (
     <>
     <Container>
-      <Button style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
+      <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
       <h5 style={{fontWeight:'bold',fontSize:'2rem'}}>Registar-se</h5>
       <Box
       marginTop={"50px"}
@@ -53,14 +53,11 @@ function RegisterForm() {
       <div> 
       <TextField 
             required
-            variant="filled"
+            variant="outlined"
             id="password"
             label="Password"
             type="Password"
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-            InputProps={{
-              disableUnderline: true
-            }}
       />
       </div>
       <div>
