@@ -37,6 +37,7 @@ function RegisterForm() {
             id="nome"
             label="Nome"
             placeholder="Nome"
+            style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
       />
       </div>
       <div> 
@@ -46,6 +47,7 @@ function RegisterForm() {
             id="email"
             label="Email"
             placeholder="Email"
+            style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
       />
       </div>
       <div> 
@@ -62,7 +64,7 @@ function RegisterForm() {
       />
       </div>
       <div>
-        <Button style={{marginTop:'20px', backgroundColor:'#008A87', color:'white', width:'74%', textTransform: 'none'}}>Criar conta</Button>
+        <Button style={{marginTop:'20px', backgroundColor:'#008A87', color:'white', width:'74%', textTransform: 'none', borderRadius: '5px'}}>Criar conta</Button>
       </div>
       </Box>
 
