@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Authentication from '../../autentication/Authentication';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     display: flex;
@@ -47,7 +48,7 @@ function NavBar() {
             <nav>
                 <a href='/' style={{ fontSize: '28px' }}>Início</a>
                 <a href='/' style={{ fontSize: '28px' }}>Torneios</a>
-                <a href='/' style={{ fontSize: '28px' }}>Padel</a>
+                <a href='/infoPadel' style={{ fontSize: '28px' }}>Padel</a>
             </nav>
             <div onClick={() => {
                 setShowMenu(true)
