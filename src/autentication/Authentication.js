@@ -94,7 +94,7 @@ function Authentication({showMenu}) {
                     </div>
                 }
                 <MovingContainer style=
-                     {mode === 0 && {transform: "translateX(125%)"} || mode === 1 && {transform: null} || mode === 2 && {transform: "translateX(62.5%)"}}
+                     {(mode === 0 && {transform: "translateX(125%)"}) || (mode === 1 && {transform: null}) || (mode === 2 && {transform: "translateX(62.5%)"})}
                 >
                     {mode === 0 && <RegisterForm showMenu={showMenu}/>}
                     {mode === 1 && <LoginForm showMenu={showMenu} setMode={showLoginOrganizador}/>}
