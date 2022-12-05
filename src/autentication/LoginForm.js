@@ -57,8 +57,8 @@ function LoginForm() {
       </div>
       <div>
         <Button style={{marginTop:'20px', backgroundColor:'blue', color:'white', width:'74%', borderRadius: '5px'}}>Entrar</Button>
-        <Button style={{color:'black',fontSize:'.7rem',paddingTop:'15px'}}>Esqueceu-se da password?</Button>
-        <Button >Sou organizador!</Button>
+        <Button style={{color:'black',fontSize:'.7rem',paddingTop:'15px',textTransform:'none',width:'74%'}}>Esqueceu-se da password?</Button>
+        <Button style={{textTransform:'none',width:'74%'}}>Sou organizador!</Button>
       </div>
       </Box>
       </Container>
