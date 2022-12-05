@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 
 
-function LoginForm({showMenu}) {
+function LoginForm({showMenu, setMode}) {
   return (
     <>
     <Container>
@@ -58,7 +58,7 @@ function LoginForm({showMenu}) {
       <div>
         <Button style={{marginTop:'20px', backgroundColor:'#052F53', color:'white', width:'74%', borderRadius: '5px', textTransform: 'none'}}>Entrar</Button>
         <Button style={{color:'black',fontSize:'.7rem',paddingTop:'15px',textTransform:'none',width:'74%'}}>Esqueceu-se da password?</Button>
-        <Button style={{textTransform:'none',width:'74%', color:'#007370'}}>Sou organizador!</Button>
+        <Button onClick={setMode} style={{textTransform:'none',width:'74%', color:'#007370'}}>Sou organizador!</Button>
       </div>
       </Box>
       </Container>
