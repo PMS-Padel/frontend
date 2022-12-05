@@ -51,14 +51,18 @@ function RegisterForm() {
       <div> 
       <TextField 
             required
-            variant="outlined"
+            variant="filled"
             id="password"
             label="Password"
             type="Password"
+            style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+            InputProps={{
+              disableUnderline: true
+            }}
       />
       </div>
       <div>
-        <Button style={{marginTop:'20px', backgroundColor:'blue', color:'white', width:'74%'}}>Entrar</Button>
+        <Button style={{marginTop:'20px', backgroundColor:'#008A87', color:'white', width:'74%', textTransform: 'none'}}>Criar conta</Button>
       </div>
       </Box>
 

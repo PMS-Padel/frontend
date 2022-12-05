@@ -65,19 +65,19 @@ const MovingContainer = styled.div`
 `
 
 function Authentication() {
-    const [mode, setMode] = useState(0) // 0-> login 1-> register
+    const [mode, setMode] = useState(1) // 0-> login 1-> register
     return (
         <Background>
             <Container register={mode === 0}>
                 <div className='modeChanger'>
                     <h2 style={{color:'white', fontSize:'30px'}}>Possui conta?</h2>
-                    <Button onClick={() => {
+                    <Button style={{textTransform: 'none'}} onClick={() => {
                         setMode(1)
                     }}>Entrar</Button>
                 </div>
                 <div className='modeChanger'>
                     <h2 style={{color:'white', fontSize:'30px'}}>Não possui conta?</h2>
-                    <Button onClick={() => {
+                    <Button style={{textTransform: 'none'}} onClick={() => {
                         setMode(0)
                     }}>Registar-se</Button>
                 </div>
