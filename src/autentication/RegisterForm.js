@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
@@ -17,17 +17,29 @@ const Container = styled.div`
 `
 
 function RegisterForm({showMenu}) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm_password, setConfirmPassword] = useState('');
 
-  const submitRegister = () =>
-      axiosConfig.get('/register')
-          .then(response => {
-            console.log('entrou');
-            console.log(response);
-          })
-          .catch(error => {
-            console.log('erro!');
-            console.log(error);
-          });
+  function submitRegister() {
+    axiosConfig.post('/register', {
+      name: name,
+      email: email,
+      password: password,
+      password_confirmation: confirm_password,
+      role: 'player',
+      gender: 'M'
+      })
+        .then(response => {
+          console.log('entrou');
+          console.log(response);
+        })
+        .catch(error => {
+          console.log('erro!');
+          console.log(error);
+        })
+  }
 
   return (
     <>
@@ -52,6 +64,7 @@ function RegisterForm({showMenu}) {
             label="Nome"
             placeholder="Nome"
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+            onChange={(event) => {setName(event.target.value)}}
       />
       </div>
       <div> 
@@ -62,6 +75,7 @@ function RegisterForm({showMenu}) {
             label="Email"
             placeholder="Email"
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+            onChange={(event) => {setEmail(event.target.value)}}
       />
       </div>
       <div> 
@@ -72,6 +86,18 @@ function RegisterForm({showMenu}) {
             label="Password"
             type="Password"
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+            onChange={(event) => {setPassword(event.target.value)}}
+      />
+      </div>
+      <div>
+      <TextField
+          required
+          variant="outlined"
+          id="confirm_password"
+          label="Confirmar Password"
+          type="Password"
+          style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+          onChange={(event) => {setConfirmPassword(event.target.value)}}
       />
       </div>
       <div>
