@@ -8,6 +8,8 @@ import Box from '@mui/material/Box';
 import { Button, Checkbox } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import axiosConfig from '../axiosConfig';
+
 
 const Container = styled.div`
   margin-left: 10px;
@@ -15,6 +17,18 @@ const Container = styled.div`
 `
 
 function RegisterForm({showMenu}) {
+
+  const submitRegister = () =>
+      axiosConfig.get('/register')
+          .then(response => {
+            console.log('entrou');
+            console.log(response);
+          })
+          .catch(error => {
+            console.log('erro!');
+            console.log(error);
+          });
+
   return (
     <>
     <Container>
@@ -61,7 +75,7 @@ function RegisterForm({showMenu}) {
       />
       </div>
       <div>
-        <Button style={{marginTop:'20px', backgroundColor:'#008A87', color:'white', width:'74%', textTransform: 'none', borderRadius: '5px'}}>Criar conta</Button>
+        <Button onClick={submitRegister} style={{marginTop:'20px', backgroundColor:'#008A87', color:'white', width:'74%', textTransform: 'none', borderRadius: '5px'}}>Criar conta</Button>
       </div>
       </Box>
 
