@@ -1,24 +1,61 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
-import { Button, Checkbox } from '@mui/material';
+import {Alert, AlertTitle, Button, Checkbox, Dialog} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import axiosConfig from '../axiosConfig';
+import {helperTextEmailLogin, helperTextPasswordLogin} from './dataConditions';
 
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Container = styled.div`
   margin-left: 10px;
   text-align: center;
 `
 
-
 function LoginForm({showMenu, setMode}) {
+  const [loading, setLoading] = React.useState(false);
+  const [errorAlert, setErrorAlert] = React.useState({open: false, errorStatus: ''});
+  const handleErrorAlertClose = () => {
+    setErrorAlert({...errorAlert, open: false});
+  };
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function submitLogin() {
+    if(!(typeof helperTextEmailLogin(email) === 'string' ||
+        typeof helperTextPasswordLogin(password) === 'string')) {
+      setLoading(!loading);
+      axiosConfig.post('/login', {
+        email: email,
+        password: password
+      })
+          .then(response => {
+            setLoading(false);
+            //console.log(response.data.access_token);
+          })
+          .catch(error => {
+            setLoading(false);
+            setErrorAlert({...errorAlert, open: true, errorStatus: error.code});
+          })
+    }
+  }
+
   return (
     <>
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+    >
+      <CircularProgress color="inherit" />
+    </Backdrop>
     <Container>
       <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
       <h5 style={{fontWeight:'bold',fontSize:'2rem'}}>Entrar</h5>
@@ -39,6 +76,9 @@ function LoginForm({showMenu, setMode}) {
             label="Email"
             placeholder="Email"
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+            onChange={(event) => {setEmail(event.target.value)}}
+            //error={typeof helperTextEmailLogin(email) === 'string'}
+            //helperText={helperTextEmailLogin(email)}
           />
       </div>
       <div>
@@ -48,6 +88,9 @@ function LoginForm({showMenu, setMode}) {
             label="Password"
             type="Password"
             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+            onChange={(event) => {setPassword(event.target.value)}}
+            //error={typeof helperTextPasswordLogin(password) === 'string'}
+            //helperText={helperTextPasswordLogin(password)}
           />
       </div>
       <div>
@@ -56,10 +99,18 @@ function LoginForm({showMenu, setMode}) {
       </FormGroup>
       </div>
       <div>
-        <Button style={{marginTop:'20px', backgroundColor:'#052F53', color:'white', width:'74%', borderRadius: '5px', textTransform: 'none'}}>Entrar</Button>
+        <Button onClick={submitLogin} style={{marginTop:'20px', backgroundColor:'#052F53', color:'white', width:'74%', borderRadius: '5px', textTransform: 'none'}}>Entrar</Button>
         <Button style={{color:'black',fontSize:'.7rem',paddingTop:'15px',textTransform:'none',width:'74%'}}>Esqueceu-se da password?</Button>
         <Button onClick={setMode} style={{textTransform:'none',width:'74%', color:'#007370'}}>Sou organizador!</Button>
       </div>
+        <Dialog
+            open={errorAlert.open}
+            onClose={handleErrorAlertClose}>
+          <Alert severity="error">
+            <AlertTitle>{errorAlert.errorStatus}</AlertTitle>
+            Ocorreu um erro. Verifique e tente novamente.
+          </Alert>
+        </Dialog>
       </Box>
       </Container>
       </>

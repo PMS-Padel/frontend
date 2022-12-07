@@ -28,3 +28,12 @@ export function helperTextConfirmPassword(stringConfirmPassword, stringPassword)
     if (stringConfirmPassword.trim() !== stringPassword.trim() && stringConfirmPassword.trim().length>0) return 'Passwords devem corresponder!';
     return null;
 }
+
+export function helperTextEmailLogin(stringEmail) {
+    if (stringEmail.trim().length===0) return 'Email vazio!'
+    return null;
+}
+export function helperTextPasswordLogin(stringPassword) {
+    if (stringPassword.trim().length===0) return 'Password vazio!'
+    return null;
+}
