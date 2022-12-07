@@ -59,7 +59,7 @@ const MovingContainer = styled.div`
     background-color: #E5E5E5;
     position: absolute;
     width: 41%;
-    height: 110%;
+    height: 120%;
     left: 3%;
     border-radius: 30px;
     transition: all 1s ease-in-out;
@@ -96,7 +96,7 @@ function Authentication({showMenu}) {
                 <MovingContainer style=
                      {(mode === 0 && {transform: "translateX(125%)"}) || (mode === 1 && {transform: null}) || (mode === 2 && {transform: "translateX(62.5%)"})}
                 >
-                    {mode === 0 && <RegisterForm showMenu={showMenu}/>}
+                    {mode === 0 && <RegisterForm showMenu={showMenu} setMode={backToLoginUser}/>}
                     {mode === 1 && <LoginForm showMenu={showMenu} setMode={showLoginOrganizador}/>}
                     {mode === 2 && <LoginOrganizador showMenu={showMenu} setMode={backToLoginUser}/>}
                 </MovingContainer>

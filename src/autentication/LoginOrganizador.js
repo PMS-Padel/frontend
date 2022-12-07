@@ -23,7 +23,7 @@ function LoginOrganizador({showMenu, setMode}) {
                 <Button onClick={setMode} style={{position:'absolute',left:'5px',top:'10px'}}><ArrowBackIcon/></Button>
                 <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
                 <h5 style={{fontWeight:'bold',fontSize:'2rem',margin:"40px 20px 10px"}}>Entrar</h5>
-                <p style={{color:'#00302A',fontSize:'1rem',textTransform:'none',margin:"10px 20px 20px"}}>Bem vindo, Organizador!</p>
+                <p style={{color:'#00302A',fontSize:'1rem',textTransform:'none'}}>Bem vindo, Organizador!</p>
                 <Box
                     marginTop={"50px"}
 
