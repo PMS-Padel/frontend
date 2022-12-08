@@ -13,6 +13,7 @@ import {helperTextEmailLogin, helperTextPasswordLogin} from './dataConditions';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import {Navigate} from "react-router-dom";
 
 const Container = styled.div`
   margin-left: 10px;
@@ -22,6 +23,7 @@ const Container = styled.div`
 function LoginForm({showMenu, setMode}) {
   const [loading, setLoading] = React.useState(false);
   const [errorAlert, setErrorAlert] = React.useState({open: false, errorStatus: ''});
+  const [user, setUser] = React.useState(null);
   const handleErrorAlertClose = () => {
     setErrorAlert({...errorAlert, open: false});
   };
@@ -39,7 +41,8 @@ function LoginForm({showMenu, setMode}) {
       })
           .then(response => {
             setLoading(false);
-            //console.log(response.data.access_token);
+            localStorage.setItem('auth', response.data.access_token);
+            setUser(response.data.access_token);
           })
           .catch(error => {
             setLoading(false);
@@ -50,6 +53,7 @@ function LoginForm({showMenu, setMode}) {
 
   return (
     <>
+      {user && <Navigate to="/MenuJogador" />}
     <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}

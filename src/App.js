@@ -1,9 +1,10 @@
 /** @format */
 
-import {Routes, Route, BrowserRouter} from "react-router-dom"
+import {BrowserRouter, Route, Routes} from "react-router-dom"
 
 import MenuInicial from './pages/menuInicial'
 import InfoPadel from './pages/infoPadel'
+import MenuJogador from './pages/player/menuJogador'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path = "/" element = {<MenuInicial />} />
           <Route path = "/InfoPadel" element = {<InfoPadel />} />
+          <Route path = "/MenuJogador" element = {<MenuJogador />} />
         </Routes>
       </BrowserRouter>
   );

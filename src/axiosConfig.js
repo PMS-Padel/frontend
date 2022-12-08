@@ -6,9 +6,7 @@ const axiosConfig = axios.create({
 
 let authToken = localStorage.getItem('auth');
 
-axiosConfig.defaults.headers.common = {
-    Authorization: `Bearer ${authToken}`,
-};
+axiosConfig.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
 
 axiosConfig.interceptors.response.use(
     response => {

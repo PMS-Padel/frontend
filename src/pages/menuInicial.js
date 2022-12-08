@@ -7,8 +7,9 @@ import Row from '../components/general/Row';
 import styled from 'styled-components';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { HeaderLanding } from '../components/general/HeaderLandingPage';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import NavBar from '../components/general/NavBar';
+import {Navigate} from "react-router-dom";
 
 const AccountButton = styled(AccountCircleIcon)`
   color: white;
@@ -18,7 +19,10 @@ const AccountButton = styled(AccountCircleIcon)`
 `
 
 function MenuInicial() {
+    const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth'));
+
     return (<>
+        {storedAuth !== null && <Navigate to="/MenuJogador" />}
         <NavBar />
         <HeaderLanding />
         <div>
