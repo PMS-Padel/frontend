@@ -11,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path = "/" element = {<MenuInicial />} />
-          <Route path = "/InfoPadel" element = {<InfoPadel />} />
-          <Route path = "/MenuJogador" element = {<MenuJogador />} />
+          <Route path = "/info" element = {<InfoPadel />} />
+          <Route path = "/menu" element = {<MenuJogador />} />
         </Routes>
       </BrowserRouter>
   );

@@ -91,8 +91,7 @@ export default class MenuJogador extends Component {
                     <CircularProgress color="inherit"/>
                 </Backdrop>
                 <NavBar/>
-                <HeaderLanding/>
-                <p>{this.state.user.name}</p>
+                <HeaderLanding firstText={'Bem-vindo'} secondText={(this.state.user.name ?? '') + '!'}/>
                 <Button onClick={this.logoutAccount} style={{
                     marginTop: '20px',
                     backgroundColor: '#052F53',

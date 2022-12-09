@@ -22,9 +22,9 @@ function MenuInicial() {
     const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth'));
 
     return (<>
-        {storedAuth !== null && <Navigate to="/MenuJogador" />}
+        {storedAuth !== null && <Navigate to="/menu" />}
         <NavBar />
-        <HeaderLanding />
+        <HeaderLanding firstText={'Vem competir'} secondText={'e divertir-te!'}/>
         <div>
             <h1 style={{ fontSize: "40px", color: "#052F53" }}>Torneios</h1>
         </div>

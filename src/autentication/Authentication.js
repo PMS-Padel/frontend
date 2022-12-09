@@ -4,19 +4,7 @@ import styled from 'styled-components'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import LoginOrganizador from './LoginOrganizador'
-
-const Background = styled.div`
-    background-color: rgba(255,255,255,0.5);
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    left: 0;
-
-`
+import Backdrop from "@mui/material/Backdrop";
 
 const Container = styled.div`
     background-color: ${props => props.register ? "#052F53" : "#007370"};
@@ -75,7 +63,10 @@ function Authentication({showMenu}) {
         setMode(1);
 
     return (
-        <Background>
+        <Backdrop
+            sx={{ backgroundColor: "rgb(255,255,255,0.5)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+        >
             <Container register={mode === 0}>
                 {mode !== 2 &&
                     <div className='modeChanger'>
@@ -101,7 +92,7 @@ function Authentication({showMenu}) {
                     {mode === 2 && <LoginOrganizador showMenu={showMenu} setMode={backToLoginUser}/>}
                 </MovingContainer>
             </Container>
-        </Background>
+        </Backdrop>
     )
 }
 

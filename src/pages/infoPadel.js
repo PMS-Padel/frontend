@@ -1,20 +1,17 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { HeaderLanding } from '../components/general/HeaderLandingPage';
-import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import styled from "styled-components";
 import NavBar from "../components/general/NavBar";
 import Row from "../components/general/Row";
 import App from "../App";
 import backgroundPic from "../img/JogadorTorneiosInicialBackground.png";
-import rectangleImg from "../img/InfoPadelRoundedWhiteRectangle.png";
 import imagePexels_1 from "../img/PexelsPaddleImage1.png";
 import imagePexels_2 from "../img/PexelsPaddleImage2.png";
 
 const AccountButton = styled(AccountCircleIcon)`
   color: white;
   position: absolute; 
-  top: 0%;
+  top: 0;
   right: 10%
 `
 

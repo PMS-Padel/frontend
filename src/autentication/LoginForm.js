@@ -40,6 +40,19 @@ function LoginForm({showMenu, setMode}) {
         password: password
       })
           .then(response => {
+            /*
+            if(response.data.role === 'player')
+            {
+              setLoading(false);
+              setErrorAlert({...errorAlert, open: true, errorStatus: 'ERR_WRONG_FORM'});
+            }
+            else
+            {
+              setLoading(false);
+              localStorage.setItem('auth', response.data.access_token);
+              setUser(response.data.access_token);
+            }
+             */
             setLoading(false);
             localStorage.setItem('auth', response.data.access_token);
             setUser(response.data.access_token);
@@ -53,7 +66,7 @@ function LoginForm({showMenu, setMode}) {
 
   return (
     <>
-      {user && <Navigate to="/MenuJogador" />}
+      {user && <Navigate to="/menu" />}
     <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}
