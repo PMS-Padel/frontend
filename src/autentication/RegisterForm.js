@@ -60,7 +60,7 @@ function RegisterForm({showMenu, setMode}) {
 
   return (
     <>
-      <LoadingPopup loading={loading}/>
+      <LoadingPopup loading={loading} borderRadius={'30px'}/>
     <Container>
       <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
       <h5 style={{fontWeight:'bold',fontSize:'2rem',margin:"20px 20px 10px"}}>Registar-se</h5>
