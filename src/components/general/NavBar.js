@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import Authentication from '../../autentication/Authentication';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Container = styled.div`
   display: flex;
@@ -41,42 +43,73 @@ const Container = styled.div`
   }
 `
 
-function NavBar() {
+function NavBar({storedAuth, logoutAccount}) {
     const [showMenu, setShowMenu] = useState(false)
-    const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth'))
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleCloseLogout = () => {
+        setAnchorEl(null);
+        logoutAccount();
+    };
 
     const disableMenu = () =>
         setShowMenu(false);
 
     return (
         <Container>
-            {storedAuth === null &&
-                <>
-                    <div></div>
-                    <nav>
-                        <a href='/' style={{fontSize: '28px'}}>Início</a>
-                        <a href='/' style={{fontSize: '28px'}}>Torneios</a>
-                        <a href='/info' style={{fontSize: '28px'}}>Padel</a>
-                    </nav>
-                    <div onClick={() => {setShowMenu(true)}}><AccountCircleIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
-                    </div>
-                    {showMenu && <Authentication showMenu={disableMenu}/>}
-                </>
-            }
-            {storedAuth !== null &&
-                <>
-                    <div></div>
-                    <nav>
-                        <a href='/menu' style={{fontSize: '28px'}}>Início</a>
-                        <a href='/info' style={{fontSize: '28px'}}>Torneios</a>
-                        <a href='/info' style={{fontSize: '28px'}}>Padel</a>
-                    </nav>
-                    <div>
-                        <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
-                        <AccountCircleIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
-                    </div>
-                </>
-            }
+            <>
+                <div></div>
+                {storedAuth === null &&
+                    <>
+                        <nav>
+                            <a href='/' style={{fontSize: '28px'}}>Início</a>
+                            <a href='/' style={{fontSize: '28px'}}>Torneios</a>
+                            <a href='/info' style={{fontSize: '28px'}}>Padel</a>
+                        </nav>
+                        <div onClick={() => {
+                            setShowMenu(true)
+                        }}><AccountCircleIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
+                        </div>
+                        {showMenu && <Authentication showMenu={disableMenu}/>}
+                    </>
+                }
+                {storedAuth !== null &&
+                    <>
+                        <nav>
+                            <a href='/menu' style={{fontSize: '28px'}}>Início</a>
+                            <a href='/info' style={{fontSize: '28px'}}>Torneios</a>
+                            <a href='/info' style={{fontSize: '28px'}}>Padel</a>
+                        </nav>
+                        <div>
+                            <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
+                            <AccountCircleIcon id="icon-account" fontSize="large" style={{color: 'white', cursor: 'pointer'}}
+                                               aria-controls={open ? 'basic-menu' : undefined}
+                                               aria-haspopup="true"
+                                               aria-expanded={open ? 'true' : undefined}
+                                               onClick={handleClick}/>
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'icon-account',
+                                }}
+                            >
+                                <MenuItem onClick={handleClose}>Conta</MenuItem>
+                                <MenuItem onClick={handleClose}>Definições</MenuItem>
+                                <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
+                            </Menu>
+                        </div>
+                    </>
+                }
+            </>
         </Container>
     )
 }

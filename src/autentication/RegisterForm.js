@@ -10,6 +10,8 @@ import {helperTextName, helperTextEmail, helperTextPassword, helperTextConfirmPa
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import AlertPopup from "../components/general/AlertPopup";
+import LoadingPopup from "../components/general/Loading";
 
 const Container = styled.div`
   margin-left: 10px;
@@ -18,13 +20,13 @@ const Container = styled.div`
 
 function RegisterForm({showMenu, setMode}) {
   const [loading, setLoading] = React.useState(false);
-  const [errorAlert, setErrorAlert] = React.useState({open: false, errorStatus: ''});
+  const [errorAlert, setErrorAlert] = useState({open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro ao registar a conta. Verifique e tente novamente.'});
   const handleErrorAlertClose = () => {
     setErrorAlert({...errorAlert, open: false});
   };
-  const [successAlert, setSuccessAlert] = React.useState(false);
+  const [successAlert, setSuccessAlert] = React.useState({open: false, severity: 'success', errorStatus: 'SUCCESSO', description: 'A conta foi registada com sucesso!'});
   const handleSuccessAlertClose = () => {
-    setSuccessAlert(false);
+    setSuccessAlert({...successAlert, open: false});
     setMode();
   };
 
@@ -47,7 +49,7 @@ function RegisterForm({showMenu, setMode}) {
       })
           .then(response => {
             setLoading(false);
-            setSuccessAlert(true);
+            setSuccessAlert({...successAlert, open: true});
           })
           .catch(error => {
             setLoading(false);
@@ -58,12 +60,7 @@ function RegisterForm({showMenu, setMode}) {
 
   return (
     <>
-    <Backdrop
-        sx={{ borderRadius: '30px', color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-    >
-      <CircularProgress color="inherit" />
-    </Backdrop>
+      <LoadingPopup loading={loading}/>
     <Container>
       <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>
       <h5 style={{fontWeight:'bold',fontSize:'2rem',margin:"20px 20px 10px"}}>Registar-se</h5>
@@ -133,22 +130,8 @@ function RegisterForm({showMenu, setMode}) {
       <div>
         <Button onClick={submitRegister} style={{marginTop:'20px', backgroundColor:'#008A87', color:'white', width:'74%', textTransform: 'none', borderRadius: '5px'}}>Criar conta</Button>
       </div>
-         <Dialog
-            open={errorAlert.open}
-            onClose={handleErrorAlertClose}>
-           <Alert severity="error">
-             <AlertTitle>{errorAlert.errorStatus}</AlertTitle>
-             Ocorreu um erro. Verifique e tente novamente.
-           </Alert>
-         </Dialog>
-          <Dialog
-              open={successAlert}
-              onClose={handleSuccessAlertClose}>
-            <Alert severity="success">
-              <AlertTitle>SUCCESS</AlertTitle>
-              A conta foi registada com sucesso!
-            </Alert>
-          </Dialog>
+        <AlertPopup errorAlert={errorAlert} handleErrorAlert={handleErrorAlertClose} />
+        <AlertPopup errorAlert={successAlert} handleErrorAlert={handleSuccessAlertClose} />
       </Box>
 
     </Container>

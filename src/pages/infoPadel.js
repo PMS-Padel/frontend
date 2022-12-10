@@ -7,6 +7,8 @@ import App from "../App";
 import backgroundPic from "../img/JogadorTorneiosInicialBackground.png";
 import imagePexels_1 from "../img/PexelsPaddleImage1.png";
 import imagePexels_2 from "../img/PexelsPaddleImage2.png";
+import AlertPopup from "../components/general/AlertPopup";
+import LoadingPopup from "../components/general/Loading";
 
 const AccountButton = styled(AccountCircleIcon)`
   color: white;
@@ -15,9 +17,10 @@ const AccountButton = styled(AccountCircleIcon)`
   right: 10%
 `
 
-export function InfoPadel(){
+export function InfoPadel( {storedAuth, errorAlertLogout, logoutAccount, handleErrorAlertCloseLogout, loading} ){
     return(<>
-        <NavBar />
+        <LoadingPopup loading={loading}/>
+        <NavBar storedAuth={storedAuth} logoutAccount={logoutAccount}/>
         <div style={{ position: "relative", top: 0, left: 0 }}>
             <img src={backgroundPic} alt="background" style={{ width: "100%", position: 'relative', zIndex: -10, objectFit: "cover", top: 0, left: 0 }} />
             <h1 style={{ textAlign: 'center', fontSize: "40px", color: "white", position: 'absolute', bottom: "90%", left: "5%", zIndex: "-1"}}>Descobre mais sobre o teu desporto!</h1>
@@ -38,6 +41,7 @@ export function InfoPadel(){
                     <br/>pelas mais diversas associações e entidades.</h2>
             </div>
         </div>
+        <AlertPopup errorAlert={errorAlertLogout} handleErrorAlert={handleErrorAlertCloseLogout} />
     </>
     );
 }

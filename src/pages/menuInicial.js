@@ -18,12 +18,11 @@ const AccountButton = styled(AccountCircleIcon)`
   right: 10%
 `
 
-function MenuInicial() {
-    const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth'));
+function MenuInicial({storedAuth}) {
 
     return (<>
         {storedAuth !== null && <Navigate to="/menu" />}
-        <NavBar />
+        <NavBar storedAuth={storedAuth}/>
         <HeaderLanding firstText={'Vem competir'} secondText={'e divertir-te!'}/>
         <div>
             <h1 style={{ fontSize: "40px", color: "#052F53" }}>Torneios</h1>
