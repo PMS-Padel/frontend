@@ -93,7 +93,7 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                             <a href='/info' style={{fontSize: '28px'}}>Padel</a>
                         </nav>
                         <div>
-                            <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
+                            <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer', marginRight: '20px'}}/>
                             <AccountCircleIcon id="icon-account" fontSize="large" style={{color: 'white', cursor: 'pointer'}}
                                                aria-controls={open ? 'basic-menu' : undefined}
                                                aria-haspopup="true"
@@ -108,10 +108,10 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                                     'aria-labelledby': 'icon-account',
                                 }}
                             >
-                                <MenuItem onClick={handleClose}>Conta</MenuItem>
-                                {isAdmin && <MenuItem onClick={handleCloseChangeMenu}>Ir a Organizador</MenuItem>}
-                                <MenuItem onClick={handleClose}>Definições</MenuItem>
-                                <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleClose}>Conta</MenuItem>
+                                {isAdmin && <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Ir a Organizador</MenuItem>}
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleClose}>Definições</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     </>

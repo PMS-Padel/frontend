@@ -72,7 +72,7 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                             <a href='/' style={{fontSize: '28px'}}>Organizar</a>
                         </nav>
                         <div>
-                            <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer'}}/>
+                            <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer', marginRight: '20px'}}/>
                             <AccountCircleIcon id="icon-account" fontSize="large" style={{color: 'white', cursor: 'pointer'}}
                                                aria-controls={open ? 'basic-menu' : undefined}
                                                aria-haspopup="true"
@@ -87,10 +87,10 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                                     'aria-labelledby': 'icon-account',
                                 }}
                             >
-                                <MenuItem onClick={handleClose}>Conta</MenuItem>
-                                <MenuItem onClick={handleCloseChangeMenu}>Ir a Jogador</MenuItem>
-                                <MenuItem onClick={handleClose}>Definições</MenuItem>
-                                <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleClose}>Conta</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Ir a Jogador</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleClose}>Definições</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     </>
