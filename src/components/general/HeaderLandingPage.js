@@ -1,7 +1,10 @@
 import React from 'react';
-import backgroundPic from '../../img/MainNormal2.jpg';
+import backgroundDefault from '../../img/MainNormal2.jpg';
+import backgroundOrganizador from '../../img/MainOrganizador2.jpg';
 
 export function HeaderLanding({firstText, secondText}) {
+  let backgroundPic = (firstText === 'Organiza os' ? backgroundOrganizador : backgroundDefault);
+
   return (<>
     <div style={{ position: "relative", top: 0, left: 0 }}>
       <img src={backgroundPic} alt="background" style={{ width: "100%", position: 'relative', zIndex: -10, objectFit: "cover", top: 0, left: 0 }} />

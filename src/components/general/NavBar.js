@@ -43,7 +43,7 @@ const Container = styled.div`
   }
 `
 
-function NavBar({storedAuth, logoutAccount}) {
+function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
     const [showMenu, setShowMenu] = useState(false)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -53,6 +53,10 @@ function NavBar({storedAuth, logoutAccount}) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const handleCloseChangeMenu = () => {
+        setAnchorEl(null);
+        goToAdminMenu();
+    };
     const handleCloseLogout = () => {
         setAnchorEl(null);
         logoutAccount();
@@ -60,6 +64,8 @@ function NavBar({storedAuth, logoutAccount}) {
 
     const disableMenu = () =>
         setShowMenu(false);
+
+
 
     return (
         <Container>
@@ -82,7 +88,7 @@ function NavBar({storedAuth, logoutAccount}) {
                 {storedAuth !== null &&
                     <>
                         <nav>
-                            <a href='/menu' style={{fontSize: '28px'}}>Início</a>
+                            <a href='/menu-jogador' style={{fontSize: '28px'}}>Início</a>
                             <a href='/info' style={{fontSize: '28px'}}>Torneios</a>
                             <a href='/info' style={{fontSize: '28px'}}>Padel</a>
                         </nav>
@@ -103,6 +109,7 @@ function NavBar({storedAuth, logoutAccount}) {
                                 }}
                             >
                                 <MenuItem onClick={handleClose}>Conta</MenuItem>
+                                {isAdmin && <MenuItem onClick={handleCloseChangeMenu}>Ir a Organizador</MenuItem>}
                                 <MenuItem onClick={handleClose}>Definições</MenuItem>
                                 <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>

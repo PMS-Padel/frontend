@@ -7,6 +7,7 @@ import InfoPadel from './pages/infoPadel'
 import MenuJogador from './pages/player/menuJogador'
 import {useState} from "react";
 import axiosConfig from "./axiosConfig";
+import MenuOrganizador from "./pages/organizador/menuOrganizador";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -37,6 +38,7 @@ function App() {
             .then(response => {
                 setLoading(false);
                 localStorage.removeItem('auth');
+                sessionStorage.removeItem('loginForm');
                 setStoredAuth(null);
             })
             .catch(error => {
@@ -49,16 +51,23 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path = "/" element =
-              {<MenuInicial storedAuth={storedAuth} />} />
+              {<MenuInicial setStoredAuth={setStoredAuth} storedAuth={storedAuth} />} />
           <Route path = "/info" element =
-              {<InfoPadel storedAuth={storedAuth}
+              {<InfoPadel setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                          errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
                           loading={loading}
                           logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>} />
-          <Route path = "/menu" element =
+          <Route path = "/menu-jogador" element =
               {<MenuJogador setStoredAuth={setStoredAuth} storedAuth={storedAuth}
                             errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
-                            logoutAccount={logoutAccount}
-                  loading={loading} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
+                            loading={loading}
+                            logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
+          />
+          <Route path = "/menu-organizador" element =
+              {<MenuOrganizador setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                            errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
+                            loading={loading}
+                            logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
           />
         </Routes>
       </BrowserRouter>

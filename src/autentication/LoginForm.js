@@ -42,21 +42,9 @@ function LoginForm({showMenu, setMode}) {
         password: password
       })
           .then(response => {
-            /*
-            if(response.data.role === 'player')
-            {
-              setLoading(false);
-              setErrorAlert({...errorAlert, open: true, errorStatus: 'ERR_WRONG_FORM'});
-            }
-            else
-            {
-              setLoading(false);
-              localStorage.setItem('auth', response.data.access_token);
-              setUser(response.data.access_token);
-            }
-             */
             setLoading(false);
             localStorage.setItem('auth', response.data.access_token);
+            sessionStorage.setItem('loginForm', 'player');
             setUser(response.data.access_token);
           })
           .catch(error => {
@@ -68,7 +56,7 @@ function LoginForm({showMenu, setMode}) {
 
   return (
     <>
-    {user && <Navigate to="/menu" />}
+    {user && <Navigate to="/menu-jogador" />}
     <LoadingPopup loading={loading}/>
     <Container>
       <Button onClick={showMenu} style={{position:'absolute',right:'5px',top:'10px'}}><CloseIcon/></Button>

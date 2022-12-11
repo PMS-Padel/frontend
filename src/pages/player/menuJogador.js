@@ -23,6 +23,7 @@ export default class MenuJogador extends Component {
     state = {
         user: [],
         storedAuth: localStorage.getItem('auth'),
+        goToAdminMenu: null
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -48,14 +49,18 @@ export default class MenuJogador extends Component {
             this.props.handleErrorAlertOpenAuth();
         }
     };
+    setTrueGoToAdminMenu = () => {
+        this.setState({goToAdminMenu: true});
+    }
 
     render()
     {
         return (
             <>
                 {(this.state.storedAuth === null || this.props.storedAuth === null) && <Navigate to="/" />}
+                {this.state.goToAdminMenu && <Navigate to="/menu-organizador" />}
                 <LoadingPopup loading={this.props.loading}/>
-                <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount}/>
+                <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>
                 <HeaderLanding firstText={'Bem-vindo'} secondText={(this.state.user.name ?? '') + '!'}/>
                 <AlertPopup errorAlert={this.props.errorAlertAuth} handleErrorAlert={this.props.handleErrorAlertCloseAuth} />
                 <AlertPopup errorAlert={this.props.errorAlertLogout} handleErrorAlert={this.props.handleErrorAlertCloseLogout} />
