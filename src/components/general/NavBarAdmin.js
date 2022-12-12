@@ -54,7 +54,7 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
     };
     const handleCloseChangeMenu = () => {
         setAnchorEl(null);
-        localStorage.setItem('loginForm', 'admin');
+        localStorage.setItem('loginForm', 'player');
         goToAdminMenu();
     };
     const handleCloseLogout = () => {
