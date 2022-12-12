@@ -22,7 +22,7 @@ const AccountButton = styled(AccountCircleIcon)`
 export default class MenuJogador extends Component {
     state = {
         user: [],
-        storedAuth: localStorage.getItem('auth'),
+        storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null
     };
     componentDidMount() {

@@ -7,7 +7,7 @@ import Row from '../components/general/Row';
 import styled from 'styled-components';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { HeaderLanding } from '../components/general/HeaderLandingPage';
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import NavBar from '../components/general/NavBar';
 import {Navigate} from "react-router-dom";
 import axiosConfig from "../axiosConfig";
@@ -22,7 +22,7 @@ const AccountButton = styled(AccountCircleIcon)`
 export default class MenuInicial extends Component {
     state = {
         user: [],
-        storedAuth: localStorage.getItem('auth')
+        storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -48,8 +48,9 @@ export default class MenuInicial extends Component {
     render() {
         return (<>
                 {this.state.user.role === 'player' && <Navigate to="/menu-jogador"/>}
-                {this.state.user.role === 'admin' && sessionStorage.getItem('loginForm') === 'player' && <Navigate to="/menu-jogador"/>}
-                {this.state.user.role === 'admin' && sessionStorage.getItem('loginForm') === 'admin' && <Navigate to="/menu-organizador"/>}
+                {this.state.user.role === 'admin' && localStorage.getItem('loginForm') === null && <Navigate to="/menu-jogador"/>}
+                {this.state.user.role === 'admin' && localStorage.getItem('loginForm') === 'player' && <Navigate to="/menu-jogador"/>}
+                {this.state.user.role === 'admin' && localStorage.getItem('loginForm') === 'admin' && <Navigate to="/menu-organizador"/>}
                 <NavBar storedAuth={this.props.storedAuth}/>
                 <HeaderLanding firstText={'Vem competir'} secondText={'e divertir-te!'}/>
                 <div>

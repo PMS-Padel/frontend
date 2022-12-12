@@ -4,7 +4,7 @@ const axiosConfig = axios.create({
     baseURL: 'http://localhost:8000/api',
 });
 
-let authToken = localStorage.getItem('auth');
+let authToken = localStorage.getItem('auth') ?? sessionStorage.getItem('auth');
 
 axiosConfig.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
 

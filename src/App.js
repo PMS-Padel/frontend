@@ -11,13 +11,14 @@ import MenuOrganizador from "./pages/organizador/menuOrganizador";
 
 function App() {
     const [loading, setLoading] = useState(false);
-    const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth'));
+    const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth') ?? sessionStorage.getItem('auth'));
     const [errorAlertAuth, setErrorAlertAuth] = useState({open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro de autenticação de conta. Verifique e tente novamente.'});
     const [errorAlertLogout, setErrorAlertLogout] = useState({open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro de logout. Verifique e tente novamente.'});
 
     function handleErrorAlertCloseAuth() {
         setErrorAlertAuth({...(errorAlertAuth), open: false});
         localStorage.removeItem('auth');
+        sessionStorage.removeItem('auth');
         setStoredAuth(null);
     }
     function handleErrorAlertOpenAuth() {
@@ -38,7 +39,8 @@ function App() {
             .then(response => {
                 setLoading(false);
                 localStorage.removeItem('auth');
-                sessionStorage.removeItem('loginForm');
+                sessionStorage.removeItem('auth');
+                localStorage.removeItem('loginForm');
                 setStoredAuth(null);
             })
             .catch(error => {

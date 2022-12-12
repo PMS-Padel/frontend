@@ -26,6 +26,7 @@ function LoginForm({showMenu, setMode}) {
   const [loading, setLoading] = React.useState(false);
   const [errorAlert, setErrorAlert] = React.useState({open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro ao fazer login da conta. Verifique e tente novamente.'});
   const [user, setUser] = React.useState(null);
+  const [checked, setChecked] = React.useState(true);
   const handleErrorAlertClose = () => {
     setErrorAlert({...errorAlert, open: false});
   };
@@ -43,8 +44,14 @@ function LoginForm({showMenu, setMode}) {
       })
           .then(response => {
             setLoading(false);
-            localStorage.setItem('auth', response.data.access_token);
-            sessionStorage.setItem('loginForm', 'player');
+            if(checked)
+            {
+              localStorage.setItem('auth', response.data.access_token);
+            }
+            else {
+              sessionStorage.setItem('auth', response.data.access_token);
+            }
+            localStorage.setItem('loginForm', 'player');
             setUser(response.data.access_token);
           })
           .catch(error => {
@@ -97,7 +104,7 @@ function LoginForm({showMenu, setMode}) {
       </div>
       <div>
       <FormGroup style={{marginLeft:'55px'}}>
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Lembrar-se de mim" />
+        <FormControlLabel control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />} label="Lembrar-se de mim" />
       </FormGroup>
       </div>
       <div>
