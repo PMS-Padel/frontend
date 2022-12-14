@@ -8,6 +8,7 @@ import MenuJogador from './pages/player/menuJogador'
 import {useState} from "react";
 import axiosConfig from "./axiosConfig";
 import MenuOrganizador from "./pages/organizador/menuOrganizador";
+import NotFound from "./pages/error404";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -71,6 +72,10 @@ function App() {
                             loading={loading}
                             logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
           />
+          <Route path='*' element={<NotFound setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                                     errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
+                                     loading={loading}
+                                     logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}/>
         </Routes>
       </BrowserRouter>
   );
