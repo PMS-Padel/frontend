@@ -11,6 +11,7 @@ import React, {Component} from 'react';
 import NavBar from '../components/general/NavBar';
 import {Navigate} from "react-router-dom";
 import axiosConfig from "../axiosConfig";
+import TourneyRow from "../components/tourney/TourneyRow";
 
 const AccountButton = styled(AccountCircleIcon)`
   color: white;
@@ -56,14 +57,7 @@ export default class MenuInicial extends Component {
                 <div>
                     <h1 style={{fontSize: "40px", color: "#052F53"}}>Torneios</h1>
                 </div>
-                <Row style={{color: 'white', justifyContent: "center", gap: "20px"}}>
-                    <div
-                        style={{width: "230px", height: "250px", backgroundColor: "#6F9BC3", borderRadius: "5%"}}></div>
-                    <div
-                        style={{width: "230px", height: "250px", backgroundColor: "#6F9BC3", borderRadius: "5%"}}></div>
-                    <div
-                        style={{width: "230px", height: "250px", backgroundColor: "#6F9BC3", borderRadius: "5%"}}></div>
-                </Row>
+                <TourneyRow />
                 <div>
 
                 </div>
