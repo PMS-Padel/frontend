@@ -55,12 +55,13 @@ export default class MenuInicial extends Component {
                 <NavBar storedAuth={this.props.storedAuth}/>
                 <HeaderLanding firstText={'Vem competir'} secondText={'e divertir-te!'}/>
                 <div>
-                    <h1 style={{fontSize: "40px", color: "#052F53"}}>Torneios</h1>
+                    <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "2%"}}>Torneios</h1>
                 </div>
-                <TourneyRow />
-                <div>
-
+                <TourneyRow maxLength={3}/>
+                <div style={{ borderBottom: "3px solid #B8CEE2", paddingBottom: "50px" }}>
+                    <h1 style={{fontSize: "40px", color: "#052F53", justifyContent: "middle", textAlign: "center", paddingTop: "30px"}}>VER MAIS ANTIGOS</h1>
                 </div>
+                <div style={{ paddingBottom: "50px" }} />
             </>
         );
     }
