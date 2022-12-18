@@ -76,7 +76,7 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                     <>
                         <nav>
                             <a href='/' style={{fontSize: '28px'}}>Início</a>
-                            <a href='/' style={{fontSize: '28px'}}>Torneios</a>
+                            <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
                             <a href='/info' style={{fontSize: '28px'}}>Padel</a>
                         </nav>
                         <div onClick={() => {
@@ -90,7 +90,7 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                     <>
                         <nav>
                             <a href='/menu-jogador' style={{fontSize: '28px'}}>Início</a>
-                            <a href='/info' style={{fontSize: '28px'}}>Torneios</a>
+                            <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
                             <a href='/info' style={{fontSize: '28px'}}>Padel</a>
                         </nav>
                         <div>

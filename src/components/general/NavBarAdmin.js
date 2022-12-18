@@ -69,7 +69,7 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                     <>
                         <nav>
                             <a href='/menu-organizador' style={{fontSize: '28px'}}>Início</a>
-                            <a href='/' style={{fontSize: '28px'}}>Torneios</a>
+                            <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
                             <a href='/' style={{fontSize: '28px'}}>Organizar</a>
                         </nav>
                         <div>

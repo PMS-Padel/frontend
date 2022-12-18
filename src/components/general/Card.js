@@ -6,8 +6,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import {Navigate} from "react-router-dom";
 
 export default function MediaCard({tourney}) {
+    const [tourneyId, setTourneyId] = React.useState(null);
+
     function verifyStatus() {
         let initDate = new Date(tourney.init_date);
         let endDate = new Date(tourney.end_date);
@@ -15,25 +18,27 @@ export default function MediaCard({tourney}) {
 
         if (now.getTime() < initDate.getTime() ) {
             return (
-                <Button variant="outlined" color="success" style={{ borderRadius: 15, borderWidth: 2 }}>Inscrições Abertas</Button>
+                <Button onClick={navigateTourney} variant="outlined" color="success" style={{ borderRadius: 15, borderWidth: 2 }}>Inscrições Abertas</Button>
             )
         }
         else if (initDate.getTime() < now.getTime() && now.getTime() < endDate.getTime() ) {
             return (
-                <Button variant="outlined" color="primary" style={{ borderRadius: 15, borderWidth: 2 }}>A Decorrer</Button>
+                <Button onClick={navigateTourney} variant="outlined" color="primary" style={{ borderRadius: 15, borderWidth: 2 }}>A Decorrer</Button>
             )
         }
         else if (endDate.getTime() < now.getTime()) {
             return (
-                <Button variant="outlined" color="error" style={{ borderRadius: 15, borderWidth: 2 }}>Terminado</Button>
+                <Button onClick={navigateTourney} variant="outlined" color="error" style={{ borderRadius: 15, borderWidth: 2 }}>Terminado</Button>
             )
         }
-        else
-        {
+        else {
             return (
-                <Button variant="outlined" color="primary" style={{ borderRadius: 15, borderWidth: 2 }}>Mais detalhes</Button>
+                <Button onClick={navigateTourney} variant="outlined" color="primary" style={{ borderRadius: 15, borderWidth: 2 }}>Mais detalhes</Button>
             )
         }
+    }
+    function navigateTourney() {
+        setTourneyId(tourney.id);
     }
 
     //console.log(new Date(tourney.init_date).toLocaleDateString())
@@ -61,6 +66,7 @@ export default function MediaCard({tourney}) {
             <CardActions sx={{ justifyContent: "center", marginBottom: "15px" }}>
                 {verifyStatus()}
             </CardActions>
+            {tourneyId !== null && <Navigate to={"/torneio/" + tourney.id}/>}
         </Card>
     );
 }

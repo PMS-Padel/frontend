@@ -61,8 +61,8 @@ export default class MenuOrganizador extends Component {
                 {(this.state.storedAuth === null || this.props.storedAuth === null) && <Navigate to="/" />}
                 {this.state.goToAdminMenu && <Navigate to="/menu-jogador" />}
                 <LoadingPopup loading={this.props.loading}/>
-                <NavBarAdmin logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>
-                <HeaderLanding firstText={'Organiza os'} secondText={'melhores torneios, ' + (this.state.user.name ?? '') + '!'}/>
+                <NavBarAdmin logoutAccount={this.props.logoutAccount} goToAdminMenu={this.setTrueGoToAdminMenu}/>
+                <HeaderLanding firstText={'Organiza os melhores'} secondText={'torneios, ' + (this.state.user.name ?? '') + '!'}/>
                 <AlertPopup errorAlert={this.props.errorAlertAuth} handleErrorAlert={this.props.handleErrorAlertCloseAuth} />
                 <AlertPopup errorAlert={this.props.errorAlertLogout} handleErrorAlert={this.props.handleErrorAlertCloseLogout} />
             </>

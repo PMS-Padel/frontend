@@ -1,8 +1,9 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import Row from "../general/Row";
 import axiosConfig from "../../axiosConfig";
 import AlertPopup from "../general/AlertPopup";
 import MediaCard from "../general/Card";
+import {Grid} from "@mui/material";
 
 export default class TourneyRow extends Component {
     state = {
@@ -39,15 +40,22 @@ export default class TourneyRow extends Component {
         }))
     }
 
-    handleTourneysRowLength = () => {
+    handleTourneyCards = () => {
         if(this.state.tourneys.length > 0)
         {
             return (
-                this.state.tourneys.slice(0, (this.props.maxLength)).map(function(tourney){
-                    return <div key={tourney.id}>
-                        <MediaCard tourney={tourney}/>
-                    </div>;
-                })
+                <Grid container rowSpacing={1} columnSpacing={0}
+                      direction="row"
+                      justifyContent="space-evenly"
+                      alignItems="center">
+                    {
+                        this.state.tourneys.slice(0, (this.props.maxLength)).map(function(tourney, index){
+                            return <Grid item xs={3} key={index}>
+                                <MediaCard tourney={tourney}/>
+                            </Grid>
+                        })
+                    }
+                </Grid>
             )
         }
         else if(this.state.tourneys.length === 0)
@@ -64,11 +72,6 @@ export default class TourneyRow extends Component {
         }
     }
     render() {
-        return (
-            <Row style={{color: 'white', justifyContent: "center", gap: "20px"}}>
-                {this.handleTourneysRowLength()}
-                <AlertPopup errorAlert={this.state.errorAlertTourney} handleErrorAlert={this.handleErrorAlertCloseTourney} />
-            </Row>
-        )
+        return this.handleTourneyCards()
     }
 }

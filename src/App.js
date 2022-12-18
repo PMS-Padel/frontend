@@ -9,6 +9,7 @@ import {useState} from "react";
 import axiosConfig from "./axiosConfig";
 import MenuOrganizador from "./pages/organizador/menuOrganizador";
 import NotFound from "./pages/error404";
+import TourneyList from "./pages/listTourney";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -43,6 +44,7 @@ function App() {
                 sessionStorage.removeItem('auth');
                 localStorage.removeItem('loginForm');
                 setStoredAuth(null);
+                window.location.reload();
             })
             .catch(error => {
                 setLoading(false);
@@ -72,6 +74,11 @@ function App() {
                             loading={loading}
                             logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
           />
+            <Route path = "/torneios" element =
+                {<TourneyList setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                                  errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
+                                  logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
+            />
           <Route path='*' element={<NotFound setStoredAuth={setStoredAuth} storedAuth={storedAuth}
                                      errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
                                      loading={loading}

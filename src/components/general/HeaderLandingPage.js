@@ -3,7 +3,7 @@ import backgroundDefault from '../../img/MainNormal2.jpg';
 import backgroundOrganizador from '../../img/MainOrganizador2.jpg';
 
 export function HeaderLanding({firstText, secondText}) {
-  let backgroundPic = (firstText === 'Organiza os' ? backgroundOrganizador : backgroundDefault);
+  let backgroundPic = (firstText === 'Organiza os melhores' ? backgroundOrganizador : backgroundDefault);
 
   return (<>
     <div style={{ position: "relative", top: 0, left: 0 }}>
