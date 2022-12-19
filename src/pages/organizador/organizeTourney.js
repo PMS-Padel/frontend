@@ -14,6 +14,7 @@ import NavBarAdmin from "../../components/general/NavBarAdmin";
 import LoadingPopup from "../../components/general/Loading";
 import {Button} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PosterImageDefault from "../../img/PosterImageDefault.png";
 
 const AccountButton = styled(AccountCircleIcon)`
   color: white;
@@ -27,7 +28,8 @@ export default class OrganizeTourney extends Component {
         user: [],
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null,
-        createTourney: false
+        menuCreateTourney: false,
+        file: null
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -53,8 +55,13 @@ export default class OrganizeTourney extends Component {
     setTrueGoToAdminMenu = () => {
         this.setState({goToAdminMenu: true});
     }
-    handleCreateTourney = () => {
-        this.setState({createTourney: !this.state.createTourney});
+    handleMenuCreateTourney = () => {
+        this.setState({menuCreateTourney: !this.state.menuCreateTourney});
+    }
+
+    handleFileChange = (e) => {
+        console.log(e.target.files)
+        this.setState({file: URL.createObjectURL(e.target.files[0])});
     }
 
     render() {
@@ -64,7 +71,7 @@ export default class OrganizeTourney extends Component {
                 {this.state.goToAdminMenu && <Navigate to="/menu-jogador" />}
                 <LoadingPopup loading={this.props.loading}/>
                 <NavBarAdmin logoutAccount={this.props.logoutAccount} goToAdminMenu={this.setTrueGoToAdminMenu}/>
-                {this.state.createTourney === false ?
+                {this.state.menuCreateTourney === false ?
                     <div style={{position: "relative", top: 0, left: 0}}>
                         <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic}
                              alt="background" style={{
@@ -84,14 +91,15 @@ export default class OrganizeTourney extends Component {
                             left: "5%",
                             zIndex: "-1"
                         }}>Organiza os melhores torneios!</h1>
-                        <Button onClick={this.handleCreateTourney} style={{
+                        <Button onClick={this.handleMenuCreateTourney} style={{
                             textAlign: 'center',
-                            fontSize: "25px",
+                            fontSize: "30px",
                             color: "#530505",
                             backgroundColor: "white",
                             position: 'absolute',
                             bottom: "85%",
-                            left: "42vw",
+                            left: "43.5vw",
+                            textTransform: 'none',
                             zIndex: "1"}}>Criar Torneio</Button>
                         <div style={{
                             width: "94%",
@@ -118,7 +126,25 @@ export default class OrganizeTourney extends Component {
                             top: 0,
                             left: 0
                         }}/>
-                        <Button onClick={this.handleCreateTourney} style={{position:'absolute',left:'5px',top:'80px',color:'white'}}><ArrowBackIcon/></Button>
+                        <Button onClick={this.handleMenuCreateTourney} style={{position:'absolute',left:'5px',top:'80px',color:'white'}}><ArrowBackIcon/></Button>
+                        <div style={{
+                            width: "82%",
+                            height: "25%",
+                            borderRadius: "1%",
+                            position: 'absolute',
+                            zIndex: 0,
+                            objectFit: "cover",
+                            top: 220,
+                            left: 125,
+                            backgroundColor: "#FFFFFF"
+                        }}>
+                            <div style={{ padding: "20px" }}>
+                                <Button style={{textTransform: 'none'}} component="label">
+                                    <input hidden accept="image/*" type="file" onChange={this.handleFileChange} />
+                                    <img src={this.state.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 }
                 <AlertPopup errorAlert={this.props.errorAlertAuth} handleErrorAlert={this.props.handleErrorAlertCloseAuth} />
