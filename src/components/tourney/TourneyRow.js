@@ -14,7 +14,7 @@ export default class TourneyRow extends Component {
         this.getAllTourneys();
     }
     getAllTourneys = async () => {
-        const res = await axiosConfig.post('/gettournaments',{})
+        const res = await axiosConfig.get('/gettournaments',{})
             .then((res) => res)
             .catch((error) => false);
 
