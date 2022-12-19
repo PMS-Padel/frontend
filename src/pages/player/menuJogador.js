@@ -29,6 +29,7 @@ export default class MenuJogador extends Component {
         if(this.state.storedAuth !== null) {
             this.getUser();
             this.props.setStoredAuth(this.state.storedAuth);
+            localStorage.setItem('loginForm', 'player');
         }
     }
     getUser = async () => {

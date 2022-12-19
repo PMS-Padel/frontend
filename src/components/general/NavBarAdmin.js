@@ -70,7 +70,7 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                         <nav>
                             <a href='/menu-organizador' style={{fontSize: '28px'}}>Início</a>
                             <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
-                            <a href='/' style={{fontSize: '28px'}}>Organizar</a>
+                            <a href='/organizar' style={{fontSize: '28px'}}>Organizar</a>
                         </nav>
                         <div>
                             <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer', marginRight: '20px'}}/>

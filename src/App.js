@@ -10,6 +10,7 @@ import axiosConfig from "./axiosConfig";
 import MenuOrganizador from "./pages/organizador/menuOrganizador";
 import NotFound from "./pages/error404";
 import TourneyList from "./pages/listTourney";
+import OrganizeTourney from "./pages/organizador/organizeTourney";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -78,6 +79,12 @@ function App() {
                 {<TourneyList setStoredAuth={setStoredAuth} storedAuth={storedAuth}
                                   errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
                                   logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
+            />
+            <Route path = "/organizar" element =
+                {<OrganizeTourney setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                              errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
+                              loading={loading}
+                              logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
             />
           <Route path='*' element={<NotFound setStoredAuth={setStoredAuth} storedAuth={storedAuth}
                                      errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}

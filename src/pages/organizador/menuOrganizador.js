@@ -29,6 +29,7 @@ export default class MenuOrganizador extends Component {
         if(this.state.storedAuth !== null) {
             this.getUser();
             this.props.setStoredAuth(this.state.storedAuth);
+            localStorage.setItem('loginForm', 'admin');
         }
     }
     getUser = async () => {
