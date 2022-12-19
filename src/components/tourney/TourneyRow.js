@@ -72,6 +72,11 @@ export default class TourneyRow extends Component {
         }
     }
     render() {
-        return this.handleTourneyCards()
+        return (
+            <>
+                {this.handleTourneyCards()}
+                <AlertPopup errorAlert={this.state.errorAlertTourney} handleErrorAlert={this.handleErrorAlertCloseTourney} />
+            </>
+        )
     }
 }
