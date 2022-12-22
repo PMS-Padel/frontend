@@ -35,12 +35,20 @@ const Container = styled.div`
     flex-grow: 1;
     align-items: center;
     gap: 30px;
-
-    & a {
-      color: white;
-      text-decoration: none;
-    }
   }
+`
+
+const HRefA = styled.a`
+  color: white;
+  
+  &:hover,
+  &.active {
+    font-weight: bold;
+  }
+  text-decoration: ${(props) =>
+    props.href === window.location.pathname ? "underline" : "none"};
+  font-weight: ${(props) =>
+    props.href === window.location.pathname ? "bold" : "normal"};
 `
 
 function NavBarAdmin({logoutAccount, goToAdminMenu}) {
@@ -68,9 +76,9 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                 <div></div>
                     <>
                         <nav>
-                            <a href='/menu-organizador' style={{fontSize: '28px'}}>Início</a>
-                            <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
-                            <a href='/organizar' style={{fontSize: '28px'}}>Organizar</a>
+                            <HRefA href='/menu-organizador' style={{fontSize: '28px'}}>Início</HRefA>
+                            <HRefA href='/torneios' style={{fontSize: '28px'}}>Torneios</HRefA>
+                            <HRefA href='/organizar' style={{fontSize: '28px'}}>Organizar</HRefA>
                         </nav>
                         <div>
                             <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer', marginRight: '20px'}}/>
@@ -89,7 +97,7 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                                 }}
                             >
                                 <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleClose}>Conta</MenuItem>
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Ir a Jogador</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Menu Jogador</MenuItem>
                                 <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleClose}>Definições</MenuItem>
                                 <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>

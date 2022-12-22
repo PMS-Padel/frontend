@@ -35,12 +35,20 @@ const Container = styled.div`
     flex-grow: 1;
     align-items: center;
     gap: 30px;
-
-    & a {
-      color: white;
-      text-decoration: none;
-    }
   }
+`
+
+const HRefA = styled.a`
+  color: white;
+  
+  &:hover,
+  &.active {
+    font-weight: bold;
+  }
+  text-decoration: ${(props) =>
+          props.href === window.location.pathname ? "underline" : "none"};
+  font-weight: ${(props) =>
+          props.href === window.location.pathname ? "bold" : "normal"};
 `
 
 function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
@@ -66,8 +74,6 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
     const disableMenu = () =>
         setShowMenu(false);
 
-
-
     return (
         <Container>
             <>
@@ -75,9 +81,9 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                 {storedAuth === null &&
                     <>
                         <nav>
-                            <a href='/' style={{fontSize: '28px'}}>Início</a>
-                            <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
-                            <a href='/info' style={{fontSize: '28px'}}>Padel</a>
+                            <HRefA href='/' style={{fontSize: '28px'}}>Início</HRefA>
+                            <HRefA href='/torneios' style={{fontSize: '28px'}}>Torneios</HRefA>
+                            <HRefA href='/info' style={{fontSize: '28px'}}>Padel</HRefA>
                         </nav>
                         <div onClick={() => {
                             setShowMenu(true)
@@ -89,9 +95,9 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                 {storedAuth !== null &&
                     <>
                         <nav>
-                            <a href='/menu-jogador' style={{fontSize: '28px'}}>Início</a>
-                            <a href='/torneios' style={{fontSize: '28px'}}>Torneios</a>
-                            <a href='/info' style={{fontSize: '28px'}}>Padel</a>
+                            <HRefA href='/menu-jogador' style={{fontSize: '28px'}}>Início</HRefA>
+                            <HRefA href='/torneios' style={{fontSize: '28px'}}>Torneios</HRefA>
+                            <HRefA href='/info' style={{fontSize: '28px'}}>Padel</HRefA>
                         </nav>
                         <div>
                             <CircleNotificationsIcon fontSize="large" style={{color: 'white', cursor: 'pointer', marginRight: '20px'}}/>
@@ -110,7 +116,7 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                                 }}
                             >
                                 <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleClose}>Conta</MenuItem>
-                                {isAdmin && <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Ir a Organizador</MenuItem>}
+                                {isAdmin && <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Menu Organizador</MenuItem>}
                                 <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleClose}>Definições</MenuItem>
                                 <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>
