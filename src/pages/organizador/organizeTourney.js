@@ -12,9 +12,12 @@ import {Navigate} from "react-router-dom";
 import TourneyRow from "../../components/tourney/TourneyRow";
 import NavBarAdmin from "../../components/general/NavBarAdmin";
 import LoadingPopup from "../../components/general/Loading";
-import {Button} from "@mui/material";
+import {Button, Grid} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PosterImageDefault from "../../img/PosterImageDefault.png";
+import TextField from "@mui/material/TextField";
+import {helperTextName} from "../../autentication/dataConditions";
+import MenuItem from "@mui/material/MenuItem";
 
 const AccountButton = styled(AccountCircleIcon)`
   color: white;
@@ -29,7 +32,7 @@ export default class OrganizeTourney extends Component {
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null,
         menuCreateTourney: false,
-        file: null
+        file: null,
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -62,6 +65,40 @@ export default class OrganizeTourney extends Component {
     handleFileChange = (e) => {
         console.log(e.target.files)
         this.setState({file: URL.createObjectURL(e.target.files[0])});
+    }
+
+    getTodayDate = () => {
+        let dateNow = new Date();
+        let monthNumber = dateNow.getMonth() + 1;
+        let dayNumber = dateNow.getDate();
+        let monthString = monthNumber.toString();
+        let dayString = dayNumber.toString();
+        if(monthNumber < 10)
+        {
+            monthString = '0' + monthNumber.toString();
+        }
+        if(dayNumber < 10)
+        {
+            dayString = '0' + dayNumber.toString();
+        }
+        return dateNow.getFullYear() + "-" + monthString + "-" + dayString;
+    }
+
+    getCategorias = () => {
+        return [
+            {
+                value: 'Misto',
+                label: 'Misto',
+            },
+            {
+                value: 'Masculino',
+                label: 'Masculino',
+            },
+            {
+                value: 'Feminino',
+                label: 'Feminino',
+            },
+        ];
     }
 
     render() {
@@ -134,15 +171,115 @@ export default class OrganizeTourney extends Component {
                             position: 'absolute',
                             zIndex: 0,
                             objectFit: "cover",
-                            top: 220,
-                            left: 125,
+                            top: 250,
+                            left: 150,
                             backgroundColor: "#FFFFFF"
                         }}>
                             <div style={{ padding: "20px" }}>
-                                <Button style={{textTransform: 'none'}} component="label">
-                                    <input hidden accept="image/*" type="file" onChange={this.handleFileChange} />
-                                    <img src={this.state.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
-                                </Button>
+                                <Grid container spacing={2}
+                                      justifyContent="center"
+                                      alignItems="center"
+                                      sx={{
+                                          '& .MuiTextField-root': { m: 1, width: '25ch' },
+                                      }}>
+                                    <Grid item xs={4}>
+                                        <Button style={{textTransform: 'none'}} component="label">
+                                            <input hidden accept="image/*" type="file" onChange={this.handleFileChange} />
+                                            <img src={this.state.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={4} style={{ paddingTop: '25px'}}>
+                                        <Grid container spacing={2}
+                                              justifyContent="center"
+                                              alignItems="center">
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    id="titulo"
+                                                    label="Título"
+                                                    placeholder="Título"
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    multiline
+                                                    rows={4}
+                                                    variant="outlined"
+                                                    id="descricao"
+                                                    label="Descrição"
+                                                    placeholder="Descrição"
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    id="categoria-select"
+                                                    select
+                                                    label="Categoria"
+                                                    defaultValue="Misto"
+                                                    required
+                                                >
+                                                    {(this.getCategorias()).map((option) => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={4} style={{ paddingTop: '25px'}}>
+                                        <Grid container spacing={2}
+                                              justifyContent="center"
+                                              alignItems="center">
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    id="data-inicio"
+                                                    type="date"
+                                                    label="Data início"
+                                                    placeholder="Data início"
+                                                    defaultValue={this.getTodayDate()}
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    id="data-fim"
+                                                    type="date"
+                                                    label="Data fim"
+                                                    placeholder="Data fim"
+                                                    defaultValue={this.getTodayDate()}
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    type="number"
+                                                    InputProps={{ inputProps: { min: 4 } }}
+                                                    defaultValue='4'
+                                                    id="max-jogadores"
+                                                    label="Número máximo de jogadores"
+                                                    placeholder="Número máximo de jogadores"
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                             </div>
                         </div>
                     </div>
