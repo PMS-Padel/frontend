@@ -32,7 +32,15 @@ export default class OrganizeTourney extends Component {
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null,
         menuCreateTourney: false,
-        file: null,
+        dataNewTourney: {
+            title: '',
+            description: '',
+            category: '',
+            initialDate: '',
+            finalDate: '',
+            maxPlayers: undefined,
+            file: null,
+            price: null}
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -62,11 +70,7 @@ export default class OrganizeTourney extends Component {
         this.setState({menuCreateTourney: !this.state.menuCreateTourney});
     }
 
-    handleFileChange = (e) => {
-        console.log(e.target.files)
-        this.setState({file: URL.createObjectURL(e.target.files[0])});
-    }
-
+    /*
     getTodayDate = () => {
         let dateNow = new Date();
         let monthNumber = dateNow.getMonth() + 1;
@@ -83,9 +87,14 @@ export default class OrganizeTourney extends Component {
         }
         return dateNow.getFullYear() + "-" + monthString + "-" + dayString;
     }
+     */
 
     getCategorias = () => {
         return [
+            {
+                value: '',
+                label: '',
+            },
             {
                 value: 'Misto',
                 label: 'Misto',
@@ -184,8 +193,9 @@ export default class OrganizeTourney extends Component {
                                       }}>
                                     <Grid item xs={4}>
                                         <Button style={{textTransform: 'none'}} component="label">
-                                            <input hidden accept="image/*" type="file" onChange={this.handleFileChange} />
-                                            <img src={this.state.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
+                                            <input hidden accept="image/*" type="file"
+                                               onChange={(e) => this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, file: URL.createObjectURL(e.target.files[0])}}))} />
+                                            <img src={this.state.dataNewTourney.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
                                         </Button>
                                     </Grid>
                                     <Grid item xs={4} style={{ paddingTop: '25px'}}>
@@ -200,7 +210,9 @@ export default class OrganizeTourney extends Component {
                                                     label="Título"
                                                     placeholder="Título"
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, title: event.target.value}}))}
+                                                    }
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
@@ -213,7 +225,9 @@ export default class OrganizeTourney extends Component {
                                                     label="Descrição"
                                                     placeholder="Descrição"
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, description: event.target.value}}))}
+                                                    }
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
@@ -221,8 +235,11 @@ export default class OrganizeTourney extends Component {
                                                     id="categoria-select"
                                                     select
                                                     label="Categoria"
-                                                    defaultValue="Misto"
                                                     required
+                                                    defaultValue=''
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, category: event.target.value}}))}
+                                                    }
                                                 >
                                                     {(this.getCategorias()).map((option) => (
                                                         <MenuItem key={option.value} value={option.value}>
@@ -240,27 +257,31 @@ export default class OrganizeTourney extends Component {
                                             <Grid item xs={12}>
                                                 <TextField
                                                     required
+                                                    InputLabelProps={{ shrink: true }}
                                                     variant="outlined"
                                                     id="data-inicio"
                                                     type="date"
                                                     label="Data início"
                                                     placeholder="Data início"
-                                                    defaultValue={this.getTodayDate()}
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, initialDate: event.target.value}}))}
+                                                    }
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField
                                                     required
+                                                    InputLabelProps={{ shrink: true }}
                                                     variant="outlined"
                                                     id="data-fim"
                                                     type="date"
                                                     label="Data fim"
                                                     placeholder="Data fim"
-                                                    defaultValue={this.getTodayDate()}
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, finalDate: event.target.value}}))}
+                                                    }
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
@@ -269,12 +290,13 @@ export default class OrganizeTourney extends Component {
                                                     variant="outlined"
                                                     type="number"
                                                     InputProps={{ inputProps: { min: 4 } }}
-                                                    defaultValue='4'
                                                     id="max-jogadores"
                                                     label="Número máximo de jogadores"
                                                     placeholder="Número máximo de jogadores"
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                                    onChange={(event) => {console.log(event.target.value)}}
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, maxPlayers: event.target.value}}))}
+                                                    }
                                                 />
                                             </Grid>
                                         </Grid>
