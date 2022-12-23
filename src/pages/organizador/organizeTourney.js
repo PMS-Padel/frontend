@@ -12,7 +12,7 @@ import {Navigate} from "react-router-dom";
 import TourneyRow from "../../components/tourney/TourneyRow";
 import NavBarAdmin from "../../components/general/NavBarAdmin";
 import LoadingPopup from "../../components/general/Loading";
-import {Button, Grid} from "@mui/material";
+import {Button, Grid, InputAdornment} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PosterImageDefault from "../../img/PosterImageDefault.png";
 import TextField from "@mui/material/TextField";
@@ -40,7 +40,9 @@ export default class OrganizeTourney extends Component {
             finalDate: '',
             maxPlayers: undefined,
             file: null,
-            price: null}
+            price: null,
+            local: '',
+            insurance: ''}
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -193,7 +195,7 @@ export default class OrganizeTourney extends Component {
                                       }}>
                                     <Grid item xs={4}>
                                         <Button style={{textTransform: 'none'}} component="label">
-                                            <input hidden accept="image/*" type="file"
+                                            <input hidden accept="image/*" type="file" required
                                                onChange={(e) => this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, file: URL.createObjectURL(e.target.files[0])}}))} />
                                             <img src={this.state.dataNewTourney.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
                                         </Button>
@@ -248,6 +250,27 @@ export default class OrganizeTourney extends Component {
                                                     ))}
                                                 </TextField>
                                             </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    type="number"
+                                                    inputProps={{
+                                                        step: 0.5,
+                                                    }}
+                                                    InputProps={{
+                                                        endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                                                    }}
+                                                    id="preco"
+                                                    label="Preço de entrada"
+                                                    placeholder="Preço de entrada"
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) =>
+                                                        {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, price: event.target.value}}))}
+                                                    }
+                                                />
+                                            </Grid>
+
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={4} style={{ paddingTop: '25px'}}>
@@ -296,6 +319,32 @@ export default class OrganizeTourney extends Component {
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                                     onChange={(event) =>
                                                         {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, maxPlayers: event.target.value}}))}
+                                                    }
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    id="localizacao"
+                                                    label="Localização"
+                                                    placeholder="Localização"
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) =>
+                                                    {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, local: event.target.value}}))}
+                                                    }
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    required
+                                                    variant="outlined"
+                                                    id="seguro"
+                                                    label="Seguro"
+                                                    placeholder="Seguro"
+                                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                    onChange={(event) =>
+                                                    {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, insurance: event.target.value}}))}
                                                     }
                                                 />
                                             </Grid>
