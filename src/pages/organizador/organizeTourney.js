@@ -124,39 +124,49 @@ export default class OrganizeTourney extends Component {
                         <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic}
                              alt="background" style={{
                             width: "100%",
-                            position: 'relative',
+                            position: 'absolute',
                             zIndex: -10,
                             objectFit: "cover",
                             top: 0,
                             left: 0
+                            
                         }}/>
+                        <div >
                         <h1 style={{
+
+                            marginLeft:'-77%',
+                            marginTop:'0%',
                             textAlign: 'center',
                             fontSize: "40px",
                             color: "white",
-                            position: 'absolute',
-                            bottom: "90%",
+                            position: 'relative',
+                            top:'10rem',
+                            bottom: "15%",
                             left: "5%",
                             zIndex: "-1"
                         }}>Organiza os melhores torneios!</h1>
+                        </div>
+                        <div>
                         <Button onClick={this.handleMenuCreateTourney} style={{
                             textAlign: 'center',
                             fontSize: "30px",
                             color: "#530505",
                             backgroundColor: "white",
-                            position: 'absolute',
-                            bottom: "85%",
-                            left: "43.5vw",
+                            position: 'relative',
+                            top:'13rem',
+                            bottom: "55%",
+                            left: "50%",
                             textTransform: 'none',
                             zIndex: "1"}}>Criar Torneio</Button>
+                        </div>
                         <div style={{
                             width: "94%",
-                            height: "75%",
+                            height: "50rem",
                             borderRadius: "1%",
-                            position: 'absolute',
+                            position: 'relative',
                             zIndex: 0,
                             objectFit: "cover",
-                            top: 550,
+                            top: '20rem',
                             left: 45,
                             backgroundColor: "#FFFFFF"
                         }}>
