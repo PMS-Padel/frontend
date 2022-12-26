@@ -27,23 +27,27 @@ const AccountButton = styled(AccountCircleIcon)`
 `
 
 export default class OrganizeTourney extends Component {
-    state = {
-        user: [],
-        storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
-        goToAdminMenu: null,
-        menuCreateTourney: false,
-        dataNewTourney: {
-            title: '',
-            description: '',
-            category: '',
-            initialDate: '',
-            finalDate: '',
-            maxPlayers: undefined,
-            file: null,
-            price: null,
-            local: '',
-            insurance: ''}
-    };
+
+        state = {
+            user: [],
+            storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
+            goToAdminMenu: null,
+            menuCreateTourney: false,
+            dataNewTourney: {
+                title: '',
+                description: '',
+                category: '',
+                initialDate: '',
+                finalDate: '',
+                maxPlayers: undefined,
+                file: null,
+                price: null,
+                local: '',
+                insurance: ''}
+        };
+
+
+
     componentDidMount() {
         if(this.state.storedAuth !== null) {
             this.getUser();
@@ -111,6 +115,27 @@ export default class OrganizeTourney extends Component {
             },
         ];
     }
+
+    submitTourney(newTourney) {
+
+          axiosConfig.post('/createtournament', {
+            title: newTourney.title,
+            description: this.state.dataNewTourney.description,
+            category: this.state.dataNewTourney.category,
+            initialDate: this.state.dataNewTourney.initialDate,
+            finalDate: this.state.dataNewTourney.finalDate,
+            maxPlayers: this.state.dataNewTourney.maxPlayers,
+            file: this.state.dataNewTourney.file,
+            price: this.state.dataNewTourney.price,
+            local: this.state.dataNewTourney.local,
+            insurance: this.state.dataNewTourney.insurance
+
+          })
+              .then()
+              .catch()
+ 
+    }
+      
 
     render() {
         return (<>
@@ -244,7 +269,7 @@ export default class OrganizeTourney extends Component {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField
-                                                    id="categoria-select"
+                                                    id="categoria_select"
                                                     select
                                                     label="Categoria"
                                                     required
@@ -292,7 +317,7 @@ export default class OrganizeTourney extends Component {
                                                     required
                                                     InputLabelProps={{ shrink: true }}
                                                     variant="outlined"
-                                                    id="data-inicio"
+                                                    id="data_inicio"
                                                     type="date"
                                                     label="Data início"
                                                     placeholder="Data início"
@@ -307,7 +332,7 @@ export default class OrganizeTourney extends Component {
                                                     required
                                                     InputLabelProps={{ shrink: true }}
                                                     variant="outlined"
-                                                    id="data-fim"
+                                                    id="data_fim"
                                                     type="date"
                                                     label="Data fim"
                                                     placeholder="Data fim"
@@ -323,7 +348,7 @@ export default class OrganizeTourney extends Component {
                                                     variant="outlined"
                                                     type="number"
                                                     InputProps={{ inputProps: { min: 4 } }}
-                                                    id="max-jogadores"
+                                                    id="max_jogadores"
                                                     label="Número máximo de jogadores"
                                                     placeholder="Número máximo de jogadores"
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
@@ -361,8 +386,8 @@ export default class OrganizeTourney extends Component {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Button onClick={(e)=>{ e.preventDefault(); window.location.href='/organizar';}} style={{position:'relative', marginLeft:'60%', marginTop:'3rem', backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
-                                <Button  style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
+                                <Button onClick={this.handleMenuCreateTourney} style={{position:'relative', marginLeft:'60%', marginTop:'3rem', backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
+                                <Button onClick={()=>{this.submitTourney(this.state.dataNewTourney)}} style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
                             </div>
                         </div>
                     </div>
