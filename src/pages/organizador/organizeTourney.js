@@ -27,26 +27,27 @@ const AccountButton = styled(AccountCircleIcon)`
 `
 
 export default class OrganizeTourney extends Component {
-
-        state = {
-            user: [],
-            storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
-            goToAdminMenu: null,
-            menuCreateTourney: false,
-            dataNewTourney: {
-                title: '',
-                description: '',
-                category: '',
-                initialDate: '',
-                finalDate: '',
-                maxPlayers: undefined,
-                file: null,
-                price: null,
-                local: '',
-                insurance: ''}
-        };
-
-
+    state = {
+        user: [],
+        storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
+        goToAdminMenu: null,
+        menuCreateTourney: false,
+        errorAlertTourney: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na criação do torneio. Verifique e tente novamente.'},
+        successAlertTourney: {open: false, severity: 'success', errorStatus: 'SUCESSO', description: 'O torneio foi criada com sucesso!'},
+        loadingTourney: false,
+        dataNewTourney: {
+            title: '',
+            description: '',
+            category: '',
+            initialDate: '',
+            finalDate: '',
+            maxPlayers: undefined,
+            file: null,
+            price: null,
+            local: '',
+            insurance: ''
+        }
+    };
 
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -76,66 +77,80 @@ export default class OrganizeTourney extends Component {
         this.setState({menuCreateTourney: !this.state.menuCreateTourney});
     }
 
-    /*
-    getTodayDate = () => {
-        let dateNow = new Date();
-        let monthNumber = dateNow.getMonth() + 1;
-        let dayNumber = dateNow.getDate();
-        let monthString = monthNumber.toString();
-        let dayString = dayNumber.toString();
-        if(monthNumber < 10)
-        {
-            monthString = '0' + monthNumber.toString();
-        }
-        if(dayNumber < 10)
-        {
-            dayString = '0' + dayNumber.toString();
-        }
-        return dateNow.getFullYear() + "-" + monthString + "-" + dayString;
-    }
-     */
-
     getCategorias = () => {
         return [
             {
-                value: '',
+                value: null,
                 label: '',
             },
             {
-                value: 'Misto',
+                value: 3,
                 label: 'Misto',
             },
             {
-                value: 'Masculino',
+                value: 2,
                 label: 'Masculino',
             },
             {
-                value: 'Feminino',
+                value: 1,
                 label: 'Feminino',
             },
         ];
     }
 
-    submitTourney(newTourney) {
-
-          axiosConfig.post('/createtournament', {
-            title: newTourney.title,
-            description: this.state.dataNewTourney.description,
-            category: this.state.dataNewTourney.category,
-            initialDate: this.state.dataNewTourney.initialDate,
-            finalDate: this.state.dataNewTourney.finalDate,
-            maxPlayers: this.state.dataNewTourney.maxPlayers,
-            file: this.state.dataNewTourney.file,
-            price: this.state.dataNewTourney.price,
-            local: this.state.dataNewTourney.local,
-            insurance: this.state.dataNewTourney.insurance
-
-          })
-              .then()
-              .catch()
- 
+    submitTourney = () => {
+        this.setState({loadingTourney: true});
+        console.log(this.state.dataNewTourney);
+        axiosConfig.post('/createtournament', {
+        name: this.state.dataNewTourney.title,
+        description: this.state.dataNewTourney.description,
+        tournamenttype: this.state.dataNewTourney.category,
+        init_date: this.state.dataNewTourney.initialDate,
+        end_date: this.state.dataNewTourney.finalDate,
+        maxplayers: this.state.dataNewTourney.maxPlayers,
+        file_url: this.state.dataNewTourney.file,
+        //price: this.state.dataNewTourney.price,
+        location: this.state.dataNewTourney.local,
+        //insurance: this.state.dataNewTourney.insurance
+        })
+            .then(response => {
+              this.setState({loadingTourney: false});
+              this.setState(prevState => ({
+                  successAlertTourney: {
+                      ...prevState.successAlertTourney,
+                      open: true
+                  }
+              }))
+            })
+            .catch(error => {
+              this.setState({loadingTourney: false});
+              this.setState(prevState => ({
+                  errorAlertTourney: {
+                      ...prevState.errorAlertTourney,
+                      open: true,
+                      errorStatus: error.code
+                  }
+              }))
+            })
     }
-      
+
+    handleErrorAlertClose = () => {
+        this.setState(prevState => ({
+            errorAlertTourney: {
+                ...prevState.errorAlertTourney,
+                open: false
+            }
+        }))
+    }
+    handleSuccessAlertClose = () => {
+        this.setState(prevState => ({
+            successAlertTourney: {
+                ...prevState.successAlertTourney,
+                open: false
+            }
+        }))
+        window.location.reload();
+    }
 
     render() {
         return (<>
@@ -143,55 +158,47 @@ export default class OrganizeTourney extends Component {
                 {(this.state.storedAuth === null || this.props.storedAuth === null) && <Navigate to="/" />}
                 {this.state.goToAdminMenu && <Navigate to="/menu-jogador" />}
                 <LoadingPopup loading={this.props.loading}/>
+                <LoadingPopup loading={this.state.loadingTourney}/>
+                <AlertPopup errorAlert={this.state.errorAlertTourney} handleErrorAlert={this.handleErrorAlertClose} />
+                <AlertPopup errorAlert={this.state.successAlertTourney} handleErrorAlert={this.handleSuccessAlertClose} />
                 <NavBarAdmin logoutAccount={this.props.logoutAccount} goToAdminMenu={this.setTrueGoToAdminMenu}/>
                 {this.state.menuCreateTourney === false ?
                     <div style={{position: "relative", top: 0, left: 0}}>
                         <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic}
                              alt="background" style={{
                             width: "100%",
-                            position: 'absolute',
+                            position: 'relative',
                             zIndex: -10,
                             objectFit: "cover",
                             top: 0,
-                            left: 0
-                            
-                        }}/>
-                        <div >
+                            left: 0}}/>
                         <h1 style={{
-
-                            marginLeft:'-77%',
-                            marginTop:'0%',
                             textAlign: 'center',
                             fontSize: "40px",
                             color: "white",
-                            position: 'relative',
-                            top:'10rem',
-                            bottom: "15%",
+                            position: 'absolute',
+                            bottom: "90%",
                             left: "5%",
                             zIndex: "-1"
                         }}>Organiza os melhores torneios!</h1>
-                        </div>
-                        <div>
                         <Button onClick={this.handleMenuCreateTourney} style={{
                             textAlign: 'center',
                             fontSize: "30px",
                             color: "#530505",
                             backgroundColor: "white",
-                            position: 'relative',
-                            top:'13rem',
-                            bottom: "55%",
-                            left: "50%",
+                            position: 'absolute',
+                            top: '15rem',
+                            left: "43.5vw",
                             textTransform: 'none',
                             zIndex: "1"}}>Criar Torneio</Button>
-                        </div>
                         <div style={{
                             width: "94%",
-                            height: "50rem",
+                            height: "75%",
                             borderRadius: "1%",
-                            position: 'relative',
+                            position: 'absolute',
                             zIndex: 0,
                             objectFit: "cover",
-                            top: '20rem',
+                            top: '22rem',
                             left: 45,
                             backgroundColor: "#FFFFFF"
                         }}>
@@ -387,7 +394,7 @@ export default class OrganizeTourney extends Component {
                                     </Grid>
                                 </Grid>
                                 <Button onClick={this.handleMenuCreateTourney} style={{position:'relative', marginLeft:'60%', marginTop:'3rem', backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
-                                <Button onClick={()=>{this.submitTourney(this.state.dataNewTourney)}} style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
+                                <Button onClick={this.submitTourney} style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
                             </div>
                         </div>
                     </div>
