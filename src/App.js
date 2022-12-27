@@ -12,6 +12,7 @@ import NotFound from "./pages/error404";
 import TourneyList from "./pages/listTourney";
 import OrganizeTourney from "./pages/organizador/organizeTourney";
 import SettingsAccount from "./pages/settingsAccount";
+import TourneyPage from "./pages/pageTourney";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -81,6 +82,13 @@ function App() {
                                   errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
                                   logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
             />
+            <Route path = "/torneio-page" element =
+                {<TourneyPage setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                                  errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
+                                  logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
+            />
+
+
             <Route path = "/organizar" element =
                 {<OrganizeTourney setStoredAuth={setStoredAuth} storedAuth={storedAuth}
                               errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
