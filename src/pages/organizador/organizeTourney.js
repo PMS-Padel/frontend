@@ -102,16 +102,20 @@ export default class OrganizeTourney extends Component {
         this.setState({loadingTourney: true});
         console.log(this.state.dataNewTourney);
         axiosConfig.post('/createtournament', {
-        name: this.state.dataNewTourney.title,
-        description: this.state.dataNewTourney.description,
-        tournamenttype: this.state.dataNewTourney.category,
-        init_date: this.state.dataNewTourney.initialDate,
-        end_date: this.state.dataNewTourney.finalDate,
-        maxplayers: this.state.dataNewTourney.maxPlayers,
-        file_url: this.state.dataNewTourney.file,
-        //price: this.state.dataNewTourney.price,
-        location: this.state.dataNewTourney.local,
-        //insurance: this.state.dataNewTourney.insurance
+            name: this.state.dataNewTourney.title,
+            description: this.state.dataNewTourney.description,
+            tournamenttype: this.state.dataNewTourney.category,
+            initdate: this.state.dataNewTourney.initialDate,
+            enddate: this.state.dataNewTourney.finalDate,
+            maxplayers: this.state.dataNewTourney.maxPlayers,
+            fileurl: this.state.dataNewTourney.file,
+            price: this.state.dataNewTourney.price,
+            location: this.state.dataNewTourney.local,
+            //insurance: this.state.dataNewTourney.insurance
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + this.state.storedAuth
+            }
         })
             .then(response => {
               this.setState({loadingTourney: false});
