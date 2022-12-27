@@ -8,6 +8,7 @@ import axiosConfig from "../axiosConfig";
 import {Navigate} from "react-router-dom";
 import TourneyRow from "../components/tourney/TourneyRow";
 import NavBarAdmin from "../components/general/NavBarAdmin";
+import {Button, Grid, InputAdornment} from "@mui/material";
 
 export default class TourneyPage extends Component {
 
@@ -64,6 +65,12 @@ export default class TourneyPage extends Component {
                     <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>}
 
             <h1>oi</h1>
+            <div style={{backgroundColor:'#052F53', position:'relative', top:'25rem', }}>
+            <Button style={{ color:'white', position:'relative', marginLeft:'35%'}}>Inscritos</Button>
+            <Button style={{ color:'white', position:'relative', marginLeft:'2rem'}}>Mapa de jogos</Button>
+            <Button style={{ color:'white', position:'relative', marginLeft:'2rem'}}>Calendário</Button>
+            <Button style={{ color:'white', position:'relative', marginLeft:'2rem'}}>Resultados</Button>
+            </div>
             </>
         )
     }
