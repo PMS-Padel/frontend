@@ -14,11 +14,21 @@ import TourneyRow from "../components/tourney/TourneyRow";
 import {Button, Grid, InputAdornment} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {helperTextEmail, helperTextName} from "../autentication/dataConditions";
+import MenuItem from "@mui/material/MenuItem";
 
 
 export default class SettingsAccount extends Component {
     state = {
         user: [],
+        changedUser: {
+            name: '',
+            email: '',
+            phone_number: '',
+            gender: 'M',
+            birth_date: '',
+            level: ''
+        },
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null
     };
@@ -40,12 +50,25 @@ export default class SettingsAccount extends Component {
         if(res !== false) {
             let {data} = res;
             this.setState({user: data});
+            this.setState({changedUser: data});
         }
         else
         {
             this.props.handleErrorAlertOpenAuth();
         }
     };
+    getGender = () => {
+        return [
+            {
+                value: 'M',
+                label: 'Masculino',
+            },
+            {
+                value: 'F',
+                label: 'Feminino',
+            }
+        ];
+    }
     setTrueGoToAdminMenu = () => {
         this.setState({goToAdminMenu: true});
     }
@@ -95,18 +118,55 @@ export default class SettingsAccount extends Component {
                                           alignItems="center">
                                         <Grid item xs={12}>
                                             <TextField
-                                                //required
+                                                required
                                                 //InputLabelProps={{ shrink: true }}
                                                 variant="outlined"
                                                 id="nome"
                                                 label="Nome"
                                                 placeholder="Nome"
-                                                value={this.state.user.name ?? ''}
+                                                value={this.state.changedUser.name ?? ''}
                                                 style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                                 onChange={(event) =>
-                                                {console.log(event.target.value)}
+                                                    {this.setState(prevState => ({changedUser: {...prevState.changedUser, name: event.target.value}}))}
                                                 }
+                                                error={typeof helperTextName(this.state.changedUser.name) === 'string'}
+                                                helperText={helperTextName(this.state.changedUser.name)}
                                             />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                required
+                                                //InputLabelProps={{ shrink: true }}
+                                                variant="outlined"
+                                                id="email"
+                                                label="Email"
+                                                placeholder="Email"
+                                                value={this.state.changedUser.email ?? ''}
+                                                style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                onChange={(event) =>
+                                                    {this.setState(prevState => ({changedUser: {...prevState.changedUser, email: event.target.value}}))}
+                                                }
+                                                error={typeof helperTextEmail(this.state.changedUser.email) === 'string'}
+                                                helperText={helperTextEmail(this.state.changedUser.email)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                id="gender-select"
+                                                select
+                                                label="Género"
+                                                required
+                                                defaultValue={this.state.changedUser.gender ?? ''}
+                                                onChange={(event) =>
+                                                {this.setState(prevState => ({changedUser: {...prevState.changedUser, gender: event.target.value}}))}
+                                                }
+                                            >
+                                                {(this.getGender()).map((option) => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -123,12 +183,41 @@ export default class SettingsAccount extends Component {
                                                 type="number"
                                                 label="Número de contacto"
                                                 placeholder="Número de contacto"
-                                                defaultValue={this.state.user.phone_number ?? ''}
+                                                value={this.state.changedUser.phone_number ?? ''}
                                                 style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                                 onChange={(event) =>
-                                                //{this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, initialDate: event.target.value}}))}
-                                                {console.log(event.target.value)}
+                                                {this.setState(prevState => ({changedUser: {...prevState.changedUser, phone_number: event.target.value}}))}
                                                 }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                InputLabelProps={{ shrink: true }}
+                                                variant="outlined"
+                                                id="date-birth"
+                                                type="date"
+                                                label="Data de nascimento"
+                                                placeholder="Data de nascimento"
+                                                style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                value={this.state.changedUser.birth_date !== null ? this.state.changedUser.birth_date.substring(0, 10) : ''}
+                                                onChange={(event) =>
+                                                    {this.setState(prevState => ({changedUser: {...prevState.changedUser, birth_date: event.target.value}}))}
+                                                }
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                disabled
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
+                                                variant="outlined"
+                                                type="number"
+                                                id="level"
+                                                label="Nível"
+                                                placeholder="Nível"
+                                                style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                value={this.state.changedUser.level ?? ''}
                                             />
                                         </Grid>
                                     </Grid>
