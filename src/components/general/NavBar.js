@@ -5,6 +5,7 @@ import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import Authentication from '../../autentication/Authentication';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import {Navigate} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -55,6 +56,7 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
     const [showMenu, setShowMenu] = useState(false)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const [redirectSettings, setRedirectSettings] = React.useState(false);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -66,6 +68,10 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
         localStorage.setItem('loginForm', 'admin');
         goToAdminMenu();
     };
+    const handleCloseToSettings = () => {
+        setAnchorEl(null);
+        setRedirectSettings(true);
+    };
     const handleCloseLogout = () => {
         setAnchorEl(null);
         logoutAccount();
@@ -76,6 +82,7 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
 
     return (
         <Container>
+            {redirectSettings === true && <Navigate to="/settings" />}
             <>
                 <div></div>
                 {storedAuth === null &&
@@ -115,10 +122,9 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                                     'aria-labelledby': 'icon-account',
                                 }}
                             >
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleClose}>Conta</MenuItem>
-                                {isAdmin && <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseChangeMenu}>Menu Organizador</MenuItem>}
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleClose}>Definições</MenuItem>
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold', borderTop:'1px solid #6A9FC8' }} onClick={handleCloseLogout}>Logout</MenuItem>
+                                {isAdmin && <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} onClick={handleCloseChangeMenu}>Menu Organizador</MenuItem>}
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} disabled={window.location.pathname === "/settings"} onClick={handleCloseToSettings}>Definições</MenuItem>
+                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     </>

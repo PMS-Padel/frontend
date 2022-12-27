@@ -11,6 +11,7 @@ import MenuOrganizador from "./pages/organizador/menuOrganizador";
 import NotFound from "./pages/error404";
 import TourneyList from "./pages/listTourney";
 import OrganizeTourney from "./pages/organizador/organizeTourney";
+import SettingsAccount from "./pages/settingsAccount";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -85,6 +86,12 @@ function App() {
                               errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
                               loading={loading}
                               logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
+            />
+            <Route path = "/settings" element =
+                {<SettingsAccount setStoredAuth={setStoredAuth} storedAuth={storedAuth}
+                                  errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}
+                                  loading={loading}
+                                  logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}
             />
           <Route path='*' element={<NotFound setStoredAuth={setStoredAuth} storedAuth={storedAuth}
                                      errorAlertAuth={errorAlertAuth} handleErrorAlertOpenAuth={handleErrorAlertOpenAuth} handleErrorAlertCloseAuth={handleErrorAlertCloseAuth}

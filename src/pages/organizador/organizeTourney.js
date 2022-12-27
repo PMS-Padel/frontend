@@ -206,6 +206,7 @@ export default class OrganizeTourney extends Component {
                             left: 45,
                             backgroundColor: "#FFFFFF"
                         }}>
+                            <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "3%"}}>Os teus torneios criados mais recentes</h1>
                             <TourneyRow maxLength={undefined}/>
                         </div>
                     </div>
@@ -243,7 +244,7 @@ export default class OrganizeTourney extends Component {
                                         <Button style={{textTransform: 'none'}} component="label">
                                             <input hidden accept="image/*" type="file" required
                                                onChange={(e) => this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, file: URL.createObjectURL(e.target.files[0])}}))} />
-                                            <img src={this.state.dataNewTourney.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + ""}/>
+                                            <img src={this.state.dataNewTourney.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + this.state.dataNewTourney.title}/>
                                         </Button>
                                     </Grid>
                                     <Grid item xs={4} style={{ paddingTop: '25px'}}>

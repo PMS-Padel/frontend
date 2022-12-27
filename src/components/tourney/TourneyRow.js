@@ -49,7 +49,7 @@ export default class TourneyRow extends Component {
                       justifyContent="space-evenly"
                       alignItems="center">
                     {
-                        this.state.tourneys.slice(0, (this.props.maxLength)).map(function(tourney, index){
+                        this.state.tourneys.sort((a,b) => b.id - a.id).slice(0, (this.props.maxLength)).map(function(tourney, index){
                             return <Grid item xs={3} key={index}>
                                 <MediaCard tourney={tourney}/>
                             </Grid>
