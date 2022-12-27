@@ -73,6 +73,10 @@ export default class SettingsAccount extends Component {
         this.setState({goToAdminMenu: true});
     }
 
+    updateAccount = () => {
+
+    }
+
     render()
     {
         return (
@@ -107,12 +111,13 @@ export default class SettingsAccount extends Component {
                                   alignItems="center"
                                   sx={{
                                       '& .MuiTextField-root': { m: 1, width: '25ch' },
+                                      '& .MuiButtonBase-root': { m: 1, width: '25ch', height: '5ch' },
                                   }}>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <AccountCircleIcon fontSize="large" style={{
                                         color: ((localStorage.getItem('loginForm') === 'admin' && 'rgba(138, 21, 21, 0.8)') || 'rgba(21, 96, 138, 0.8)'), width: "350px", height: "350px"}}/>
                                 </Grid>
-                                <Grid item xs={4} style={{ paddingTop: '25px'}}>
+                                <Grid item xs={3} style={{ paddingTop: '25px'}}>
                                     <Grid container spacing={2}
                                           justifyContent="center"
                                           alignItems="center">
@@ -170,7 +175,7 @@ export default class SettingsAccount extends Component {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={4} style={{ paddingTop: '25px'}}>
+                                <Grid item xs={3} style={{ paddingTop: '25px'}}>
                                     <Grid container spacing={2}
                                           justifyContent="center"
                                           alignItems="center">
@@ -221,6 +226,11 @@ export default class SettingsAccount extends Component {
                                             />
                                         </Grid>
                                     </Grid>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button onClick={this.updateAccount}
+                                        style={{backgroundColor:'#052F53',
+                                            color:'white', borderRadius: '5px', textTransform: 'none' }}>Atualizar conta</Button>
                                 </Grid>
                             </Grid>
                         </div>

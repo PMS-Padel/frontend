@@ -398,8 +398,13 @@ export default class OrganizeTourney extends Component {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Button onClick={this.handleMenuCreateTourney} style={{position:'relative', marginLeft:'60%', marginTop:'3rem', backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
-                                <Button onClick={this.submitTourney} style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53', color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
+                                <Button onClick={this.handleMenuCreateTourney}
+                                        style={{position:'relative', marginLeft:'60%', marginTop:'3rem',
+                                            backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px',
+                                            textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
+                                <Button onClick={this.submitTourney}
+                                        style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
                             </div>
                         </div>
                     </div>
