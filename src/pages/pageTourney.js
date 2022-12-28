@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import styled from "styled-components";
 import NavBar from "../components/general/NavBar";
 import backgroundPic from "../img/JogadorTorneiosInicialBackground.png";
@@ -6,11 +6,9 @@ import backgroundPic2 from "../img/OrganizadorInicialBackground.png";
 import backgroundPicTourney from "../img/TourneyPageBackgroundImage.png";
 import AlertPopup from "../components/general/AlertPopup";
 import axiosConfig from "../axiosConfig";
-import {Navigate} from "react-router-dom";
-import TourneyRow from "../components/tourney/TourneyRow";
+import {Navigate, useParams} from "react-router-dom";
 import NavBarAdmin from "../components/general/NavBarAdmin";
-import {Button, Grid, InputAdornment} from "@mui/material";
-import { padding } from '@mui/system';
+import LoadingPopup from "../components/general/Loading";
 
 const Container = styled.div`
   display: flex;
@@ -54,14 +52,16 @@ export default class TourneyPage extends Component {
         user: [],
         tourney: [],
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
-        goToAdminMenu: null
+        goToAdminMenu: null,
+        errorAlertSpecificTourney: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na busca do torneio. Verifique e tente novamente.'},
+        tourneyNotFound: false,
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
             this.getUser();
-            this.getTourney(this.props.id)
             this.props.setStoredAuth(this.state.storedAuth);
         }
+        this.getTourney();
     }
     getUser = async () => {
         const res = await axiosConfig.get('/test-authentication',{
@@ -77,9 +77,8 @@ export default class TourneyPage extends Component {
             this.setState({user: data});
         }
     };
-    getTourney = async (id) => {
-        const res = await axiosConfig.get('/gettournament/{id}',{ id
-        })
+    getTourney = async () => {
+        const res = await axiosConfig.get(`/gettournament/${window.location.pathname.substring(9)}`)
             .then((res) => res)
             .catch((error) => false);
 
@@ -87,7 +86,25 @@ export default class TourneyPage extends Component {
             let {data} = res;
             this.setState({tourney: data});
         }
+        else
+        {
+            this.setState(prevState => ({
+                errorAlertSpecificTourney: {
+                    ...prevState.errorAlertSpecificTourney,
+                    open: true
+                }
+            }))
+        }
     };
+    handleErrorAlertCloseSpecificTourney = () => {
+        this.setState(prevState => ({
+            errorAlertSpecificTourney: {
+                ...prevState.errorAlertSpecificTourney,
+                open: false
+            }
+        }))
+        this.setState({tourneyNotFound: true})
+    }
 
     setTrueGoToAdminMenu = () => {
         this.setState({goToAdminMenu: true});
@@ -96,11 +113,16 @@ export default class TourneyPage extends Component {
     render(){
         return(
             <>
+                {this.state.tourneyNotFound && <Navigate to="/torneios" />}
               {this.state.goToAdminMenu && localStorage.getItem('loginForm') === 'admin' && <Navigate to="/menu-organizador" />}
                 {this.state.goToAdminMenu && localStorage.getItem('loginForm') === 'player' && <Navigate to="/menu-jogador" />}
                 {localStorage.getItem('loginForm') === 'admin' ?
                     <NavBarAdmin logoutAccount={this.props.logoutAccount} goToAdminMenu={this.setTrueGoToAdminMenu}/> :
-                    <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>}
+                    <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>
+                }
+                <LoadingPopup loading={this.props.loading}/>
+                <AlertPopup errorAlert={this.props.errorAlertLogout} handleErrorAlert={this.props.handleErrorAlertCloseLogout} />
+                <AlertPopup errorAlert={this.state.errorAlertSpecificTourney} handleErrorAlert={this.handleErrorAlertCloseSpecificTourney} />
 
                 <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic} alt="background" style={{
                     width: "100%",

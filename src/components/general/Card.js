@@ -66,7 +66,7 @@ export default function MediaCard({tourney}) {
             <CardActions sx={{ justifyContent: "center", marginBottom: "15px" }}>
                 {verifyStatus()}
             </CardActions>
-            {tourneyId !== null && <Navigate to={"/torneio/" + tourney.id}/>}
+            {tourneyId !== null && <Navigate to={`/torneio/${tourney.id}`}/>}
         </Card>
     );
 }
