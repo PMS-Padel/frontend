@@ -97,7 +97,7 @@ export default class SettingsAccount extends Component {
                         left: 0}}/>
                     <div style={{
                         width: "94%",
-                        height: "75%",
+                        height: "90%",
                         borderRadius: "1%",
                         position: 'absolute',
                         zIndex: 0,
@@ -198,6 +198,7 @@ export default class SettingsAccount extends Component {
                                         <Grid item xs={12}>
                                             <TextField
                                                 InputLabelProps={{ shrink: true }}
+                                                inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                                                 variant="outlined"
                                                 id="date-birth"
                                                 type="date"

@@ -100,7 +100,7 @@ export default class OrganizeTourney extends Component {
 
     submitTourney = () => {
         this.setState({loadingTourney: true});
-        console.log(this.state.dataNewTourney);
+        //console.log(this.state.dataNewTourney);
         axiosConfig.post('/createtournament', {
             name: this.state.dataNewTourney.title,
             description: this.state.dataNewTourney.description,
@@ -197,7 +197,7 @@ export default class OrganizeTourney extends Component {
                             zIndex: "1"}}>Criar Torneio</Button>
                         <div style={{
                             width: "94%",
-                            height: "75%",
+                            height: "90%",
                             borderRadius: "1%",
                             position: 'absolute',
                             zIndex: 0,
