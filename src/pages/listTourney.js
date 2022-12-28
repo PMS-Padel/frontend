@@ -74,7 +74,7 @@ export default class TourneyList extends Component {
                         zIndex: "-1"}}>Os melhores torneios estão à tua espera!</h1>
                     <div style={{
                         width: "94%",
-                        height: "75%",
+                        height: "90%",
                         borderRadius: "1%",
                         position: 'absolute',
                         zIndex: 0,

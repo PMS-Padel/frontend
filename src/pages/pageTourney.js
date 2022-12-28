@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavBar from "../components/general/NavBar";
 import backgroundPic from "../img/JogadorTorneiosInicialBackground.png";
 import backgroundPic2 from "../img/OrganizadorInicialBackground.png";
+import backgroundPicTourney from "../img/TourneyPageBackgroundImage.png";
 import AlertPopup from "../components/general/AlertPopup";
 import axiosConfig from "../axiosConfig";
 import {Navigate} from "react-router-dom";
@@ -11,8 +12,44 @@ import NavBarAdmin from "../components/general/NavBarAdmin";
 import {Button, Grid, InputAdornment} from "@mui/material";
 import { padding } from '@mui/system';
 
-export default class TourneyPage extends Component {
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  padding: 10px 0;
+  background-color: #052F53;
+  //border-bottom:1px solid #FFF;
+  position: absolute;
+  top: 580px;
 
+  & nav {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    max-width: 900px;
+    margin: auto;
+    z-index: 1;
+    flex-grow: 1;
+    align-items: center;
+    gap: 30px;
+    
+    & a {
+      color: white;
+
+      &:hover,
+      &.active {
+        font-weight: bold;
+      }
+      text-decoration: ${(props) =>
+              props.href === window.location.pathname ? "underline" : "none"};
+      font-weight: ${(props) =>
+              props.href === window.location.pathname ? "bold" : "normal"};
+    }
+  }
+`
+
+export default class TourneyPage extends Component {
     state = {
         user: [],
         tourney: [],
@@ -22,7 +59,7 @@ export default class TourneyPage extends Component {
     componentDidMount() {
         if(this.state.storedAuth !== null) {
             this.getUser();
-            this.getTurney(this.props.id)
+            this.getTourney(this.props.id)
             this.props.setStoredAuth(this.state.storedAuth);
         }
     }
@@ -40,7 +77,7 @@ export default class TourneyPage extends Component {
             this.setState({user: data});
         }
     };
-    getTurney =  async (id) => {
+    getTourney = async (id) => {
         const res = await axiosConfig.get('/gettournament/{id}',{ id
         })
             .then((res) => res)
@@ -65,21 +102,30 @@ export default class TourneyPage extends Component {
                     <NavBarAdmin logoutAccount={this.props.logoutAccount} goToAdminMenu={this.setTrueGoToAdminMenu}/> :
                     <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>}
 
-            <div style={{backgroundColor:'green',}}>
-                <div style={{backgroundColor:'red', position:'absolute', top:'5rem', height:'10rem', width:'10rem', }}>
-
-                </div>
-                <div style={{backgroundColor:'blue', position:'absolute', top:'5rem', height:'10rem', width:'10rem'}}>
-
-                </div>
-            </div>
-            
-            <div style={{backgroundColor:'#052F53', position:'relative', top:'25rem', }}>
-            <Button onClick={undefined} style={{ color:'white', position:'relative', marginLeft:'35%'}}>Inscritos</Button>
-            <Button onClick={undefined} style={{ color:'white', position:'relative', marginLeft:'2rem'}}>Mapa de jogos</Button>
-            <Button onClick={undefined} style={{ color:'white', position:'relative', marginLeft:'2rem'}}>Calendário</Button>
-            <Button onClick={undefined} style={{ color:'white', position:'relative', marginLeft:'2rem'}}>Resultados</Button>
-            </div>
+                <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic} alt="background" style={{
+                    width: "100%",
+                    position: 'relative',
+                    zIndex: -10,
+                    objectFit: "cover",
+                    top: 0,
+                    left: 0}}/>
+                    <img src={backgroundPicTourney} alt="background" style={{
+                        width: "100%",
+                        position: 'absolute',
+                        opacity: 0.8,
+                        zIndex: -10,
+                        objectFit: "cover",
+                        top: 65,
+                        left: 0
+                    }}/>
+                    <Container>
+                        <nav>
+                            <a href='/' style={{fontSize: '28px'}}>Inscritos</a>
+                            <a href='/' style={{fontSize: '28px'}}>Mapa de jogos</a>
+                            <a href='/' style={{fontSize: '28px'}}>Calendário</a>
+                            <a href='/' style={{fontSize: '28px'}}>Resultados</a>
+                        </nav>
+                    </Container>
             </>
         )
     }

@@ -77,7 +77,7 @@ export default class InfoPadel extends Component {
                     }}>Descobre mais sobre o teu desporto!</h1>
                     <div style={{
                         width: "94%",
-                        height: "75%",
+                        height: "90%",
                         borderRadius: "1%",
                         position: 'absolute',
                         zIndex: -10,
