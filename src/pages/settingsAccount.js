@@ -30,7 +30,10 @@ export default class SettingsAccount extends Component {
             level: ''
         },
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
-        goToAdminMenu: null
+        goToAdminMenu: null,
+        loadingChangeUser: false,
+        errorAlertChangeUser: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na atualização da conta. Verifique e tente novamente.'},
+        successAlertChangeUser: {open: false, severity: 'success', errorStatus: 'SUCESSO', description: 'A conta foi alterada com sucesso!'},
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -74,7 +77,57 @@ export default class SettingsAccount extends Component {
     }
 
     updateAccount = () => {
+        this.setState({loadingChangeUser: true});
+        //console.log(this.state.changedUser);
+        axiosConfig.post('/update', {
+            name: this.state.changedUser.name,
+            email: this.state.changedUser.email,
+            phone_number: this.state.changedUser.phone_number,
+            gender: this.state.changedUser.gender,
+            birth_date: this.state.changedUser.birth_date,
+            id: this.state.changedUser.id,
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + this.state.storedAuth
+            }
+        })
+            .then(response => {
+                this.setState({loadingChangeUser: false});
+                this.setState(prevState => ({
+                    successAlertChangeUser: {
+                        ...prevState.successAlertChangeUser,
+                        open: true
+                    }
+                }))
+            })
+            .catch(error => {
+                this.setState({loadingChangeUser: false});
+                this.setState(prevState => ({
+                    errorAlertChangeUser: {
+                        ...prevState.errorAlertChangeUser,
+                        open: true,
+                        errorStatus: error.code
+                    }
+                }))
+            })
+    }
 
+    handleErrorAlertClose = () => {
+        this.setState(prevState => ({
+            errorAlertChangeUser: {
+                ...prevState.errorAlertChangeUser,
+                open: false
+            }
+        }))
+    }
+    handleSuccessAlertClose = () => {
+        this.setState(prevState => ({
+            successAlertChangeUser: {
+                ...prevState.successAlertChangeUser,
+                open: false
+            }
+        }))
+        window.location.reload();
     }
 
     render()
@@ -87,6 +140,10 @@ export default class SettingsAccount extends Component {
                 {localStorage.getItem('loginForm') === 'admin' ?
                     <NavBarAdmin logoutAccount={this.props.logoutAccount} goToAdminMenu={this.setTrueGoToAdminMenu}/> :
                     <NavBar storedAuth={this.props.storedAuth} logoutAccount={this.props.logoutAccount} isAdmin={(this.state.user.role === 'admin')} goToAdminMenu={this.setTrueGoToAdminMenu}/>}
+                <LoadingPopup loading={this.props.loading}/>
+                <LoadingPopup loading={this.state.loadingChangeUser}/>
+                <AlertPopup errorAlert={this.state.errorAlertChangeUser} handleErrorAlert={this.handleErrorAlertClose} />
+                <AlertPopup errorAlert={this.state.successAlertChangeUser} handleErrorAlert={this.handleSuccessAlertClose} />
                 <div style={{position: "relative", top: 0, left: 0}}>
                     <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic} alt="background" style={{
                         width: "100%",
