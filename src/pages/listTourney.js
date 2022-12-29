@@ -82,7 +82,7 @@ export default class TourneyList extends Component {
                         top: 400,
                         left: 45,
                         backgroundColor: "#FFFFFF"}}>
-                        <TourneyRow maxLength={undefined}/>
+                        <TourneyRow maxLength={undefined} adminId={undefined}/>
                     </div>
                 </div>
                 <AlertPopup errorAlert={this.props.errorAlertLogout} handleErrorAlert={this.props.handleErrorAlertCloseLogout} />

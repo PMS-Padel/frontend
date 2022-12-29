@@ -352,7 +352,7 @@ export default class SettingsAccount extends Component {
                         <div>
                             <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "3%"}}>Os teus torneios</h1>
                         </div>
-                        <TourneyRow maxLength={undefined}/>
+                        <TourneyRow maxLength={undefined} adminId={undefined}/>
                     </div>
                 </div>
                 <AlertPopup errorAlert={this.props.errorAlertLogout} handleErrorAlert={this.props.handleErrorAlertCloseLogout} />
