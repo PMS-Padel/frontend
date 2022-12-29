@@ -126,14 +126,15 @@ export default class TourneyPage extends Component {
 
                 <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic} alt="background" style={{
                     width: "100%",
-                    position: 'relative',
+                    position: 'absolute',
                     zIndex: -10,
                     objectFit: "cover",
                     top: 0,
                     left: 0}}/>
                     <img src={backgroundPicTourney} alt="background" style={{
                         width: "100%",
-                        position: 'absolute',
+                        height: "26rem",
+                        position: 'relative',
                         opacity: 0.8,
                         zIndex: -10,
                         objectFit: "cover",
