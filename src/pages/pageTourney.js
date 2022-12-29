@@ -149,10 +149,10 @@ export default class TourneyPage extends Component {
                     <img src={this.state.tourney.file_url}/>
                     </div>
                     <div style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'13%', right:'10%', textAlign:'center'}}>
-                        <h1 style={{fontSize:'1.5rem'}}>Visão geral</h1>
-                        <h1 style={{fontSize:'1rem'}}>Incrições</h1>
-                        <h1 style={{fontSize:'2rem'}}>??/{this.state.tourney.max_players}</h1>
-                        <h1 style={{fontSize:'1rem'}}>Inscrições fecham em {undefined} dias</h1>
+                        <h1 style={{fontSize:'1.5rem', marginTop:'1.4rem'}}>Visão geral</h1>
+                        <h1 style={{fontSize:'1rem', marginTop:'3rem'}}>Incrições:</h1>
+                        <h1 style={{fontSize:'2rem', marginTop:'3rem'}}>??/{this.state.tourney.max_players}</h1>
+                        <h1 style={{fontSize:'1rem', marginTop:'2rem'}}>Inscrições fecham em {undefined} dias</h1>
                     </div>
                     <Container>
                         <nav>
