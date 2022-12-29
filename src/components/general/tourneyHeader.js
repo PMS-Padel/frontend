@@ -58,7 +58,7 @@ export default function TourneyHeader({tourney, user}) {
                 <>
                     <h1 style={{fontSize: '1rem', marginTop: '1.5rem'}}>Inscrições fecham em {diffInDays} dias</h1>
                     {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id &&
-                        <Button variant="contained" style={{textTransform: 'none'}} onClick={undefined}>Entrar</Button>}
+                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}} onClick={undefined}>Inscreve-te!</Button>}
                 </>
             )
         } else {
