@@ -55,11 +55,14 @@ export default class TourneyPage extends Component {
         goToAdminMenu: null,
         errorAlertSpecificTourney: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na busca do torneio. Verifique e tente novamente.'},
         tourneyNotFound: false,
+        date: new Date()
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
             this.getUser();
             this.props.setStoredAuth(this.state.storedAuth);
+            console.log(this.state.date.getDay());
+            
         }
         this.getTourney();
     }
@@ -84,6 +87,7 @@ export default class TourneyPage extends Component {
 
         if(res !== false) {
             let {data} = res;
+            console.log(res);
             this.setState({tourney: data});
         }
         else
@@ -141,6 +145,15 @@ export default class TourneyPage extends Component {
                         top: 65,
                         left: 0
                     }}/>
+                    <div style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'13%', left:'10%'}}>
+                    <img src={this.state.tourney.file_url}/>
+                    </div>
+                    <div style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'13%', right:'10%', textAlign:'center'}}>
+                        <h1 style={{fontSize:'1.5rem'}}>Visão geral</h1>
+                        <h1 style={{fontSize:'1rem'}}>Incrições</h1>
+                        <h1 style={{fontSize:'2rem'}}>??/{this.state.tourney.max_players}</h1>
+                        <h1 style={{fontSize:'1rem'}}>Inscrições fecham em {undefined} dias</h1>
+                    </div>
                     <Container>
                         <nav>
                             <a href='/' style={{fontSize: '28px'}}>Inscritos</a>
