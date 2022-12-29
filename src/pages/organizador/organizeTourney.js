@@ -100,7 +100,7 @@ export default class OrganizeTourney extends Component {
 
     submitTourney = () => {
         this.setState({loadingTourney: true});
-        //console.log(this.state.dataNewTourney);
+        console.log(this.state.dataNewTourney);
         axiosConfig.post('/createtournament', {
             name: this.state.dataNewTourney.title,
             description: this.state.dataNewTourney.description,
@@ -111,6 +111,7 @@ export default class OrganizeTourney extends Component {
             fileurl: this.state.dataNewTourney.file,
             price: this.state.dataNewTourney.price,
             location: this.state.dataNewTourney.local,
+            userid: this.state.user.id,
             //insurance: this.state.dataNewTourney.insurance
         }, {
             headers: {
@@ -266,7 +267,7 @@ export default class OrganizeTourney extends Component {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField
-                                                    required
+                                                    //required
                                                     multiline
                                                     rows={4}
                                                     variant="outlined"
@@ -299,7 +300,7 @@ export default class OrganizeTourney extends Component {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField
-                                                    required
+                                                    //required
                                                     variant="outlined"
                                                     type="number"
                                                     inputProps={{
@@ -328,6 +329,9 @@ export default class OrganizeTourney extends Component {
                                                 <TextField
                                                     required
                                                     InputLabelProps={{ shrink: true }}
+                                                    inputProps=
+                                                        {{ max: this.state.dataNewTourney.finalDate ?
+                                                                new Date(this.state.dataNewTourney.finalDate).toISOString().slice(0, 10) : '' }}
                                                     variant="outlined"
                                                     id="data_inicio"
                                                     type="date"
@@ -343,6 +347,9 @@ export default class OrganizeTourney extends Component {
                                                 <TextField
                                                     required
                                                     InputLabelProps={{ shrink: true }}
+                                                    inputProps=
+                                                        {{ min: this.state.dataNewTourney.initialDate ?
+                                                                new Date(this.state.dataNewTourney.initialDate).toISOString().slice(0, 10) : '' }}
                                                     variant="outlined"
                                                     id="data_fim"
                                                     type="date"
@@ -367,6 +374,7 @@ export default class OrganizeTourney extends Component {
                                                     onChange={(event) =>
                                                         {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, maxPlayers: event.target.value}}))}
                                                     }
+                                                    defaultValue='4'
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
@@ -384,7 +392,7 @@ export default class OrganizeTourney extends Component {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField
-                                                    required
+                                                    //required
                                                     variant="outlined"
                                                     id="seguro"
                                                     label="Seguro"
