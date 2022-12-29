@@ -113,6 +113,20 @@ export default class TourneyPage extends Component {
     setTrueGoToAdminMenu = () => {
         this.setState({goToAdminMenu: true});
     }
+    diasFalta =() =>{
+
+        let endDate = new Date(this.state.tourney.end_date);
+        let now = new Date();
+        now.setHours(0,0,0,0);
+        let diff = endDate.getTime() - now.getTime();
+        let diffInDays = diff / (1000 * 3600 * 24);
+
+        return(
+            <h1 style={{fontSize:'1rem', marginTop:'2rem'}}>Inscrições fecham em {diffInDays} dias</h1>
+        )
+
+
+    }
 
     render(){
         return(
@@ -152,7 +166,7 @@ export default class TourneyPage extends Component {
                         <h1 style={{fontSize:'1.5rem', marginTop:'1.4rem'}}>Visão geral</h1>
                         <h1 style={{fontSize:'1rem', marginTop:'3rem'}}>Incrições:</h1>
                         <h1 style={{fontSize:'2rem', marginTop:'3rem'}}>??/{this.state.tourney.max_players}</h1>
-                        <h1 style={{fontSize:'1rem', marginTop:'2rem'}}>Inscrições fecham em {undefined} dias</h1>
+                        {this.diasFalta()}
                     </div>
                     <Container>
                         <nav>
