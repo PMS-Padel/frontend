@@ -14,8 +14,14 @@ import TourneyRow from "../components/tourney/TourneyRow";
 import {Button, Grid, InputAdornment} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {helperTextEmail, helperTextName} from "../autentication/dataConditions";
+import {
+    helperTextEmail,
+    helperTextEmailLogin,
+    helperTextName,
+    helperTextPasswordLogin
+} from "../autentication/dataConditions";
 import MenuItem from "@mui/material/MenuItem";
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 export default class SettingsAccount extends Component {
@@ -27,13 +33,16 @@ export default class SettingsAccount extends Component {
             phone_number: '',
             gender: 'M',
             birth_date: '',
-            level: ''
+            level: '',
+            user_code: '',
+            role: ''
         },
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null,
         loadingChangeUser: false,
         errorAlertChangeUser: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na atualização da conta. Verifique e tente novamente.'},
         successAlertChangeUser: {open: false, severity: 'success', errorStatus: 'SUCESSO', description: 'A conta foi alterada com sucesso!'},
+        setPassword: '',
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -72,44 +81,50 @@ export default class SettingsAccount extends Component {
             }
         ];
     }
+    insertPassword = (pass) => {
+        this.setState({setPassword: pass});
+    }
     setTrueGoToAdminMenu = () => {
         this.setState({goToAdminMenu: true});
     }
 
     updateAccount = () => {
-        this.setState({loadingChangeUser: true});
-        //console.log(this.state.changedUser);
-        axiosConfig.post('/update', {
-            name: this.state.changedUser.name,
-            email: this.state.changedUser.email,
-            phone_number: this.state.changedUser.phone_number,
-            gender: this.state.changedUser.gender,
-            birth_date: this.state.changedUser.birth_date,
-            id: this.state.changedUser.id,
-        }, {
-            headers: {
-                Authorization: 'Bearer ' + this.state.storedAuth
-            }
-        })
-            .then(response => {
-                this.setState({loadingChangeUser: false});
-                this.setState(prevState => ({
-                    successAlertChangeUser: {
-                        ...prevState.successAlertChangeUser,
-                        open: true
-                    }
-                }))
+        if(typeof helperTextPasswordLogin(this.state.setPassword) !== 'string') {
+            this.setState({loadingChangeUser: true});
+            //console.log(this.state.changedUser);
+            axiosConfig.post('/update', {
+                name: this.state.changedUser.name,
+                email: this.state.changedUser.email,
+                phone_number: this.state.changedUser.phone_number,
+                gender: this.state.changedUser.gender,
+                birth_date: this.state.changedUser.birth_date,
+                id: this.state.changedUser.id,
+                password: this.state.setPassword,
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.state.storedAuth
+                }
             })
-            .catch(error => {
-                this.setState({loadingChangeUser: false});
-                this.setState(prevState => ({
-                    errorAlertChangeUser: {
-                        ...prevState.errorAlertChangeUser,
-                        open: true,
-                        errorStatus: error.code
-                    }
-                }))
-            })
+                .then(response => {
+                    this.setState({loadingChangeUser: false});
+                    this.setState(prevState => ({
+                        successAlertChangeUser: {
+                            ...prevState.successAlertChangeUser,
+                            open: true
+                        }
+                    }))
+                })
+                .catch(error => {
+                    this.setState({loadingChangeUser: false});
+                    this.setState(prevState => ({
+                        errorAlertChangeUser: {
+                            ...prevState.errorAlertChangeUser,
+                            open: true,
+                            errorStatus: error.code
+                        }
+                    }))
+                })
+        }
     }
 
     handleErrorAlertClose = () => {
@@ -168,11 +183,12 @@ export default class SettingsAccount extends Component {
                                   alignItems="center"
                                   sx={{
                                       '& .MuiTextField-root': { m: 1, width: '25ch' },
-                                      '& .MuiButtonBase-root': { m: 1, width: '25ch', height: '5ch' },
+                                      '& .MuiButtonBase-root': { m: 1, width: '32ch', height: '6ch' },
                                   }}>
                                 <Grid item xs={3}>
-                                    <AccountCircleIcon fontSize="large" style={{
-                                        color: ((localStorage.getItem('loginForm') === 'admin' && 'rgba(138, 21, 21, 0.8)') || 'rgba(21, 96, 138, 0.8)'), width: "350px", height: "350px"}}/>
+                                    {this.state.changedUser.name ? 
+                                        <img src={'https://avatars.dicebear.com/api/initials/' + this.state.changedUser.name + '.svg'} style={{ width: "300px", height: "300px", borderRadius: '5px' }} alt={'Avatar da conta ' + this.state.changedUser.name}/>
+                                        : <CircularProgress />}
                                 </Grid>
                                 <Grid item xs={3} style={{ paddingTop: '25px'}}>
                                     <Grid container spacing={2}
@@ -230,6 +246,21 @@ export default class SettingsAccount extends Component {
                                                 ))}
                                             </TextField>
                                         </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                disabled
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
+                                                variant="outlined"
+                                                type="number"
+                                                id="user_code"
+                                                label="Código de utilizador"
+                                                placeholder="Código de utilizador"
+                                                style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                value={this.state.changedUser.user_code ?? ''}
+                                            />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={3} style={{ paddingTop: '25px'}}>
@@ -245,6 +276,7 @@ export default class SettingsAccount extends Component {
                                                 type="number"
                                                 label="Número de contacto"
                                                 placeholder="Número de contacto"
+                                                InputProps={{ inputProps: { min: 100000000 } }}
                                                 value={this.state.changedUser.phone_number ?? ''}
                                                 style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                                 onChange={(event) =>
@@ -278,17 +310,42 @@ export default class SettingsAccount extends Component {
                                                 type="number"
                                                 id="level"
                                                 label="Nível"
-                                                placeholder="Nível"
+                                                placeholder="Não definido"
                                                 style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                                value={this.state.changedUser.level ?? ''}
+                                                value={this.state.changedUser.level ?? '-'}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                disabled
+                                                InputProps={{
+                                                    readOnly: true,
+                                                }}
+                                                variant="outlined"
+                                                id="role"
+                                                label="Tipo de conta"
+                                                placeholder="Tipo de conta"
+                                                style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                                value={this.state.changedUser.role ?? ''}
                                             />
                                         </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={3}>
+                                    <TextField
+                                        required
+                                        id="password"
+                                        label="Password atual"
+                                        placeholder="Password atual"
+                                        type="password"
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) => {this.insertPassword(event.target.value)}}
+                                        error={typeof helperTextPasswordLogin(this.state.setPassword) === 'string'}
+                                        helperText={helperTextPasswordLogin(this.state.setPassword)}
+                                    />
                                     <Button onClick={this.updateAccount}
                                         style={{backgroundColor:'#052F53',
-                                            color:'white', borderRadius: '5px', textTransform: 'none' }}>Atualizar conta</Button>
+                                            color:'white', borderRadius: '5px', textTransform: 'none', marginTop: '19px', top: '6px' }}>Atualizar conta</Button>
                                 </Grid>
                             </Grid>
                         </div>
