@@ -1,4 +1,4 @@
-import {Grid, InputAdornment} from "@mui/material";
+import {Grid, InputAdornment, Button} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import React, {Component} from "react";
@@ -332,6 +332,9 @@ export default class TourneyGeneral extends Component {
                                     </Grid>
                                 </Grid>
                             </Grid>
+                            <Button onClick={this.submitTourney}
+                                        style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'43%'}}>Update</Button>
                         </div>
                     </div>
                 </div>
