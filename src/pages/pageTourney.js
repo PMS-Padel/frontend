@@ -265,7 +265,7 @@ export default class TourneyPage extends Component {
                                 alignItems="center">
                                 <Grid item xs={12}>
                                     <TextField
-                                        required
+                                        
                                         InputLabelProps={{ shrink: true }}
                                         inputProps=
                                             {{ max: this.state.changeTourney.finalDate ?
@@ -283,7 +283,7 @@ export default class TourneyPage extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
-                                        required
+                                        
                                         InputLabelProps={{ shrink: true }}
                                         inputProps=
                                             {{ min: this.state.changeTourney.initialDate ?
@@ -301,7 +301,7 @@ export default class TourneyPage extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
-                                        required
+                                        
                                         variant="outlined"
                                         type="number"
                                         InputProps={{ inputProps: { min: 4 } }}
@@ -317,7 +317,7 @@ export default class TourneyPage extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
-                                        required
+                                        
                                         variant="outlined"
                                         id="localizacao"
                                         label="Localização"
@@ -330,7 +330,7 @@ export default class TourneyPage extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
-                                        //required
+                                        
                                         variant="outlined"
                                         id="seguro"
                                         label="Seguro"
