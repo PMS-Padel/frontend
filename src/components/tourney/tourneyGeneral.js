@@ -56,6 +56,7 @@ export default class TourneyGeneral extends Component {
             maxplayers: this.state.changeTourney.max_players,
             price: this.state.changeTourney.price,
             location: this.state.changeTourney.location,
+            insurance: this.state.changeTourney.seguro
         }, {
             headers: {
                 Authorization: 'Bearer ' + this.props.storedAuth
@@ -317,12 +318,12 @@ export default class TourneyGeneral extends Component {
                                                 label="Seguro"
                                                 placeholder="Seguro"
                                                 style={{backgroundColor: '#FFFFFF', borderRadius: '5px'}}
-                                                value={this.state.changeTourney.insurance ?? ''}
+                                                value={this.state.changeTourney.seguro ?? ''}
                                                 onChange={(event) => {
                                                     this.setState(prevState => ({
                                                         changeTourney: {
                                                             ...prevState.changeTourney,
-                                                            insurance: event.target.value
+                                                            seguro: event.target.value
                                                         }
                                                     }))
                                                 }

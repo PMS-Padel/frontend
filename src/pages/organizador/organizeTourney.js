@@ -41,9 +41,9 @@ export default class OrganizeTourney extends Component {
             category: '',
             initialDate: '',
             finalDate: '',
-            maxPlayers: undefined,
+            maxPlayers: 4,
             file: null,
-            price: null,
+            price: 0,
             local: '',
             insurance: ''
         }
@@ -112,7 +112,7 @@ export default class OrganizeTourney extends Component {
             price: this.state.dataNewTourney.price,
             location: this.state.dataNewTourney.local,
             userid: this.state.user.id,
-            //insurance: this.state.dataNewTourney.insurance
+            insurance: this.state.dataNewTourney.insurance
         }, {
             headers: {
                 Authorization: 'Bearer ' + this.state.storedAuth
@@ -312,6 +312,7 @@ export default class OrganizeTourney extends Component {
                                                     id="preco"
                                                     label="Preço de entrada"
                                                     placeholder="Preço de entrada"
+                                                    defaultValue={0}
                                                     style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                                     onChange={(event) =>
                                                         {this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, price: event.target.value}}))}
