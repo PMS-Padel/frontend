@@ -107,6 +107,43 @@ export default class TourneyPage extends Component {
         ];
     }
 
+    submitTourney = () => {
+        console.log(this.state.changeTourney);
+        axiosConfig.post('/updatetournament', {
+            name: this.state.changeTourney.title,
+            description: this.state.changeTourney.description,
+            tournamenttype: this.state.changeTourney.category,
+            initdate: this.state.changeTourney.initialDate,
+            enddate: this.state.changeTourney.finalDate,
+            maxplayers: this.state.changeTourney.maxPlayers,
+            price: this.state.changeTourney.price,
+            location: this.state.changeTourney.local,
+
+
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + this.state.storedAuth
+            }
+        })
+            .then(response => {
+              this.setState(prevState => ({
+                  successAlertTourney: {
+                      ...prevState.successAlertTourney,
+                      open: true
+                  }
+              }))
+            })
+            .catch(error => {
+              this.setState(prevState => ({
+                  errorAlertTourney: {
+                      ...prevState.errorAlertTourney,
+                      open: true,
+                      errorStatus: error.code
+                  }
+              }))
+            })
+    }
+
     render(){
         return(
             <>
@@ -149,13 +186,7 @@ export default class TourneyPage extends Component {
                         sx={{
                             '& .MuiTextField-root': { m: 1, width: '25ch' },
                         }}>
-                                <Grid item xs={4}>
-                                    <Button style={{textTransform: 'none'}} component="label">
-                                        <input hidden accept="image/*" type="file" required
-                                        onChange={(e) => this.setState(prevState => ({changeTourney: {...prevState.changeTourney, file: URL.createObjectURL(e.target.files[0])}}))} />
-                                        <img src={PosterImageDefault} width={350} height={350} alt="Imagem acerca de " />
-                                    </Button>
-                                </Grid>
+
                                 <Grid item xs={4} style={{ paddingTop: '25px'}}>
                                 <Grid container spacing={2}
                                     justifyContent="center"
@@ -314,7 +345,7 @@ export default class TourneyPage extends Component {
                             </Grid>
                         </Grid>
                 </Grid>
-                <Button onClick={undefined}
+                <Button onClick={this.submitTourney}
                 style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
                 color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Update</Button>
                 </div>
