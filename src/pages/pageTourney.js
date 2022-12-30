@@ -108,8 +108,11 @@ export default class TourneyPage extends Component {
                     left: 0}}/>
                 <TourneyHeader tourney={this.state.tourney} user={this.state.user} MenuTourney={this.state.MenuTourney} handleMenuTourneyChange={this.handleMenuTourneyChange}/>
                 {this.state.MenuTourney === 0 && localStorage.getItem('loginForm') === 'admin' &&
-                    <TourneyGeneral changeTourney={this.state.tourney} storedAuth={this.state.storedAuth}/>
-                }
+                    <TourneyGeneral changeTourney={this.state.tourney} storedAuth={this.state.storedAuth}/>}
+                {this.state.MenuTourney === 0 && localStorage.getItem('loginForm') === 'player' &&
+                    <div>
+                        <hi>oi</hi>
+                    </div>}
             </>
         )
     }

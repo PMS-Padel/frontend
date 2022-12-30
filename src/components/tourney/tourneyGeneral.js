@@ -108,7 +108,7 @@ export default class TourneyGeneral extends Component {
                 <AlertPopup errorAlert={this.state.errorAlertTourney} handleErrorAlert={this.handleErrorAlertClose} />
                 <AlertPopup errorAlert={this.state.successAlertTourney} handleErrorAlert={this.handleSuccessAlertClose} />
                 <div style={{
-                    width: "82%",
+                    width: "80%",
                     borderRadius: "1%",
                     position: 'absolute',
                     zIndex: 0,
@@ -353,7 +353,7 @@ export default class TourneyGeneral extends Component {
                             </Grid>
                             <Button onClick={this.submitTourney}
                                         style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
-                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'43%'}}>Atualizar torneio</Button>
+                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Atualizar torneio</Button>
                         </div>
                     </div>
                 </div>
