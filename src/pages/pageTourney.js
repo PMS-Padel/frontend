@@ -178,7 +178,9 @@ export default class TourneyPage extends Component {
                     backgroundColor: "#FFFFFF"
                 }}>
                     <div style={{ padding: "20px",}}>
-                        {this.state.MenuTourney === 0 &&
+
+
+                        {this.state.MenuTourney === 0 && localStorage.getItem('loginForm') === 'admin' ?
                         <div>
                         <Grid container spacing={2}
                         justifyContent="center"
@@ -198,6 +200,7 @@ export default class TourneyPage extends Component {
                                             id="titulo"
                                             label="Título"
                                             placeholder="Título"
+                                            value={this.state.changeTourney.name ?? ''}
                                             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                             onChange={(event) =>
                                                 {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, title: event.target.value}}))}
@@ -206,13 +209,14 @@ export default class TourneyPage extends Component {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
-                                            //required
+                                            required
                                             multiline
                                             rows={4}
                                             variant="outlined"
                                             id="descricao"
                                             label="Descrição"
                                             placeholder="Descrição"
+                                            value={this.state.changeTourney.description ?? ''}
                                             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                             onChange={(event) =>
                                                 {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, description: event.target.value}}))}
@@ -225,7 +229,7 @@ export default class TourneyPage extends Component {
                                             select
                                             label="Categoria"
                                             required
-                                            defaultValue=''
+                                            defaultValue={this.state.changeTourney.category ?? ''}
                                             onChange={(event) =>
                                                 {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, category: event.target.value}}))}
                                             }
@@ -239,7 +243,7 @@ export default class TourneyPage extends Component {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
-                                            //required
+                                            required
                                             variant="outlined"
                                             type="number"
                                             inputProps={{
@@ -251,6 +255,7 @@ export default class TourneyPage extends Component {
                                             id="preco"
                                             label="Preço de entrada"
                                             placeholder="Preço de entrada"
+                                            value={this.state.changeTourney.price ?? ''}
                                             style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                             onChange={(event) =>
                                                 {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, price: event.target.value}}))}
@@ -266,7 +271,7 @@ export default class TourneyPage extends Component {
                                 alignItems="center">
                                 <Grid item xs={12}>
                                     <TextField
-                                        
+                                        required
                                         InputLabelProps={{ shrink: true }}
                                         inputProps=
                                             {{ max: this.state.changeTourney.finalDate ?
@@ -276,6 +281,8 @@ export default class TourneyPage extends Component {
                                         type="date"
                                         label="Data início"
                                         placeholder="Data início"
+                                        value={this.state.changeTourney.initialDate !== null ? this.state.changeTourney.initialDate.substring(0, 10) : ''}
+                                    
                                         style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                         onChange={(event) =>
                                             {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, initialDate: event.target.value}}))}
@@ -294,6 +301,7 @@ export default class TourneyPage extends Component {
                                         type="date"
                                         label="Data fim"
                                         placeholder="Data fim"
+                                        value={this.state.changeTourney.finalDate ?? ''}
                                         style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                         onChange={(event) =>
                                             {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, finalDate: event.target.value}}))}
@@ -309,11 +317,12 @@ export default class TourneyPage extends Component {
                                         id="max_jogadores"
                                         label="Número máximo de jogadores"
                                         placeholder="Número máximo de jogadores"
+                                        value={this.state.changeTourney.maxplayers ?? ''}
                                         style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                         onChange={(event) =>
                                             {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, maxPlayers: event.target.value}}))}
                                         }
-                                        defaultValue='4'
+                                        
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -323,6 +332,7 @@ export default class TourneyPage extends Component {
                                         id="localizacao"
                                         label="Localização"
                                         placeholder="Localização"
+                                        value={this.state.changeTourney.local ?? ''}
                                         style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
                                         onChange={(event) =>
                                         {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, local: event.target.value}}))}
@@ -337,6 +347,7 @@ export default class TourneyPage extends Component {
                                         label="Seguro"
                                         placeholder="Seguro"
                                         style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        value={this.state.changeTourney.insurance ?? ''}
                                         onChange={(event) =>
                                         {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, insurance: event.target.value}}))}
                                         }
@@ -349,31 +360,45 @@ export default class TourneyPage extends Component {
                     style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
                     color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Update</Button>
                 </div>
+                : 
+                <div>
+
+                    <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}} onClick={undefined}>Inscreve-te!</Button>
+                </div>
                 
                         }
 
-                {this.state.MenuTourney === 1 &&
+                {this.state.MenuTourney === 1 && localStorage.getItem('loginForm') === 'admin' ?
                 <div>
                     <h1>Inscritos</h1>
                 </div>
+                :
+                <div></div>
                 }
-                {this.state.MenuTourney === 2 &&
+                {this.state.MenuTourney === 2 && localStorage.getItem('loginForm') === 'admin' ?
                 <div>
                     <h1>Mapa de Jogos</h1>
                 </div>
+                :
+                <div></div>
                 }
-                {this.state.MenuTourney === 3 &&
+                {this.state.MenuTourney === 3 && localStorage.getItem('loginForm') === 'admin' ?
                 <div>
                     <h1>Calendário</h1>
                 </div>
+                :
+                <div></div>
                 }
-                {this.state.MenuTourney === 4 &&
+                {this.state.MenuTourney === 4 && localStorage.getItem('loginForm') === 'admin' ?
                 <div>
                     <h1>Resultados</h1>
                 </div>
+                :
+                <div></div>
                 }
                     </div>
                 </div>
+                :<div></div>
             </>
         )
     }
