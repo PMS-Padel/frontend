@@ -83,6 +83,24 @@ export default class TourneyGeneral extends Component {
             })
     }
 
+    handleErrorAlertClose = () => {
+        this.setState(prevState => ({
+            errorAlertTourney: {
+                ...prevState.errorAlertTourney,
+                open: false
+            }
+        }))
+    }
+    handleSuccessAlertClose = () => {
+        this.setState(prevState => ({
+            successAlertTourney: {
+                ...prevState.successAlertTourney,
+                open: false
+            }
+        }))
+        window.location.reload();
+    }
+
     render() {
         return (
             <>
@@ -335,7 +353,7 @@ export default class TourneyGeneral extends Component {
                             </Grid>
                             <Button onClick={this.submitTourney}
                                         style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
-                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'43%'}}>Update</Button>
+                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'43%'}}>Atualizar torneio</Button>
                         </div>
                     </div>
                 </div>
