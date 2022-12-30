@@ -17,6 +17,7 @@ export default class TourneyPage extends Component {
     state = {
         user: [],
         tourney: [],
+        MenuTourney: 0,
         changeTourney: [],
         storedAuth: localStorage.getItem('auth') ?? sessionStorage.getItem('auth'),
         goToAdminMenu: null,
@@ -75,6 +76,9 @@ export default class TourneyPage extends Component {
         }))
         this.setState({tourneyNotFound: true})
     }
+    handleMenuTourneyChange = (value) =>{
+        this.setState({MenuTourney: value})
+    }
 
     setTrueGoToAdminMenu = () => {
         this.setState({goToAdminMenu: true});
@@ -101,7 +105,7 @@ export default class TourneyPage extends Component {
                     objectFit: "cover",
                     top: 0,
                     left: 0}}/>
-                <TourneyHeader tourney={this.state.tourney} user={this.state.user}/>
+                <TourneyHeader tourney={this.state.tourney} user={this.state.user} MenuTourney={this.state.MenuTourney} handleMenuTourneyChange={this.handleMenuTourneyChange}/>
                 <div style={{
                     width: "82%",
                     height: "230%",
@@ -114,77 +118,91 @@ export default class TourneyPage extends Component {
                     backgroundColor: "#FFFFFF"
                 }}>
                     <div style={{ padding: "20px" }}>
-                        <Grid container spacing={2}
-                          justifyContent="center"
-                          alignItems="center"
-                          sx={{
-                              '& .MuiTextField-root': { m: 1, width: '25ch' },
-                          }}>
-                            <Grid item xs={6} style={{ paddingTop: '25px'}}>
-                                <TextField
-                                    required
-                                    disabled={ this.state.user.id !== undefined ?
-                                        !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                        :
-                                        true
-                                    }
-                                    InputProps={{
-                                        readOnly: this.state.user.id !== undefined ?
-                                        !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                        :
-                                        true,
-                                    }}
-                                    variant="outlined"
-                                    id="titulo"
-                                    label="Título"
-                                    placeholder="Título"
-                                    value={this.state.changeTourney.name ?? ''}
-                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                    onChange={(event) =>
-                                        {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, name: event.target.value}}))}
-                                    }
-                                />
-                            </Grid>
-                            <Grid item xs={6} style={{ paddingTop: '25px'}}>
-                                <TextField
-                                    required
-                                    disabled={ this.state.user.id !== undefined ?
-                                        !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                        :
-                                        true
-                                    }
-                                    InputProps={{
-                                        readOnly: this.state.user.id !== undefined ?
+                        {   this.state.MenuTourney === 0 &&
+                            <Grid container spacing={2}
+                                  justifyContent="center"
+                                  alignItems="center"
+                                  sx={{
+                                      '& .MuiTextField-root': {m: 1, width: '25ch'},
+                                  }}>
+                                <Grid item xs={6} style={{paddingTop: '25px'}}>
+                                    <TextField
+                                        required
+                                        disabled={this.state.user.id !== undefined ?
                                             !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
                                             :
-                                            true,
-                                    }}
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    id="descricao"
-                                    label="Descrição"
-                                    placeholder="Descrição"
-                                    value={this.state.changeTourney.description ?? ''}
-                                    style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
-                                    onChange={(event) =>
-                                    {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, description: event.target.value}}))}
-                                    }
-                                />
-                            </Grid>
-                            {
-                                localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id &&
-                                this.state.user.id !== undefined &&
-                                <Grid item xs={12} style={{paddingTop: '25px'}}>
-                                    <Button onClick={undefined}
-                                            style={{
-                                                backgroundColor: '#052F53',
-                                                color: 'white', borderRadius: '5px', textTransform: 'none',
-                                                marginTop: '19px', top: '6px', marginLeft: '20px'
-                                            }}>Atualizar torneio</Button>
+                                            true
+                                        }
+                                        InputProps={{
+                                            readOnly: this.state.user.id !== undefined ?
+                                                !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
+                                                :
+                                                true,
+                                        }}
+                                        variant="outlined"
+                                        id="titulo"
+                                        label="Título"
+                                        placeholder="Título"
+                                        value={this.state.changeTourney.name ?? ''}
+                                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) => {
+                                            this.setState(prevState => ({
+                                                changeTourney: {
+                                                    ...prevState.changeTourney,
+                                                    name: event.target.value
+                                                }
+                                            }))
+                                        }
+                                        }
+                                    />
                                 </Grid>
-                            }
-                        </Grid>
+                                <Grid item xs={6} style={{paddingTop: '25px'}}>
+                                    <TextField
+                                        required
+                                        disabled={this.state.user.id !== undefined ?
+                                            !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
+                                            :
+                                            true
+                                        }
+                                        InputProps={{
+                                            readOnly: this.state.user.id !== undefined ?
+                                                !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
+                                                :
+                                                true,
+                                        }}
+                                        multiline
+                                        rows={4}
+                                        variant="outlined"
+                                        id="descricao"
+                                        label="Descrição"
+                                        placeholder="Descrição"
+                                        value={this.state.changeTourney.description ?? ''}
+                                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) => {
+                                            this.setState(prevState => ({
+                                                changeTourney: {
+                                                    ...prevState.changeTourney,
+                                                    description: event.target.value
+                                                }
+                                            }))
+                                        }
+                                        }
+                                    />
+                                </Grid>
+                                {
+                                    localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id &&
+                                    this.state.user.id !== undefined &&
+                                    <Grid item xs={12} style={{paddingTop: '25px'}}>
+                                        <Button onClick={undefined}
+                                                style={{
+                                                    backgroundColor: '#052F53',
+                                                    color: 'white', borderRadius: '5px', textTransform: 'none',
+                                                    marginTop: '19px', top: '6px', marginLeft: '20px'
+                                                }}>Atualizar torneio</Button>
+                                    </Grid>
+                                }
+                            </Grid>
+                        }
                     </div>
                 </div>
             </>

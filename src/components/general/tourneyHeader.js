@@ -30,22 +30,22 @@ const Container = styled.div`
 
 const HRefA = styled.a`
   color: white;
-  
+
   &:hover,
   &.active {
     font-weight: bold;
   }
   text-decoration: ${(props) =>
-    props.href === window.location.pathname ? "underline" : "none"};
+          props.id.toString() === props.menuTourney.toString() ? "underline" : "none"};
   font-weight: ${(props) =>
-    props.href === window.location.pathname ? "bold" : "normal"};
+          props.id.toString() === props.menuTourney.toString() ? "bold" : "normal"};
 `
 
 const DivChangeTextColor = styled.div`
   color: ${() => localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"};
 `
 
-export default function TourneyHeader({tourney, user}) {
+export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTourneyChange}) {
     function diasFalta() {
         let initDate = new Date(tourney.init_date);
         //let endDate = new Date(tourney.end_date);
@@ -68,6 +68,7 @@ export default function TourneyHeader({tourney, user}) {
             )
         }
     }
+
 
     return (
         <>
@@ -96,11 +97,11 @@ export default function TourneyHeader({tourney, user}) {
             </DivChangeTextColor>
             <Container>
                 <nav>
-                    <HRefA href={'/torneio/' + tourney.id} style={{fontSize: '28px'}}>Geral</HRefA>
-                    <HRefA href='/' style={{fontSize: '28px'}}>Inscritos</HRefA>
-                    <HRefA href='/' style={{fontSize: '28px'}}>Mapa de jogos</HRefA>
-                    <HRefA href='/' style={{fontSize: '28px'}}>Calendário</HRefA>
-                    <HRefA href='/' style={{fontSize: '28px'}}>Resultados</HRefA>
+                    <HRefA onClick={()=>handleMenuTourneyChange(0)} id="0" menuTourney={MenuTourney} style={{fontSize: '28px'}}>Geral</HRefA>
+                    <HRefA onClick={()=>handleMenuTourneyChange(1)} id="1" menuTourney={MenuTourney} style={{fontSize: '28px'}}>Inscritos</HRefA>
+                    <HRefA onClick={()=>handleMenuTourneyChange(2)} id="2" menuTourney={MenuTourney} style={{fontSize: '28px'}}>Mapa de jogos</HRefA>
+                    <HRefA onClick={()=>handleMenuTourneyChange(3)} id="3" menuTourney={MenuTourney} style={{fontSize: '28px'}}>Calendário</HRefA>
+                    <HRefA onClick={()=>handleMenuTourneyChange(4)} id="4" menuTourney={MenuTourney} style={{fontSize: '28px'}}>Resultados</HRefA>
                 </nav>
             </Container>
         </>
