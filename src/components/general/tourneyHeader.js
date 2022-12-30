@@ -86,7 +86,11 @@ export default function TourneyHeader({tourney, user}) {
             </div>
             <DivChangeTextColor style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'100px', right:'150px', textAlign:'center', borderRadius: '5px'}}>
                 <h1 style={{fontSize:'2rem', marginTop:'1.4rem'}}>{tourney.name}</h1>
-                <h1 style={{fontSize:'1.25rem', marginTop:'1.25rem'}}>{tourney.init_date} até {tourney.end_date}</h1>
+                <h1 style={{fontSize:'1.25rem', marginTop:'1.25rem'}}>
+                    {new Date(tourney.init_date).getDate() + '-' + (new Date(tourney.init_date).getMonth() + 1) + '-' + new Date(tourney.init_date).getFullYear() + ' '}
+                    até
+                    {' ' + new Date(tourney.end_date).getDate() + '-' + (new Date(tourney.end_date).getMonth() + 1) + '-' + new Date(tourney.end_date).getFullYear()}
+                </h1>
                 <h1 style={{fontSize:'2.5rem', marginTop:'2rem'}}>??/{tourney.max_players} inscritos</h1>
                 {diasFalta()}
             </DivChangeTextColor>
