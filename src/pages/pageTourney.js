@@ -168,7 +168,6 @@ export default class TourneyPage extends Component {
                 <TourneyHeader tourney={this.state.tourney} user={this.state.user} MenuTourney={this.state.MenuTourney} handleMenuTourneyChange={this.handleMenuTourneyChange}/>
                 <div style={{
                     width: "82%",
-                    height: "230%",
                     borderRadius: "1%",
                     position: 'absolute',
                     zIndex: 0,
@@ -177,7 +176,7 @@ export default class TourneyPage extends Component {
                     left: 150,
                     backgroundColor: "#FFFFFF"
                 }}>
-                    <div style={{ padding: "20px" }}>
+                    <div style={{ padding: "20px",}}>
                         {this.state.MenuTourney === 0 &&
                         <div>
                         <Grid container spacing={2}
@@ -344,10 +343,10 @@ export default class TourneyPage extends Component {
                                 </Grid>
                             </Grid>
                         </Grid>
-                </Grid>
-                <Button onClick={this.submitTourney}
-                style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
-                color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Update</Button>
+                    </Grid>
+                    <Button onClick={this.submitTourney}
+                    style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                    color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Update</Button>
                 </div>
                 
                         }
