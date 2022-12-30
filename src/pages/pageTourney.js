@@ -110,6 +110,7 @@ export default class TourneyPage extends Component {
     submitTourney = () => {
         console.log(this.state.changeTourney);
         axiosConfig.post('/updatetournament', {
+            id:this.state.tourney.id,
             name: this.state.changeTourney.title,
             description: this.state.changeTourney.description,
             tournamenttype: this.state.changeTourney.category,
@@ -350,6 +351,27 @@ export default class TourneyPage extends Component {
                 </div>
                 
                         }
+
+                {this.state.MenuTourney === 1 &&
+                <div>
+                    <h1>Inscritos</h1>
+                </div>
+                }
+                {this.state.MenuTourney === 2 &&
+                <div>
+                    <h1>Mapa de Jogos</h1>
+                </div>
+                }
+                {this.state.MenuTourney === 3 &&
+                <div>
+                    <h1>Calendário</h1>
+                </div>
+                }
+                {this.state.MenuTourney === 4 &&
+                <div>
+                    <h1>Resultados</h1>
+                </div>
+                }
                     </div>
                 </div>
             </>
