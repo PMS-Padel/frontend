@@ -9,9 +9,11 @@ import axiosConfig from "../axiosConfig";
 import {Navigate} from "react-router-dom";
 import NavBarAdmin from "../components/general/NavBarAdmin";
 import LoadingPopup from "../components/general/Loading";
-import {Button, Grid} from "@mui/material";
+import {Button, Grid, InputAdornment} from "@mui/material";
 import TourneyHeader from "../components/general/tourneyHeader";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import PosterImageDefault from "../img/PosterImageDefault.png";
 
 export default class TourneyPage extends Component {
     state = {
@@ -84,6 +86,27 @@ export default class TourneyPage extends Component {
         this.setState({goToAdminMenu: true});
     }
 
+    getCategorias = () => {
+        return [
+            {
+                value: null,
+                label: '',
+            },
+            {
+                value: 3,
+                label: 'Misto',
+            },
+            {
+                value: 2,
+                label: 'Masculino',
+            },
+            {
+                value: 1,
+                label: 'Feminino',
+            },
+        ];
+    }
+
     render(){
         return(
             <>
@@ -118,90 +141,184 @@ export default class TourneyPage extends Component {
                     backgroundColor: "#FFFFFF"
                 }}>
                     <div style={{ padding: "20px" }}>
-                        {   this.state.MenuTourney === 0 &&
-                            <Grid container spacing={2}
-                                  justifyContent="center"
-                                  alignItems="center"
-                                  sx={{
-                                      '& .MuiTextField-root': {m: 1, width: '25ch'},
-                                  }}>
-                                <Grid item xs={6} style={{paddingTop: '25px'}}>
-                                    <TextField
-                                        required
-                                        disabled={this.state.user.id !== undefined ?
-                                            !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                            :
-                                            true
-                                        }
-                                        InputProps={{
-                                            readOnly: this.state.user.id !== undefined ?
-                                                !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                                :
-                                                true,
-                                        }}
-                                        variant="outlined"
-                                        id="titulo"
-                                        label="Título"
-                                        placeholder="Título"
-                                        value={this.state.changeTourney.name ?? ''}
-                                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px'}}
-                                        onChange={(event) => {
-                                            this.setState(prevState => ({
-                                                changeTourney: {
-                                                    ...prevState.changeTourney,
-                                                    name: event.target.value
-                                                }
-                                            }))
-                                        }
-                                        }
-                                    />
+                        {this.state.MenuTourney === 0 &&
+                        <div>
+                        <Grid container spacing={2}
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{
+                            '& .MuiTextField-root': { m: 1, width: '25ch' },
+                        }}>
+                                <Grid item xs={4}>
+                                    <Button style={{textTransform: 'none'}} component="label">
+                                        <input hidden accept="image/*" type="file" required
+                                        onChange={(e) => this.setState(prevState => ({changeTourney: {...prevState.changeTourney, file: URL.createObjectURL(e.target.files[0])}}))} />
+                                        <img src={PosterImageDefault} width={350} height={350} alt="Imagem acerca de " />
+                                    </Button>
                                 </Grid>
-                                <Grid item xs={6} style={{paddingTop: '25px'}}>
-                                    <TextField
-                                        required
-                                        disabled={this.state.user.id !== undefined ?
-                                            !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                            :
-                                            true
-                                        }
-                                        InputProps={{
-                                            readOnly: this.state.user.id !== undefined ?
-                                                !(localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id)
-                                                :
-                                                true,
-                                        }}
-                                        multiline
-                                        rows={4}
-                                        variant="outlined"
-                                        id="descricao"
-                                        label="Descrição"
-                                        placeholder="Descrição"
-                                        value={this.state.changeTourney.description ?? ''}
-                                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px'}}
-                                        onChange={(event) => {
-                                            this.setState(prevState => ({
-                                                changeTourney: {
-                                                    ...prevState.changeTourney,
-                                                    description: event.target.value
-                                                }
-                                            }))
-                                        }
-                                        }
-                                    />
-                                </Grid>
-                                {
-                                    localStorage.getItem('loginForm') === 'admin' && this.state.user.id === this.state.tourney.user_id &&
-                                    this.state.user.id !== undefined &&
-                                    <Grid item xs={12} style={{paddingTop: '25px'}}>
-                                        <Button onClick={undefined}
-                                                style={{
-                                                    backgroundColor: '#052F53',
-                                                    color: 'white', borderRadius: '5px', textTransform: 'none',
-                                                    marginTop: '19px', top: '6px', marginLeft: '20px'
-                                                }}>Atualizar torneio</Button>
+                                <Grid item xs={4} style={{ paddingTop: '25px'}}>
+                                <Grid container spacing={2}
+                                    justifyContent="center"
+                                    alignItems="center">
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            variant="outlined"
+                                            id="titulo"
+                                            label="Título"
+                                            placeholder="Título"
+                                            style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                            onChange={(event) =>
+                                                {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, title: event.target.value}}))}
+                                            }
+                                        />
                                     </Grid>
-                                }
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            //required
+                                            multiline
+                                            rows={4}
+                                            variant="outlined"
+                                            id="descricao"
+                                            label="Descrição"
+                                            placeholder="Descrição"
+                                            style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                            onChange={(event) =>
+                                                {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, description: event.target.value}}))}
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            id="categoria_select"
+                                            select
+                                            label="Categoria"
+                                            required
+                                            defaultValue=''
+                                            onChange={(event) =>
+                                                {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, category: event.target.value}}))}
+                                            }
+                                        >
+                                            {(this.getCategorias()).map((option) => (
+                                                <MenuItem key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            //required
+                                            variant="outlined"
+                                            type="number"
+                                            inputProps={{
+                                                step: 0.5,
+                                            }}
+                                            InputProps={{
+                                                endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                                            }}
+                                            id="preco"
+                                            label="Preço de entrada"
+                                            placeholder="Preço de entrada"
+                                            style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                            onChange={(event) =>
+                                                {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, price: event.target.value}}))}
+                                            }
+                                        />
+                                    </Grid>
+
+                                </Grid>
                             </Grid>
+                        <Grid item xs={4} style={{ paddingTop: '25px'}}>
+                            <Grid container spacing={2}
+                                justifyContent="center"
+                                alignItems="center">
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        InputLabelProps={{ shrink: true }}
+                                        inputProps=
+                                            {{ max: this.state.changeTourney.finalDate ?
+                                                    new Date(this.state.changeTourney.finalDate).toISOString().slice(0, 10) : '' }}
+                                        variant="outlined"
+                                        id="data_inicio"
+                                        type="date"
+                                        label="Data início"
+                                        placeholder="Data início"
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) =>
+                                            {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, initialDate: event.target.value}}))}
+                                        }
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        InputLabelProps={{ shrink: true }}
+                                        inputProps=
+                                            {{ min: this.state.changeTourney.initialDate ?
+                                                    new Date(this.state.changeTourney.initialDate).toISOString().slice(0, 10) : '' }}
+                                        variant="outlined"
+                                        id="data_fim"
+                                        type="date"
+                                        label="Data fim"
+                                        placeholder="Data fim"
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) =>
+                                            {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, finalDate: event.target.value}}))}
+                                        }
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        variant="outlined"
+                                        type="number"
+                                        InputProps={{ inputProps: { min: 4 } }}
+                                        id="max_jogadores"
+                                        label="Número máximo de jogadores"
+                                        placeholder="Número máximo de jogadores"
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) =>
+                                            {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, maxPlayers: event.target.value}}))}
+                                        }
+                                        defaultValue='4'
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        variant="outlined"
+                                        id="localizacao"
+                                        label="Localização"
+                                        placeholder="Localização"
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) =>
+                                        {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, local: event.target.value}}))}
+                                        }
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        //required
+                                        variant="outlined"
+                                        id="seguro"
+                                        label="Seguro"
+                                        placeholder="Seguro"
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        onChange={(event) =>
+                                        {this.setState(prevState => ({changeTourney: {...prevState.changeTourney, insurance: event.target.value}}))}
+                                        }
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                </Grid>
+                <Button onClick={undefined}
+                style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Update</Button>
+                </div>
+                
                         }
                     </div>
                 </div>
