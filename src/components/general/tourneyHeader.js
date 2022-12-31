@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import backgroundPicTourney from "../../img/TourneyPageBackgroundImage.png";
 import backgroundPicTourney2 from "../../img/TourneyPageBackgroundImageAdmin.png";
-import React from "react";
-import {Button} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {Button, DialogContent, DialogTitle, Dialog} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import axiosConfig from "../../axiosConfig";
+import CloseIcon from '@mui/icons-material/Close';
 
 const Container = styled.div`
   display: flex;
@@ -46,6 +49,31 @@ const DivChangeTextColor = styled.div`
 `
 
 export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTourneyChange}) {
+
+    const [openDialog, setOpenDialog] = useState(false);
+
+    useEffect(() => {
+      }, []);
+
+    function submitTeam(){
+        //console.log(this.state.changeTourney);
+        this.setState({loadingTourney: true});
+        axiosConfig.post('/updatetournament', {
+            name:undefined,
+            subscription_date:undefined,
+            player1_id:undefined,
+            player2_id:undefined,
+            tournament_id:undefined,
+            payed:undefined
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + this.props.storedAuth
+            }
+        })
+            .then()
+            .catch()
+            }
+
     function diasFalta() {
         let initDate = new Date(tourney.init_date);
         //let endDate = new Date(tourney.end_date);
@@ -59,7 +87,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 <>
                     <h1 style={{fontSize: '1rem', marginTop: '1.5rem'}}>Inscrições fecham em {diffInDays} dias</h1>
                     {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id &&
-                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}} onClick={undefined}>Inscreve-te!</Button>
+                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}} onClick={()=>{setOpenDialog(!openDialog)}}>Inscreve-te!</Button>
                     }
                 </>
             )
@@ -96,6 +124,39 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 <h1 style={{fontSize:'2.5rem', marginTop:'2rem'}}>??/{tourney.max_players} inscritos</h1>
                 {diasFalta()}
             </DivChangeTextColor>
+            <Dialog open= {openDialog} width="25rem">
+                <DialogTitle>
+                    <div style={{ fontSize: '1.5em' }}>Inscrição</div>
+                </DialogTitle>
+                <DialogContent>
+                    <TextField
+                        required
+                        variant="outlined"
+                        id="name"
+                        label="Nome da equipa"
+                        placeholder="Nome da equipa"
+                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem',marginLeft:'3.7rem'}}
+                        onChange={(event) => {
+                            this.setState(undefined)
+                        }}
+                    />
+                    <TextField
+                        required
+                        variant="outlined"
+                        id="colegaDeEquipa"
+                        label="Colega de equipa"
+                        placeholder="Colega de equipa"
+                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem',marginLeft:'3.7rem'}}
+                        onChange={(event) => {
+                            this.setState(undefined)
+                        }}  
+                    />
+                    <Button onClick={undefined}
+                        style={{position:'relative', marginTop:'2rem', backgroundColor:'#052F53',
+                        color:'white', borderRadius: '5px', textTransform: 'none', marginLeft:'37%'}}>Atualizar torneio</Button>
+                </DialogContent>
+
+            </Dialog>
             <Container>
                 <nav>
                     <HRefA onClick={()=>handleMenuTourneyChange(0)} id="0" menuTourney={MenuTourney} style={{fontSize: '28px'}}>Geral</HRefA>
