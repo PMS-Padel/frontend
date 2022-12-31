@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import PosterImageDefault from "../img/PosterImageDefault.png";
 import TourneyGeneral from "../components/tourney/tourneyGeneral";
+import { padding } from '@mui/system';
 
 export default class TourneyPage extends Component {
     state = {
@@ -34,6 +35,7 @@ export default class TourneyPage extends Component {
             
         }
         this.getTourney();
+        console.log(this.state.tourney)
     }
     getUser = async () => {
         const res = await axiosConfig.get('/test-authentication',{
@@ -85,6 +87,22 @@ export default class TourneyPage extends Component {
         this.setState({goToAdminMenu: true});
     }
 
+    tipoDeTorneio = (tipo) =>{
+        switch (tipo) {
+            case 1:
+                return(<p>Feminino</p>);
+
+            case 2:
+                return(<p>Masculino</p>);
+
+            case 3:
+                return(<p>Misto</p>);
+
+            default:
+                <h1>Erro</h1>;
+          }
+    }
+
     render(){
         return(
             <>
@@ -110,8 +128,33 @@ export default class TourneyPage extends Component {
                 {this.state.MenuTourney === 0 && localStorage.getItem('loginForm') === 'admin' &&
                     <TourneyGeneral changeTourney={this.state.tourney} storedAuth={this.state.storedAuth}/>}
                 {this.state.MenuTourney === 0 && localStorage.getItem('loginForm') === 'player' &&
-                    <div>
-                        <h1>oi</h1>
+                    <div style={{
+                        width: "80%",
+                        borderRadius: "1%",
+                        position: 'absolute',
+                        zIndex: 0,
+                        objectFit: "cover",
+                        top: 700,
+                        left: 150,
+                        backgroundColor: "#FFFFFF",
+                        paddingLeft:'2rem'
+                    }}>
+                        <div>
+                            <h1>Descrição</h1>
+                            <p>{this.state.tourney.description}</p>
+                        </div>
+                        <div>
+                            <h1>Tipo de torneio </h1>
+                            {this.tipoDeTorneio(this.state.tourney.tournament_type_id)}
+                        </div>
+                        <div>
+                            <h1>Preço (€)</h1>
+                            <p>{this.state.tourney.price}</p>
+                        </div>
+                        <div>
+                            <h1>Seguro</h1>
+                            <p>{this.state.tourney.seguro}</p>
+                        </div>
                     </div>}
             </>
         )
