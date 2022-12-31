@@ -43,6 +43,7 @@ export default class SettingsAccount extends Component {
         errorAlertChangeUser: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na atualização da conta. Verifique e tente novamente.'},
         successAlertChangeUser: {open: false, severity: 'success', errorStatus: 'SUCESSO', description: 'A conta foi alterada com sucesso!'},
         setPassword: '',
+        isSignedUp: false,
     };
     componentDidMount() {
         if(this.state.storedAuth !== null) {
@@ -63,6 +64,19 @@ export default class SettingsAccount extends Component {
             let {data} = res;
             this.setState({user: data});
             this.setState({changedUser: data});
+            axiosConfig.post('/isteammate', {
+                playerid: data.id
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.state.storedAuth
+                }
+            })
+                .then(res =>{
+                    this.setState({isSignedUp: true});
+                })
+                .catch(err =>{
+                    this.setState({isSignedUp: false});
+                })
         }
         else
         {
@@ -230,13 +244,17 @@ export default class SettingsAccount extends Component {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                disabled={this.state.isSignedUp}
+                                                InputProps={{
+                                                    readOnly: this.state.isSignedUp,
+                                                }}
                                                 id="gender-select"
                                                 select
                                                 label="Género"
                                                 required
                                                 defaultValue={this.state.changedUser.gender ?? ''}
                                                 onChange={(event) =>
-                                                {this.setState(prevState => ({changedUser: {...prevState.changedUser, gender: event.target.value}}))}
+                                                    {this.setState(prevState => ({changedUser: {...prevState.changedUser, gender: event.target.value}}))}
                                                 }
                                             >
                                                 {(this.getGender()).map((option) => (

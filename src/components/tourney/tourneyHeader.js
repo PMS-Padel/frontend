@@ -67,11 +67,35 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         setSuccessAlert({...successAlert, open: false});
         window.location.reload();
     };
-
+    const [isSignedUp, setIsSignedUp] = useState(false);
     const [update, setUpdate] = useState(false);
     const [dataParceiro, setDataParceiro] = useState({});
+    const [subbedTeamId, setSubbedTeamId] = useState(false);
     useEffect(() => {
-        if (update){
+        if (user !== undefined && tourney !== undefined)
+        {
+            axiosConfig.post('/isteammate', {
+                playerid: user.id,
+                tournamentid : tourney.id
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + storedAuth
+                }
+            })
+                .then(res =>{
+                    //console.log('entrou')
+                    setIsSignedUp(true);
+                    const {data} = res;
+                    //add team to default value
+                    setNameTeam(data.name);
+                    setSubbedTeamId(data.id);
+                })
+                .catch(err =>{
+                    setIsSignedUp(false);
+                })
+        }
+        if (update && colegaDeEquipa !== '' && colegaDeEquipa !== undefined){
+            console.log(colegaDeEquipa)
             axiosConfig.post('/getByCode', {
                 user_code: colegaDeEquipa
             }, {
@@ -89,30 +113,77 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             setUpdate(false);
         }
 
-    }, [update]);
+    }, [update, colegaDeEquipa, user, tourney]);
 
     function inscreverEquipa() {
-        setLoading(true);
-        axiosConfig.post('/createteamByCode', {
-            name: nameTeam,
-            subscriptiondate: new Date().toISOString().slice(0, 10),
-            player1Code: user.user_code,
-            player2Code: colegaDeEquipa,
-            tournamentid: tourney.id
-        }, {
-            headers: {
-                Authorization: 'Bearer ' + storedAuth
+        if(dataParceiro !== {} && nameTeam !== null && nameTeam !== '')
+        {
+            if(dataParceiro.id === tourney.user_id)
+            {
+                //alerta de erro de ser igual a admin
+                setErrorAlert({...errorAlert, description: 'Não pode inscrever o próprio organizador deste torneio como parceiro! Verifique e tente novamente.', open: true, errorStatus: 'ERR_DENIED_PARTNER'});
             }
-        })
-            .then(res =>{
-                setOpenDialog(false);
-                setLoading(false);
-                setSuccessAlert({...successAlert, open: true});
-            })
-            .catch(err =>{
-                setLoading(false);
-                setErrorAlert({...errorAlert, open: true, errorStatus: err.code});
-            })
+            else if(
+                (dataParceiro.gender === 'M' && user.gender === 'M' && tourney.tournament_type_id === 2) ||
+                (dataParceiro.gender === 'F' && user.gender === 'F' && tourney.tournament_type_id === 1) ||
+                (dataParceiro.gender === 'M' && user.gender === 'F' && tourney.tournament_type_id === 3) ||
+                (dataParceiro.gender === 'F' && user.gender === 'M' && tourney.tournament_type_id === 3) )
+            {
+                setLoading(true);
+                if(isSignedUp)
+                {
+                    axiosConfig.post('/updateteam', {
+                        id: subbedTeamId,
+                        name: nameTeam,
+                        subscriptiondate: new Date().toISOString().slice(0, 10),
+                        player1_id: user.id,
+                        player2Code: colegaDeEquipa,
+                        tournamentid: tourney.id
+                    }, {
+                        headers: {
+                            Authorization: 'Bearer ' + storedAuth
+                        }
+                    })
+                        .then(res =>{
+                            setOpenDialog(false);
+                            setLoading(false);
+                            setSuccessAlert({...successAlert, description: 'A equipa foi alterada com sucesso!', open: true});
+                        })
+                        .catch(err =>{
+                            setLoading(false);
+                            setErrorAlert({...errorAlert, description: 'Ocorreu um erro ao alterar a equipa. Verifique e tente novamente.', open: true, errorStatus: err.code});
+                        })
+                }
+                else
+                {
+                    axiosConfig.post('/createteamByCode', {
+                        name: nameTeam,
+                        subscriptiondate: new Date().toISOString().slice(0, 10),
+                        player1Code: user.user_code,
+                        player2Code: colegaDeEquipa,
+                        tournamentid: tourney.id
+                    }, {
+                        headers: {
+                            Authorization: 'Bearer ' + storedAuth
+                        }
+                    })
+                        .then(res =>{
+                            setOpenDialog(false);
+                            setLoading(false);
+                            setSuccessAlert({...successAlert, description: 'A equipa foi inscrita com sucesso!', open: true});
+                        })
+                        .catch(err =>{
+                            setLoading(false);
+                            setErrorAlert({...errorAlert, description: 'Ocorreu um erro ao inscrever a equipa. Verifique e tente novamente.', open: true, errorStatus: err.code});
+                        })
+                }
+            }
+            else
+            {
+                //erro de alerta de gender
+                setErrorAlert({...errorAlert, description: 'O género de um ou mais jogadores não corresponde ao tipo de torneio. Verifique e tente novamente.', open: true, errorStatus: 'ERR_TOURNEY_TYPE'});
+            }
+        }
     }
 
     function diasFalta() {
@@ -128,7 +199,8 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 <>
                     <h1 style={{fontSize: '1rem', marginTop: '1.5rem'}}>Inscrições fecham em {diffInDays} dias</h1>
                     {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id &&
-                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}} onClick={()=>{setOpenDialog(true)}}>Inscreve-te!</Button>
+                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}}
+                                onClick={()=>{setOpenDialog(true)}}>{isSignedUp ? 'Mudar equipa' : 'Inscreve-te!'}</Button>
                     }
                 </>
             )
@@ -212,6 +284,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                                 label="Nome da equipa"
                                 placeholder="Nome da equipa"
                                 style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem'}}
+                                value={nameTeam ?? ''}
                                 onChange={(event) => {
                                     setNameTeam(event.target.value)
                                 }}
@@ -315,7 +388,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                         <Grid item xs={12}>
                             <Button onClick={inscreverEquipa}
                                 style={{position:'relative', marginTop:'2rem', backgroundColor:'#052F53',
-                                color:'white', borderRadius: '5px', textTransform: 'none'}}>Inscrever equipa</Button>
+                                color:'white', borderRadius: '5px', textTransform: 'none'}}>{isSignedUp ? 'Mudar parceiro/a' : 'Inscrever equipa'}</Button>
                         </Grid>
                     </Grid>
                 </DialogContent>
