@@ -53,16 +53,18 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
     const [openDialog, setOpenDialog] = useState(false);
     const [nameTeam, setNameTeam] = useState(null);
     const [colegaDeEquipa, setColegaDeEquipa] = useState(null);
+    const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
+        if (update !== false){
         console.log(typeof nameTeam);
         console.log(typeof new Date());
         console.log(typeof user.user_code);
         console.log(typeof colegaDeEquipa);
         console.log(typeof tourney.id);
         console.log( nameTeam);
-        console.log( new Date());
+        console.log( date);
         console.log( user.user_code);
         console.log( colegaDeEquipa);
         console.log( tourney.id);
@@ -70,7 +72,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
  
         axiosConfig.post('/createteamByCode', {
             name:nameTeam,
-            subscription_date: new Date(),
+            subscription_date: date,
             player1Code:user.user_code,
             player2Code:colegaDeEquipa,
             tournament_id:tourney.id,
@@ -86,6 +88,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             .catch(err =>{
                 console.log(err)
             })
+        }
 
       }, [update]);
 
