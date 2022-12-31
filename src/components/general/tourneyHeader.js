@@ -127,6 +127,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             <Dialog open= {openDialog} width="25rem">
                 <DialogTitle>
                     <div style={{ fontSize: '1.5em' }}>Inscrição</div>
+                    <Button  style={{position:'absolute',top:'1rem', right:'1rem',}} onClick={()=>{setOpenDialog(!openDialog)}}><CloseIcon/></Button>
                 </DialogTitle>
                 <DialogContent>
                     <TextField
