@@ -57,9 +57,10 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
+        console.log(update);
         if (update !== false){
         console.log(typeof nameTeam);
-        console.log(typeof new Date());
+        console.log(typeof date);
         console.log(typeof user.user_code);
         console.log(typeof colegaDeEquipa);
         console.log(typeof tourney.id);
@@ -69,7 +70,8 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         console.log( colegaDeEquipa);
         console.log( tourney.id);
         console.log( storedAuth);
- 
+            
+        
         axiosConfig.post('/createteamByCode', {
             name:nameTeam,
             subscription_date: date,
@@ -83,11 +85,15 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             }
         })
             .then(res =>{
+                
                 console.log(res)
             })
             .catch(err =>{
+ 
                 console.log(err)
             })
+            setOpenDialog(!openDialog);
+            setUpdate(!update);
         }
 
       }, [update]);
