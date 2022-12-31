@@ -75,9 +75,9 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         axiosConfig.post('/createteamByCode', {
             name:nameTeam,
             subscription_date: date,
-            player1Code:user.user_code.toString(),
+            player1Code:user.user_code,
             player2Code:colegaDeEquipa,
-            tournament_id:tourney.id.toString()
+            tournament_id:tourney.id
         }, {
             headers: {
                 Authorization: 'Bearer ' + storedAuth
