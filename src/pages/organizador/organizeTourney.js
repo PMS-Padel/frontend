@@ -1,9 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React, {Component, useState} from 'react';
 import styled from "styled-components";
-import NavBar from "../../components/general/NavBar";
-import Row from "../../components/general/Row";
-import App from "../../App";
 import backgroundPic from "../../img/JogadorTorneiosInicialBackground.png";
 import backgroundPic2 from "../../img/OrganizadorInicialBackground.png";
 import AlertPopup from "../../components/general/AlertPopup";
@@ -16,15 +13,7 @@ import {Button, Grid, InputAdornment} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PosterImageDefault from "../../img/PosterImageDefault.png";
 import TextField from "@mui/material/TextField";
-import {helperTextName} from "../../autentication/dataConditions";
 import MenuItem from "@mui/material/MenuItem";
-
-const AccountButton = styled(AccountCircleIcon)`
-  color: white;
-  position: absolute; 
-  top: 0;
-  right: 10%
-`
 
 export default class OrganizeTourney extends Component {
     state = {
@@ -99,44 +88,53 @@ export default class OrganizeTourney extends Component {
     }
 
     submitTourney = () => {
-        this.setState({loadingTourney: true});
-        console.log(this.state.dataNewTourney);
-        axiosConfig.post('/createtournament', {
-            name: this.state.dataNewTourney.title,
-            description: this.state.dataNewTourney.description,
-            tournamenttype: this.state.dataNewTourney.category,
-            initdate: this.state.dataNewTourney.initialDate,
-            enddate: this.state.dataNewTourney.finalDate,
-            maxplayers: this.state.dataNewTourney.maxPlayers,
-            fileurl: this.state.dataNewTourney.file,
-            price: this.state.dataNewTourney.price,
-            location: this.state.dataNewTourney.local,
-            userid: this.state.user.id,
-            insurance: this.state.dataNewTourney.insurance
-        }, {
-            headers: {
-                Authorization: 'Bearer ' + this.state.storedAuth
-            }
-        })
-            .then(response => {
-              this.setState({loadingTourney: false});
-              this.setState(prevState => ({
-                  successAlertTourney: {
-                      ...prevState.successAlertTourney,
-                      open: true
-                  }
-              }))
+        if(this.state.dataNewTourney.title.trim() !== '' && this.state.dataNewTourney.title !== null &&
+            this.state.dataNewTourney.category !== null &&
+            this.state.dataNewTourney.initialDate.trim() !== '' && this.state.dataNewTourney.initialDate !== null &&
+            this.state.dataNewTourney.finalDate.trim() !== '' && this.state.dataNewTourney.finalDate !== null &&
+            this.state.dataNewTourney.maxPlayers !== null &&
+            this.state.dataNewTourney.local.trim() !== '' && this.state.dataNewTourney.local !== null &&
+            this.state.dataNewTourney.file.trim() !== '' && this.state.dataNewTourney.file !== null)
+        {
+            this.setState({loadingTourney: true});
+            console.log(this.state.dataNewTourney);
+            axiosConfig.post('/createtournament', {
+                name: this.state.dataNewTourney.title,
+                description: (this.state.dataNewTourney.description !== null && this.state.dataNewTourney.description.trim() !== '') ? this.state.dataNewTourney.description : "--",
+                tournamenttype: this.state.dataNewTourney.category,
+                initdate: this.state.dataNewTourney.initialDate,
+                enddate: this.state.dataNewTourney.finalDate,
+                maxplayers: this.state.dataNewTourney.maxPlayers,
+                fileurl: this.state.dataNewTourney.file,
+                price: this.state.dataNewTourney.price ?? 0,
+                location: this.state.dataNewTourney.local,
+                userid: this.state.user.id,
+                insurance: (this.state.dataNewTourney.insurance !== null && this.state.dataNewTourney.insurance.trim() !== '') ? this.state.dataNewTourney.insurance : "--",
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.state.storedAuth
+                }
             })
-            .catch(error => {
-              this.setState({loadingTourney: false});
-              this.setState(prevState => ({
-                  errorAlertTourney: {
-                      ...prevState.errorAlertTourney,
-                      open: true,
-                      errorStatus: error.code
-                  }
-              }))
-            })
+                .then(response => {
+                    this.setState({loadingTourney: false});
+                    this.setState(prevState => ({
+                        successAlertTourney: {
+                            ...prevState.successAlertTourney,
+                            open: true
+                        }
+                    }))
+                })
+                .catch(error => {
+                    this.setState({loadingTourney: false});
+                    this.setState(prevState => ({
+                        errorAlertTourney: {
+                            ...prevState.errorAlertTourney,
+                            open: true,
+                            errorStatus: error.code
+                        }
+                    }))
+                })
+        }
     }
 
     handleErrorAlertClose = () => {

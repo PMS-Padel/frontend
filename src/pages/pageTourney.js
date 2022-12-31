@@ -140,8 +140,12 @@ export default class TourneyPage extends Component {
                             <p>{this.state.tourney.description}</p>
                         </div>
                         <div>
-                            <h1>Tipo de torneio </h1>
+                            <h1>Tipo de torneio</h1>
                             {this.tipoDeTorneio(this.state.tourney.tournament_type_id)}
+                        </div>
+                        <div>
+                            <h1>Localização</h1>
+                            <p>{this.state.tourney.location}</p>
                         </div>
                         <div>
                             <h1>Preço (€)</h1>

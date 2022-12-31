@@ -95,7 +95,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 })
         }
         if (update && colegaDeEquipa !== '' && colegaDeEquipa !== undefined){
-            console.log(colegaDeEquipa)
+            //console.log(colegaDeEquipa)
             axiosConfig.post('/getByCode', {
                 user_code: colegaDeEquipa
             }, {
