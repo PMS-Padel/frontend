@@ -48,31 +48,48 @@ const DivChangeTextColor = styled.div`
   color: ${() => localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"};
 `
 
-export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTourneyChange}) {
+export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTourneyChange, storedAuth}) {
 
     const [openDialog, setOpenDialog] = useState(false);
+    const [nameTeam, setNameTeam] = useState(null);
+    const [colegaDeEquipa, setColegaDeEquipa] = useState(null);
+    const [update, setUpdate] = useState(false);
 
     useEffect(() => {
-      }, []);
-
-    function submitTeam(){
-        //console.log(this.state.changeTourney);
-        this.setState({loadingTourney: true});
-        axiosConfig.post('/updatetournament', {
-            name:undefined,
-            subscription_date:undefined,
-            player1_id:undefined,
-            player2_id:undefined,
-            tournament_id:undefined,
-            payed:undefined
+        console.log(typeof nameTeam);
+        console.log(typeof new Date());
+        console.log(typeof user.user_code);
+        console.log(typeof colegaDeEquipa);
+        console.log(typeof tourney.id);
+        console.log( nameTeam);
+        console.log( new Date());
+        console.log( user.user_code);
+        console.log( colegaDeEquipa);
+        console.log( tourney.id);
+        console.log( storedAuth);
+ 
+        axiosConfig.post('/createteamByCode', {
+            name:nameTeam,
+            subscription_date: new Date(),
+            player1Code:user.user_code,
+            player2Code:colegaDeEquipa,
+            tournament_id:tourney.id,
+            payed:'false'
         }, {
             headers: {
-                Authorization: 'Bearer ' + this.props.storedAuth
+                Authorization: 'Bearer ' + storedAuth
             }
         })
-            .then()
-            .catch()
-            }
+            .then(res =>{
+                console.log(res)
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+
+      }, [update]);
+
+
 
     function diasFalta() {
         let initDate = new Date(tourney.init_date);
@@ -133,12 +150,12 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                     <TextField
                         required
                         variant="outlined"
-                        id="name"
+                        id="nameTeam"
                         label="Nome da equipa"
                         placeholder="Nome da equipa"
                         style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem',marginLeft:'3.7rem'}}
                         onChange={(event) => {
-                            this.setState(undefined)
+                            setNameTeam(event.target.value)
                         }}
                     />
                     <TextField
@@ -149,10 +166,10 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                         placeholder="Colega de equipa"
                         style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem',marginLeft:'3.7rem'}}
                         onChange={(event) => {
-                            this.setState(undefined)
+                            setColegaDeEquipa(event.target.value)
                         }}  
                     />
-                    <Button onClick={undefined}
+                    <Button onClick={()=> setUpdate(!update)}
                         style={{position:'relative', marginTop:'2rem', backgroundColor:'#052F53',
                         color:'white', borderRadius: '5px', textTransform: 'none', marginLeft:'37%'}}>Atualizar torneio</Button>
                 </DialogContent>
