@@ -111,7 +111,7 @@ export default class TourneyPage extends Component {
                     <TourneyGeneral changeTourney={this.state.tourney} storedAuth={this.state.storedAuth}/>}
                 {this.state.MenuTourney === 0 && localStorage.getItem('loginForm') === 'player' &&
                     <div>
-                        <hi>oi</hi>
+                        <h1>oi</h1>
                     </div>}
             </>
         )
