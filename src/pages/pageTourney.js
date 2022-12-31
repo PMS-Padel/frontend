@@ -10,7 +10,7 @@ import {Navigate} from "react-router-dom";
 import NavBarAdmin from "../components/general/NavBarAdmin";
 import LoadingPopup from "../components/general/Loading";
 import {Button, Grid, InputAdornment} from "@mui/material";
-import TourneyHeader from "../components/general/tourneyHeader";
+import TourneyHeader from "../components/tourney/tourneyHeader";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import PosterImageDefault from "../img/PosterImageDefault.png";
@@ -35,7 +35,6 @@ export default class TourneyPage extends Component {
             
         }
         this.getTourney();
-        console.log(this.state.tourney)
     }
     getUser = async () => {
         const res = await axiosConfig.get('/test-authentication',{
@@ -91,15 +90,12 @@ export default class TourneyPage extends Component {
         switch (tipo) {
             case 1:
                 return(<p>Feminino</p>);
-
             case 2:
                 return(<p>Masculino</p>);
-
             case 3:
                 return(<p>Misto</p>);
-
             default:
-                <h1>Erro</h1>;
+                return(<h1>Erro</h1>);
           }
     }
 
