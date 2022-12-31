@@ -54,6 +54,8 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
     const [nameTeam, setNameTeam] = useState(null);
     const [colegaDeEquipa, setColegaDeEquipa] = useState(null);
     const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+    const [userCode, setUserCode] = useState(user.user_code.toString());
+    const [tourneyId, setTourneyId] = useState(tourney.id.toString());
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
@@ -61,23 +63,23 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         if (update !== false){
         console.log(typeof nameTeam);
         console.log(typeof date);
-        console.log(typeof user.user_code);
+        console.log(typeof userCode);
         console.log(typeof colegaDeEquipa);
-        console.log(typeof tourney.id);
+        console.log(typeof tourneyId);
         console.log( nameTeam);
         console.log( date);
-        console.log( user.user_code);
+        console.log( userCode);
         console.log( colegaDeEquipa);
-        console.log( tourney.id);
+        console.log( tourneyId);
         console.log( storedAuth);
             
         
         axiosConfig.post('/createteamByCode', {
             name:nameTeam,
             subscription_date: date,
-            player1Code:user.user_code,
+            player1Code:userCode,
             player2Code:colegaDeEquipa,
-            tournament_id:tourney.id,
+            tournament_id:tourneyId,
             payed:'false'
         }, {
             headers: {
