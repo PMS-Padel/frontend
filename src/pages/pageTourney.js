@@ -158,7 +158,7 @@ export default class TourneyPage extends Component {
                         </div>
                     </div>}
                     {this.state.MenuTourney === 1  &&
-                    <TourneyInscritos/>}
+                    <TourneyInscritos storedAuth={this.state.storedAuth} tourney={this.state.tourney} user={this.state.user}/>}
             </>
         )
     }
