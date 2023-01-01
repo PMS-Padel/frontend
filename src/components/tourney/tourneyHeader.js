@@ -283,7 +283,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             <div style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'100px', left:'150px', borderRadius: '5px'}}>
                 <img style={{width:'20rem', height:'20rem'}} src={tourney.file_url} alt={'Imagem acerca de ' + tourney.name}/>
             </div>
-            <DivChangeTextColor style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'100px', right:'150px', textAlign:'center', borderRadius: '5px'}}>
+            <DivChangeTextColor style={{backgroundColor:'white', position:'absolute', minWidth:'20rem', height:'20rem', top:'100px', right:'150px', textAlign:'center', borderRadius: '5px', objectFit: "cover"}}>
                 <h1 style={{fontSize:'2rem', marginTop:'1.4rem'}}>{tourney.name}</h1>
                 <h1 style={{fontSize:'1.25rem', marginTop:'1.25rem'}}>
                     {new Date(tourney.init_date).getDate() + '-' + (new Date(tourney.init_date).getMonth() + 1) + '-' + new Date(tourney.init_date).getFullYear() + ' '}

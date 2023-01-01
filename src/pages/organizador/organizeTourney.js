@@ -9,11 +9,12 @@ import {Navigate} from "react-router-dom";
 import TourneyRow from "../../components/tourney/TourneyRow";
 import NavBarAdmin from "../../components/general/NavBarAdmin";
 import LoadingPopup from "../../components/general/Loading";
-import {Button, Grid, InputAdornment} from "@mui/material";
+import {Button, Dialog, DialogContent, DialogTitle, Grid, InputAdornment} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PosterImageDefault from "../../img/PosterImageDefault.png";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default class OrganizeTourney extends Component {
     state = {
@@ -35,7 +36,8 @@ export default class OrganizeTourney extends Component {
             price: 0,
             local: '',
             insurance: ''
-        }
+        },
+        openDialog: false,
     };
 
     componentDidMount() {
@@ -211,6 +213,23 @@ export default class OrganizeTourney extends Component {
                     </div>
                     :
                     <div style={{position: "relative", top: 0, left: 0}}>
+                        <Dialog open={this.state.openDialog} width="25rem">
+                            <DialogTitle>
+                                <div style={{ fontSize: '1.5em' }}>Inserir URL</div>
+                                <Button style={{position:'absolute',top:'1rem', right:'1rem',}} onClick={()=>{this.setState({openDialog: false})}}><CloseIcon/></Button>
+                            </DialogTitle>
+                            <DialogContent style={{ justifyContent: 'center', textAlign: 'center' }}>
+                                <TextField
+                                    required
+                                    variant="outlined"
+                                    id="fileUrl"
+                                    label="Imagem (URL)"
+                                    placeholder="Imagem (URL)"
+                                    style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem'}}
+                                    onChange={(event) => this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, file: event.target.value}}))}
+                                />
+                            </DialogContent>
+                        </Dialog>
                         <img src={localStorage.getItem('loginForm') === 'admin' ? backgroundPic2 : backgroundPic}
                              alt="background" style={{
                             width: "100%",
@@ -240,9 +259,7 @@ export default class OrganizeTourney extends Component {
                                           '& .MuiTextField-root': { m: 1, width: '25ch' },
                                       }}>
                                     <Grid item xs={4}>
-                                        <Button style={{textTransform: 'none'}} component="label">
-                                            <input hidden accept="image/*" type="file" required
-                                               onChange={(e) => this.setState(prevState => ({dataNewTourney: {...prevState.dataNewTourney, file: URL.createObjectURL(e.target.files[0])}}))} />
+                                        <Button style={{textTransform: 'none'}} component="label" onClick={()=>{this.setState({openDialog: true})}}>
                                             <img src={this.state.dataNewTourney.file ?? PosterImageDefault} width={350} height={350} alt={"Imagem acerca de " + this.state.dataNewTourney.title}/>
                                         </Button>
                                     </Grid>
