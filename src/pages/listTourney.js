@@ -74,14 +74,16 @@ export default class TourneyList extends Component {
                         zIndex: "-1"}}>Os melhores torneios estão à tua espera!</h1>
                     <div style={{
                         width: "94%",
-                        height: "90%",
+
                         borderRadius: "1%",
                         position: 'absolute',
                         zIndex: 0,
                         objectFit: "cover",
                         top: 400,
                         left: 45,
-                        backgroundColor: "#FFFFFF"}}>
+                        backgroundColor: "#FFFFFF",
+                        paddingTop:'2rem',
+                        paddingBottom:'2rem'}}>
                         <TourneyRow maxLength={undefined} adminId={undefined}/>
                     </div>
                 </div>
