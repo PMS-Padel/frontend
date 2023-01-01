@@ -96,7 +96,7 @@ export default class TourneyPage extends Component {
             case 3:
                 return(<p>Misto</p>);
             default:
-                return(<h1>Erro</h1>);
+                return(<p>Carregando...</p>);
           }
     }
 
@@ -134,31 +134,54 @@ export default class TourneyPage extends Component {
                         top: 700,
                         left: 150,
                         backgroundColor: "#FFFFFF",
-                        paddingLeft:'2rem'
+                        paddingLeft:'2rem',
+                        color: "#052F53"
                     }}>
-                        <div>
-                            <h1>Descrição</h1>
-                            <p>{this.state.tourney.description}</p>
-                        </div>
-                        <div>
-                            <h1>Tipo de torneio</h1>
-                            {this.tipoDeTorneio(this.state.tourney.tournament_type_id)}
-                        </div>
-                        <div>
-                            <h1>Localização</h1>
-                            <p>{this.state.tourney.location}</p>
-                        </div>
-                        <div>
-                            <h1>Preço (€)</h1>
-                            <p>{this.state.tourney.price}</p>
-                        </div>
-                        <div>
-                            <h1>Seguro</h1>
-                            <p>{this.state.tourney.seguro}</p>
-                        </div>
-                    </div>}
-                    {this.state.MenuTourney === 1  &&
-                    <TourneyInscritos storedAuth={this.state.storedAuth} tourney={this.state.tourney} user={this.state.user}/>}
+                        <Grid container rowSpacing={1} columnSpacing={0}
+                              justifyContent="space-evenly"
+                              alignItems="center">
+                            <Grid item xs={6}>
+                                <div>
+                                    <h1>Descrição</h1>
+                                    <p>{this.state.tourney.description}</p>
+                                </div>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <div>
+                                    <h1>Tipo de torneio</h1>
+                                    {this.tipoDeTorneio(this.state.tourney.tournament_type_id)}
+                                </div>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <div>
+                                    <h1>Localização</h1>
+                                    <p>{this.state.tourney.location}</p>
+                                </div>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <div>
+                                    <h1>Preço (€)</h1>
+                                    <p>{this.state.tourney.price}</p>
+                                </div>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <div>
+                                    <h1>Seguro</h1>
+                                    <p>{this.state.tourney.seguro}</p>
+                                </div>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <div>
+                                    <h1>Data Torneio criado</h1>
+                                    <p>{new Date(this.state.tourney.created_at).getDate() + '-' + (new Date(this.state.tourney.created_at).getMonth() + 1) + '-' + new Date(this.state.tourney.created_at).getFullYear()}</p>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </div>
+                }
+                {this.state.MenuTourney === 1  &&
+                    <TourneyInscritos storedAuth={this.state.storedAuth} tourney={this.state.tourney} user={this.state.user}/>
+                }
             </>
         )
     }
