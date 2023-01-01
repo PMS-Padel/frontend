@@ -6,61 +6,58 @@ import { Typography, Box } from "@mui/material";
 
 
 export default function TourneyInscritos({tourney, user, storedAuth}) {
-
     const [dataTeams, setDataTeams] = useState({});
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
-        mostraTabela(dataTeams)
-        axiosConfig.get(`getteams/2`,{
+        axiosConfig.get(`getteams/${tourney.id}`,{
             headers: {
                 Authorization: 'Bearer ' + storedAuth
             }
         })
             .then((res) => {
-                console.log(res)
-                console.log('divider')
-                console.log(res.data)
                 let {data} = res;
                 setDataTeams(data)
-                setUpdate(true)
-
+                setUpdate(!update)
             })
             .catch((error) => false);
-        },[])
-
-    useEffect(() => {
-        console.log('2 divider')
-        console.log(dataTeams)
-    },[dataTeams])
+        },[tourney])
 
     function mostraTabela(dataTeams){
-
         if (update){
             return(
                 <>
-                    <div style={{position:'relative', top:'10rem', backgroundColor:'white', paddingTop:'1rem', marginLeft:'15rem', marginRight:'15rem', paddingBottom:'1rem', borderRadius: '5px' }}>
-                    <table style={{paddingLeft:'2rem', borderCollapse:' collapse', position:'relative', left:'13%'}}>
-                        <thead style={{paddingLeft:'2rem', position:'relative', marginLeft:'2rem'}}>
-                            <tr style={{paddingLeft:'2rem', border:'1px solid #052F53'}}>
-                                <th style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>Nome da equipa</th>
-                                <th style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>Jogadores</th>
-                                <th style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>Data de inscrição</th>
+                    <div style={{
+                        width: "80%",
+                        borderRadius: "1%",
+                        position: 'absolute',
+                        zIndex: 0,
+                        objectFit: "cover",
+                        top: 700,
+                        left: 150,
+                        backgroundColor: "#FFFFFF",
+                        paddingLeft:'2rem',
+                        color: "#052F53"
+                    }}>
+                    <table style={{padding:'2rem', justifyContent:'center', textAlign: 'center'}}>
+                        <thead>
+                            <tr>
+                                <th>Nome da equipa</th>
+                                <th>Jogadores</th>
+                                <th>Níveis</th>
+                                <th>Data de inscrição</th>
                             </tr>
                         </thead>
                         <tbody>
                             {dataTeams.map((res)=>(
-                                <tr>
-                                <td style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>{res.name}</td>
-                                <td style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>{res.player1_id} <br></br> {res.player2_id} </td>
-                                <td style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>{res.subscription_date}</td>
+                                <tr key={res.id}>
+                                <td style={{ padding: "0 15px" }}>{res.name}</td>
+                                <td style={{ padding: "0 15px" }}>{res.player1_id.name} | {res.player2_id.name} </td>
+                                <td style={{ padding: "0 15px" }}>{res.player1_id.level} | {res.player2_id.level} </td>
+                                <td style={{ padding: "0 15px" }}>{res.subscription_date}</td>
                                 </tr>
                             ))}
-            
-
-
                         </tbody>
-
                     </table>
                     </div>
                 </>
@@ -68,7 +65,20 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
         }
         else {
             return (
-                <h1> Carregando tabel.</h1>
+                <div style={{
+                    width: "80%",
+                    borderRadius: "1%",
+                    position: 'absolute',
+                    zIndex: 0,
+                    objectFit: "cover",
+                    top: 700,
+                    left: 150,
+                    backgroundColor: "#FFFFFF",
+                    paddingLeft:'2rem',
+                    color: "#052F53"
+                }}>
+                    <h1>Carregando tabela...</h1>
+                </div>
             )
         }
     }
@@ -76,9 +86,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
 
     return(
         <>
-        {mostraTabela(dataTeams)}
- 
-
+            {mostraTabela(dataTeams)}
         </>
     )
 }

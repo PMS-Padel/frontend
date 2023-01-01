@@ -37,6 +37,7 @@ const Container = styled.div`
 
 const HRefA = styled.a`
   color: white;
+  cursor: pointer;
 
   &:hover,
   &.active {
@@ -135,7 +136,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                     axiosConfig.post('/updateteam', {
                         id: subbedTeamId,
                         name: nameTeam,
-                        subscriptiondate: new Date().toISOString().slice(0, 10),
+                        subscriptiondate: new Date().toISOString(),
                         player1_id: user.id,
                         player2Code: colegaDeEquipa,
                         tournamentid: tourney.id
@@ -158,7 +159,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 {
                     axiosConfig.post('/createteamByCode', {
                         name: nameTeam,
-                        subscriptiondate: new Date().toISOString().slice(0, 10),
+                        subscriptiondate: new Date().toISOString(),
                         player1Code: user.user_code,
                         player2Code: colegaDeEquipa,
                         tournamentid: tourney.id
