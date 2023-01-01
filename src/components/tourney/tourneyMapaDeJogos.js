@@ -56,9 +56,9 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                                         label="Age"
                                         onChange={undefined}
                                     >
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
+                                        {dataTeams.map((res)=>(
+                                        <MenuItem value={res.id}> {res.name}</MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                                 </div>
