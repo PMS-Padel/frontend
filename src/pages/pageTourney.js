@@ -172,7 +172,7 @@ export default class TourneyPage extends Component {
                             </Grid>
                             <Grid item xs={6}>
                                 <div>
-                                    <h1>Data Torneio criado</h1>
+                                    <h1>Data de criação do torneio</h1>
                                     <p>{new Date(this.state.tourney.created_at).getDate() + '-' + (new Date(this.state.tourney.created_at).getMonth() + 1) + '-' + new Date(this.state.tourney.created_at).getFullYear()}</p>
                                 </div>
                             </Grid>
@@ -180,7 +180,7 @@ export default class TourneyPage extends Component {
                     </div>
                 }
                 {this.state.MenuTourney === 1  &&
-                    <TourneyInscritos storedAuth={this.state.storedAuth} tourney={this.state.tourney} user={this.state.user}/>
+                    <TourneyInscritos storedAuth={this.state.storedAuth} tourney={this.state.tourney}/>
                 }
             </>
         )

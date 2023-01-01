@@ -72,6 +72,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
     const [update, setUpdate] = useState(false);
     const [dataParceiro, setDataParceiro] = useState({});
     const [subbedTeamId, setSubbedTeamId] = useState(false);
+    const [dataTeams, setDataTeams] = useState({});
     useEffect(() => {
         if (user !== undefined && tourney !== undefined)
         {
@@ -95,6 +96,19 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                     setIsSignedUp(false);
                 })
         }
+        if(tourney !== undefined)
+        {
+            axiosConfig.get(`getteams/${tourney.id}`, {
+                headers: {
+                    Authorization: 'Bearer ' + storedAuth
+                }
+            })
+                .then((res) => {
+                    let {data} = res;
+                    setDataTeams(data);
+                })
+                .catch((error) => false);
+        }
         if (update && colegaDeEquipa !== '' && colegaDeEquipa !== undefined){
             //console.log(colegaDeEquipa)
             axiosConfig.post('/getByCode', {
@@ -116,6 +130,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
 
     }, [update, colegaDeEquipa, user, tourney]);
 
+
     function inscreverEquipa() {
         if(dataParceiro !== {} && nameTeam !== null && nameTeam !== '')
         {
@@ -123,6 +138,10 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             {
                 //alerta de erro de ser igual a admin
                 setErrorAlert({...errorAlert, description: 'Não pode inscrever o próprio organizador deste torneio como parceiro! Verifique e tente novamente.', open: true, errorStatus: 'ERR_DENIED_PARTNER'});
+            }
+            else if(dataTeams.length*2 >= tourney.max_players)
+            {
+                setErrorAlert({...errorAlert, description: 'A inscrição está lotada para este torneio. Verifique novamente.', open: true, errorStatus: 'ERR_TEAMS_MAX'});
             }
             else if(
                 (dataParceiro.gender === 'M' && user.gender === 'M' && tourney.tournament_type_id === 2) ||
@@ -199,7 +218,15 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             return (
                 <>
                     <h1 style={{fontSize: '1rem', marginTop: '1.5rem'}}>Inscrições fecham em {diffInDays} dias</h1>
-                    {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id &&
+                    {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id && dataTeams.length*2 < tourney.max_players &&
+                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}}
+                                onClick={()=>{setOpenDialog(true)}}>{isSignedUp ? 'Mudar equipa' : 'Inscreve-te!'}</Button>
+                    }
+                    {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id && dataTeams.length*2 >= tourney.max_players && !isSignedUp &&
+                        <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#530508", color:"white"}} disabled
+                                onClick={()=>{setOpenDialog(true)}}>Inscrição lotada!</Button>
+                    }
+                    {localStorage.getItem('loginForm') === 'player' && user.id !== tourney.user_id && dataTeams.length*2 >= tourney.max_players && isSignedUp &&
                         <Button variant="contained" style={{textTransform: 'none', backgroundColor: "#052F53"}}
                                 onClick={()=>{setOpenDialog(true)}}>{isSignedUp ? 'Mudar equipa' : 'Inscreve-te!'}</Button>
                     }
@@ -263,7 +290,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                     até
                     {' ' + new Date(tourney.end_date).getDate() + '-' + (new Date(tourney.end_date).getMonth() + 1) + '-' + new Date(tourney.end_date).getFullYear()}
                 </h1>
-                <h1 style={{fontSize:'2.5rem', marginTop:'2rem'}}>??/{tourney.max_players} inscritos</h1>
+                <h1 style={{fontSize:'2.5rem', marginTop:'2rem'}}>{dataTeams !== {} ? dataTeams.length*2 : ''}/{tourney.max_players} inscritos</h1>
                 {diasFalta()}
             </DivChangeTextColor>
             <Dialog open={openDialog} width="25rem">
