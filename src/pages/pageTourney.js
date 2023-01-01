@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import PosterImageDefault from "../img/PosterImageDefault.png";
 import TourneyGeneral from "../components/tourney/tourneyGeneral";
+import TourneyInscritos from "../components/tourney/tourneyInscritos";
 import { padding } from '@mui/system';
 
 export default class TourneyPage extends Component {
@@ -156,6 +157,8 @@ export default class TourneyPage extends Component {
                             <p>{this.state.tourney.seguro}</p>
                         </div>
                     </div>}
+                    {this.state.MenuTourney === 1  &&
+                    <TourneyInscritos/>}
             </>
         )
     }
