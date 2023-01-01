@@ -18,7 +18,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
             .then((res) => {
                 let {data} = res;
                 setDataTeams(data)
-                setUpdate(!update)
+                setUpdate(true)
             })
             .catch((error) => false);
         },[tourney])

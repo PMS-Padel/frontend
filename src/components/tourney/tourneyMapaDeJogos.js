@@ -21,7 +21,7 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
             .then((res) => {
                 let {data} = res;
                 setDataTeams(data)
-                setUpdate(!update)
+                setUpdate(true)
             })
             .catch((error) => false);
         },[tourney])
@@ -32,6 +32,7 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                 <>
                     <div style={{
                         width: "80%",
+                        height:"50rem",
                         borderRadius: "1%",
                         position: 'absolute',
                         zIndex: 0,
@@ -40,36 +41,67 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                         left: 150,
                         backgroundColor: "#FFFFFF",
                         paddingLeft:'2rem',
-                        color: "#052F53"
-                    }}>
-                        <div className='Container'>
+                        color: "#052F53"}}>
 
-                            <div className='Branch_1'>
-
-                                <div className='Object_1'>
-                                {dataTeams.map((ress)=>(
-                                    <FormControl fullWidth>
-                                        <InputLabel id={ress.id}>Team</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id= {ress.id}
-                                            value={undefined}
-                                            label="Age"
-                                            onChange={undefined}
-                                        >
-                                            {dataTeams.map((res)=>(
-                                            <MenuItem value={res.id}> {res.name}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                ))}
-                                </div>
-
-                            </div>
-
+                        <div style={{position:'relative', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', paddingLeft:'5rem'}}>
+                            <h1>Eliminatórias</h1>
+                        {dataTeams.map((ress)=>(
+                            <FormControl fullWidth style={{paddingTop:'2rem'}}>
+                                <InputLabel id={ress.id}>Team</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id= {ress.id}
+                                    value={undefined}
+                                    label="Age"
+                                    onChange={undefined}
+                                >
+                                    {dataTeams.map((res)=>(
+                                    <MenuItem value={res.id}> {res.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        ))}
                         </div>
-
+                        <div style={{position:'absolute', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', left:'25rem', top:'0%'}}>
+                            <h1>Semi-finais</h1>
+                        {dataTeams.map((ress)=>(
+                            <FormControl fullWidth style={{paddingTop:'2rem'}}>
+                                <InputLabel id={ress.id}>Team</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id= {ress.id}
+                                    value={undefined}
+                                    label="Age"
+                                    onChange={undefined}
+                                >
+                                    {dataTeams.map((res)=>(
+                                    <MenuItem value={res.id}> {res.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        ))}
+                        </div>
+                        <div style={{position:'absolute', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', top:'20rem', top:'0%', left:'43rem'}}>
+                            <h1>Final</h1>
+                        {dataTeams.map((ress)=>(
+                            <FormControl fullWidth style={{paddingTop:'2rem'}}>
+                                <InputLabel id={ress.id}>Team</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id= {ress.id}
+                                    value={undefined}
+                                    label="Age"
+                                    onChange={undefined}
+                                >
+                                    {dataTeams.map((res)=>(
+                                    <MenuItem value={res.id}> {res.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        ))}
+                        </div>
                     </div>
+
                 </>
             )
         }
