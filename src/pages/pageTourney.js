@@ -17,6 +17,8 @@ import PosterImageDefault from "../img/PosterImageDefault.png";
 import TourneyGeneral from "../components/tourney/tourneyGeneral";
 import TourneyInscritos from "../components/tourney/tourneyInscritos";
 import TourneyMapaDeJogos from "../components/tourney/tourneyMapaDeJogos";
+import TourneyCalendario from "../components/tourney/tourneyCalendario";
+import TourneyResultados from "../components/tourney/tourneyResultados";
 import { padding } from '@mui/system';
 
 export default class TourneyPage extends Component {
@@ -182,6 +184,9 @@ export default class TourneyPage extends Component {
                 }
                 {this.state.MenuTourney === 1  &&<TourneyInscritos storedAuth={this.state.storedAuth} tourney={this.state.tourney}/>}
                 {this.state.MenuTourney === 2 && <TourneyMapaDeJogos storedAuth={this.state.storedAuth} tourney={this.state.tourney}/>}
+                {this.state.MenuTourney === 3 && <TourneyCalendario storedAuth={this.state.storedAuth} tourney={this.state.tourney}/>}
+                {this.state.MenuTourney === 4 && <TourneyResultados storedAuth={this.state.storedAuth} tourney={this.state.tourney}/>}
+                
             </>
         )
     }
