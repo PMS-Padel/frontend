@@ -2,6 +2,10 @@
 import React, {useState, useEffect, useRef,} from "react";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import {Button} from "@mui/material";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import axiosConfig from "../../axiosConfig";
 
 export default function TourneyMapaDeJogos({tourney, storedAuth}) {
@@ -38,7 +42,31 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                         paddingLeft:'2rem',
                         color: "#052F53"
                     }}>
-                        
+                        <div className='Container'>
+
+                            <div className='Branch_1'>
+
+                                <div className='Object_1'>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Team</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={undefined}
+                                        label="Age"
+                                        onChange={undefined}
+                                    >
+                                        <MenuItem value={10}>Ten</MenuItem>
+                                        <MenuItem value={20}>Twenty</MenuItem>
+                                        <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
                 </>
             )
