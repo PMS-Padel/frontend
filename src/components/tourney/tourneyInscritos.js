@@ -11,6 +11,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
+        mostraTabela(dataTeams)
         axiosConfig.get(`getteams/2`,{
             headers: {
                 Authorization: 'Bearer ' + storedAuth
@@ -22,7 +23,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
                 console.log(res.data)
                 let {data} = res;
                 setDataTeams(data)
-                setUpdate(!update)
+                setUpdate(true)
 
             })
             .catch((error) => false);
@@ -38,21 +39,21 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
         if (update){
             return(
                 <>
-                    <div style={{position:'relative', backgroundColor:'green', top:'5rem', left:'20%', width:'40rem'}}>
-                    <table style={{padding:'2rem'}}>
-                        <thead>
-                            <tr>
-                                <th>Nome da equipa</th>
-                                <th>Jogadores</th>
-                                <th>Data de inscrição</th>
+                    <div style={{position:'relative', top:'10rem', backgroundColor:'white', paddingTop:'1rem', marginLeft:'15rem', marginRight:'15rem', paddingBottom:'1rem', borderRadius: '5px' }}>
+                    <table style={{paddingLeft:'2rem', borderCollapse:' collapse', position:'relative', left:'13%'}}>
+                        <thead style={{paddingLeft:'2rem', position:'relative', marginLeft:'2rem'}}>
+                            <tr style={{paddingLeft:'2rem', border:'1px solid #052F53'}}>
+                                <th style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>Nome da equipa</th>
+                                <th style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>Jogadores</th>
+                                <th style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>Data de inscrição</th>
                             </tr>
                         </thead>
                         <tbody>
                             {dataTeams.map((res)=>(
                                 <tr>
-                                <td>{res.name}</td>
-                                <td>{res.player1_id} | {res.player2_id} </td>
-                                <td>{res.subscription_date}</td>
+                                <td style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>{res.name}</td>
+                                <td style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>{res.player1_id} <br></br> {res.player2_id} </td>
+                                <td style={{ border:'1px solid #052F53', width:'33%', padding:'1rem'}}>{res.subscription_date}</td>
                                 </tr>
                             ))}
             
@@ -75,7 +76,6 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
 
     return(
         <>
-        <h1>inscrições</h1>
         {mostraTabela(dataTeams)}
  
 
