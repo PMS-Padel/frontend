@@ -50,7 +50,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
                         </thead>
                         <tbody>
                             {dataTeams.map((res)=>(
-                                <tr>
+                                <tr key={res.id}>
                                 <td style={{ padding: "0 15px" }}>{res.name}</td>
                                 <td style={{ padding: "0 15px" }}>{res.player1_id.name} | {res.player2_id.name} </td>
                                 <td style={{ padding: "0 15px" }}>{res.player1_id.level} | {res.player2_id.level} </td>
