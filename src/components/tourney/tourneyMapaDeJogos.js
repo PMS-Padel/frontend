@@ -47,20 +47,22 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                             <div className='Branch_1'>
 
                                 <div className='Object_1'>
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Team</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={undefined}
-                                        label="Age"
-                                        onChange={undefined}
-                                    >
-                                        {dataTeams.map((res)=>(
-                                        <MenuItem value={res.id}> {res.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                {dataTeams.map((ress)=>(
+                                    <FormControl fullWidth>
+                                        <InputLabel id={ress.id}>Team</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id= {ress.id}
+                                            value={undefined}
+                                            label="Age"
+                                            onChange={undefined}
+                                        >
+                                            {dataTeams.map((res)=>(
+                                            <MenuItem value={res.id}> {res.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                ))}
                                 </div>
 
                             </div>
