@@ -99,7 +99,7 @@ export default class OrganizeTourney extends Component {
             this.state.dataNewTourney.file.trim() !== '' && this.state.dataNewTourney.file !== null)
         {
             this.setState({loadingTourney: true});
-            console.log(this.state.dataNewTourney);
+            //console.log(this.state.dataNewTourney);
             axiosConfig.post('/createtournament', {
                 name: this.state.dataNewTourney.title,
                 description: (this.state.dataNewTourney.description !== null && this.state.dataNewTourney.description.trim() !== '') ? this.state.dataNewTourney.description : "--",
