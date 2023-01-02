@@ -81,7 +81,7 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                             </FormControl>
                         ))}
                         </div>
-                        <div style={{position:'absolute', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', top:'20rem', top:'0%', left:'43rem'}}>
+                        <div style={{position:'absolute', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', top:'0%', left:'43rem'}}>
                             <h1>Final</h1>
                         {dataTeams.map((ress)=>(
                             <FormControl fullWidth style={{paddingTop:'2rem'}}>

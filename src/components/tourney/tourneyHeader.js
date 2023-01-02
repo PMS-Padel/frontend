@@ -76,25 +76,27 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
     useEffect(() => {
         if (user !== undefined && tourney !== undefined)
         {
-            axiosConfig.post('/isteammate', {
-                playerid: user.id,
-                tournamentid : tourney.id
-            }, {
-                headers: {
-                    Authorization: 'Bearer ' + storedAuth
-                }
-            })
-                .then(res =>{
-                    //console.log('entrou')
-                    setIsSignedUp(true);
-                    const {data} = res;
-                    //add team to default value
-                    setNameTeam(data.name);
-                    setSubbedTeamId(data.id);
+            if(user.id !== tourney.user_id) {
+                axiosConfig.post('/isteammate', {
+                    playerid: user.id,
+                    tournamentid: tourney.id
+                }, {
+                    headers: {
+                        Authorization: 'Bearer ' + storedAuth
+                    }
                 })
-                .catch(err =>{
-                    setIsSignedUp(false);
-                })
+                    .then(res => {
+                        //console.log('entrou')
+                        setIsSignedUp(true);
+                        const {data} = res;
+                        //add team to default value
+                        setNameTeam(data.name);
+                        setSubbedTeamId(data.id);
+                    })
+                    .catch(err => {
+                        setIsSignedUp(false);
+                    })
+            }
         }
         if(tourney !== undefined)
         {
@@ -111,9 +113,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         }
         if (update && colegaDeEquipa !== '' && colegaDeEquipa !== undefined){
             //console.log(colegaDeEquipa)
-            axiosConfig.post('/getByCode', {
-                user_code: colegaDeEquipa
-            }, {
+            axiosConfig.get('/getByCode/' + colegaDeEquipa, {
                 headers: {
                     Authorization: 'Bearer ' + storedAuth
                 }
@@ -139,6 +139,10 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 //alerta de erro de ser igual a admin
                 setErrorAlert({...errorAlert, description: 'Não pode inscrever o próprio organizador deste torneio como parceiro! Verifique e tente novamente.', open: true, errorStatus: 'ERR_DENIED_PARTNER'});
             }
+            else if(dataParceiro.id === user.id)
+            {
+                setErrorAlert({...errorAlert, description: 'Não se pode inscrever-se a si mesmo como parceiro. Verifique novamente.', open: true, errorStatus: 'ERR_SAME_PARTNER'});
+            }
             else if(dataTeams.length*2 >= tourney.max_players)
             {
                 setErrorAlert({...errorAlert, description: 'A inscrição está lotada para este torneio. Verifique novamente.', open: true, errorStatus: 'ERR_TEAMS_MAX'});
@@ -158,7 +162,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                         subscriptiondate: new Date().toISOString(),
                         player1_id: user.id,
                         player2Code: colegaDeEquipa,
-                        tournamentid: tourney.id
+                        tournamentid: tourney.id,
                     }, {
                         headers: {
                             Authorization: 'Bearer ' + storedAuth
@@ -181,7 +185,8 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                         subscriptiondate: new Date().toISOString(),
                         player1Code: user.user_code,
                         player2Code: colegaDeEquipa,
-                        tournamentid: tourney.id
+                        tournamentid: tourney.id,
+                        payed: (tourney.price === 0),
                     }, {
                         headers: {
                             Authorization: 'Bearer ' + storedAuth
@@ -341,10 +346,11 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                                 label="Código do/a parceiro/a"
                                 placeholder="Código do/a parceiro/a"
                                 style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'10rem', marginTop:'1rem'}}
-                                onChange={(event) => {
+                                onBlur={(event) => {
                                     setColegaDeEquipa(event.target.value);
                                     setUpdate(true);
                                 }}
+
                             />
                         </Grid>
                         <Grid item xs={6}>
