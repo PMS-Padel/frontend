@@ -182,7 +182,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
                             </Button>
                         </DownloadTableExcel>
                         <table ref={tableRef} style={{margin:'2rem', justifyContent:'center', textAlign: 'center',
-                        color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"}} hidden>
+                        color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53",}} hidden>
                             <thead>
                                 <tr>
                                     <th>Nome da equipa</th>
