@@ -49,15 +49,38 @@ export default class TourneyRow extends Component {
                       alignItems="center">
                     {
                         this.props.adminId !== undefined &&
-                        this.state.tourneys.sort((a,b) => b.id - a.id).slice(0, (this.props.maxLength)).filter((tourney) => tourney.user_id === this.props.adminId).map(function(tourney, index){
+                        this.state.tourneys
+                            .sort((a,b) => b.id - a.id)
+                            .slice(0, (this.props.maxLength))
+                            .filter((tourney) => tourney.user_id === this.props.adminId)
+                            .map(function(tourney, index){
                             return <Grid item xs={3} key={index}>
                                 <MediaCard tourney={tourney}/>
                             </Grid>
                         })
                     }
                     {
-                        this.props.adminId === undefined &&
-                        this.state.tourneys.sort((a,b) => b.id - a.id).slice(0, (this.props.maxLength)).map(function(tourney, index){
+                        this.props.userId !== undefined &&
+                        this.state.tourneys
+                            .sort((a,b) => b.id - a.id)
+                            .slice(0, (this.props.maxLength))
+                            .filter(tournament => {
+                                return tournament.teams.some(team => {
+                                    return team.player1_id.id === this.props.userId || team.player2_id.id === this.props.userId;
+                                });
+                            })
+                            .map(function(tourney, index){
+                                return <Grid item xs={3} key={index}>
+                                    <MediaCard tourney={tourney}/>
+                                </Grid>
+                            })
+                    }
+                    {
+                        this.props.adminId === undefined && this.props.userId === undefined &&
+                        this.state.tourneys
+                            .sort((a,b) => b.id - a.id)
+                            .slice(0, (this.props.maxLength))
+                            .map(function(tourney, index){
                             return <Grid item xs={3} key={index}>
                                 <MediaCard tourney={tourney}/>
                             </Grid>

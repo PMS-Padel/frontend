@@ -57,7 +57,7 @@ export default class MenuInicial extends Component {
                 <div>
                     <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "2%"}}>Torneios</h1>
                 </div>
-                <TourneyRow maxLength={3} adminId={undefined}/>
+                <TourneyRow maxLength={3} adminId={undefined} userId={undefined}/>
                 <div style={{ borderBottom: "3px solid #B8CEE2", paddingBottom: "50px" }}>
                     <a href="/torneios" style={{ color:"#052F53" }}>
                         <h1 style={{fontSize: "40px", color: "#052F53", justifyContent: "middle", textAlign: "center", paddingTop: "30px"}}>

@@ -375,9 +375,9 @@ export default class SettingsAccount extends Component {
                             </Grid>
                         </div>
                         <div>
-                            <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "3%"}}>Os teus torneios</h1>
+                            <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "3%"}}>Os teus torneios inscritos</h1>
                         </div>
-                        <TourneyRow maxLength={undefined} adminId={undefined}/>
+                        <TourneyRow maxLength={undefined} adminId={undefined} userId={this.state.user.id}/>
                     </div>
                 </div>
                 <AlertPopup errorAlert={this.props.errorAlertLogout} handleErrorAlert={this.props.handleErrorAlertCloseLogout} />

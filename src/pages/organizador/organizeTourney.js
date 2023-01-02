@@ -208,7 +208,7 @@ export default class OrganizeTourney extends Component {
                             backgroundColor: "#FFFFFF"
                         }}>
                             <h1 style={{fontSize: "40px", color: "#052F53", paddingLeft: "3%"}}>Os teus torneios criados mais recentes</h1>
-                            <TourneyRow maxLength={undefined} adminId={this.state.user.id}/>
+                            <TourneyRow maxLength={undefined} adminId={this.state.user.id} userId={undefined}/>
                         </div>
                     </div>
                     :
