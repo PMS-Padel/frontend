@@ -1,18 +1,25 @@
-import {Grid, InputAdornment, Button} from "@mui/material";
+import {Grid, InputAdornment, Button, DialogTitle, DialogContent, Dialog} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import axiosConfig from "../../axiosConfig";
 import LoadingPopup from "../general/Loading";
 import AlertPopup from "../general/AlertPopup";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 export default class TourneyGeneral extends Component {
     state = {
-        changeTourney: [],
+        changeTourney: this.props.changeTourney,
         loadingTourney: false,
         errorAlertTourney: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na alteração do torneio. Verifique e tente novamente.'},
         successAlertTourney: {open: false, severity: 'success', errorStatus: 'SUCESSO', description: 'O torneio foi atualizada com sucesso!'},
+        openDialogRemove: false,
+        openDialogRemoveName: '',
+        chosenTeam: {id: '', name: ''},
+        loading: false,
+        errorAlert: {open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro na eliminação do torneio. Verifique e tente novamente.'},
+        successAlert: {open: false, severity: 'success', errorStatus: 'SUCESSO', description: 'O torneio foi eliminado com sucesso!'},
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -101,12 +108,80 @@ export default class TourneyGeneral extends Component {
         window.location.reload();
     }
 
+    removeTourney = () => {
+        if(this.state.openDialogRemoveName !== undefined && this.state.openDialogRemoveName.trim() !== '')
+        {
+            this.setState({loading: true});
+            axiosConfig.post('/deleteTourney', {
+                id: this.state.chosenTeam.id,
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.props.storedAuth
+                }
+            })
+                .then(res => {
+                    this.setState({openDialogRemove: false});
+                    this.setState({loading: false});
+                    this.setState(prevState => ({
+                        successAlertTourney: {
+                            ...prevState.successAlertTourney,
+                            open: true
+                        }
+                    }))
+                })
+                .catch(err => {
+                    this.setState({loading: false});
+                    this.setState(prevState => ({
+                        errorAlertTourney: {
+                            ...prevState.errorAlertTourney,
+                            open: true
+                        }
+                    }))
+                })
+        }
+    }
+    handleRemoveTeam = (team) => {
+        this.setState({openDialogRemove: true});
+        this.setState({chosenTeam: team});
+    }
+    handleCloseRemoveTeam = () => {
+        this.setState({openDialogRemove: false});
+    }
+
     render() {
         return (
             <>
                 <LoadingPopup loading={this.state.loadingTourney}/>
+                <LoadingPopup loading={this.state.loading}/>
                 <AlertPopup errorAlert={this.state.errorAlertTourney} handleErrorAlert={this.handleErrorAlertClose} />
                 <AlertPopup errorAlert={this.state.successAlertTourney} handleErrorAlert={this.handleSuccessAlertClose} />
+                <Dialog open={this.state.openDialogRemove} width="25rem">
+                    <DialogTitle>
+                        <div style={{ fontSize: '1.5em' }}>Remover torneio</div>
+                        <Button style={{position:'absolute',top:'1rem', right:'1rem',}} onClick={()=>{this.handleCloseRemoveTeam()}}><CloseIcon/></Button>
+                    </DialogTitle>
+                    <DialogContent style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        <p>Insere o nome do torneio - {this.state.chosenTeam.name} - para confirmar a remoção.</p>
+                        <TextField
+                            required
+                            variant="outlined"
+                            id="confirmRemoveNameTourney"
+                            label="Nome do torneio"
+                            placeholder="Nome do torneio"
+                            style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem'}}
+                            onChange={(event) => this.setState({openDialogRemoveName: event.target.value})}
+                            error={this.state.openDialogRemoveName !== this.state.chosenTeam.name}
+                            helperText={this.state.openDialogRemoveName !== this.state.chosenTeam.name ? 'Inválido' : ''}
+                        />
+                        <Button onClick={this.handleCloseRemoveTeam}
+                                style={{position:'relative', marginLeft:'60%', marginTop:'3rem',
+                                    backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px',
+                                    textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
+                        <Button onClick={this.removeTourney} disabled={this.state.openDialogRemoveName !== this.state.chosenTeam.name}
+                                style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                                    color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
+                    </DialogContent>
+                </Dialog>
                 <div style={{
                     width: "80%",
                     borderRadius: "1%",
@@ -125,7 +200,6 @@ export default class TourneyGeneral extends Component {
                                   sx={{
                                       '& .MuiTextField-root': {m: 1, width: '25ch'},
                                   }}>
-
                                 <Grid item xs={4} style={{paddingTop: '25px'}}>
                                     <Grid container spacing={2}
                                           justifyContent="center"
@@ -350,10 +424,20 @@ export default class TourneyGeneral extends Component {
                                         </Grid>
                                     </Grid>
                                 </Grid>
+                                <Grid item xs={2} style={{paddingTop: '25px'}}
+                                      justifyContent="space-evenly"
+                                      alignItems="center">
+                                    <Button onClick={this.submitTourney} variant="contained"
+                                            style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                                                color:'white', borderRadius: '5px', textTransform: 'none'}}>Atualizar torneio</Button>
+                                    <Button onClick={() => this.setState({changeTourney: this.props.changeTourney})} variant="contained"
+                                            style={{position:'relative', marginTop:'2rem', backgroundColor:'#052F53',
+                                                color:'white', borderRadius: '5px', textTransform: 'none', width: '90%'}}>Repor dados do torneio</Button>
+                                    <Button onClick={() => this.handleRemoveTeam(this.state.changeTourney)} variant="contained"
+                                            style={{position:'relative', marginTop:'2rem', backgroundColor:'#530505',
+                                                color:'white', borderRadius: '5px', textTransform: 'none'}}>Eliminar torneio</Button>
+                                </Grid>
                             </Grid>
-                            <Button onClick={this.submitTourney}
-                                        style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
-                                            color:'white', width:'15%', borderRadius: '5px', textTransform: 'none', marginLeft:'40%'}}>Atualizar torneio</Button>
                         </div>
                     </div>
                 </div>
