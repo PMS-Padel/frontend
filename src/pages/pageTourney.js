@@ -179,6 +179,14 @@ export default class TourneyPage extends Component {
                                     <p>{new Date(this.state.tourney.created_at).getDate() + '-' + (new Date(this.state.tourney.created_at).getMonth() + 1) + '-' + new Date(this.state.tourney.created_at).getFullYear()}</p>
                                 </div>
                             </Grid>
+                            <Grid item xs={12}>
+                                <div>
+                                    <h1>Organizador</h1>
+                                    <p>Nome: {this.state.tourney.admin !== undefined ? this.state.tourney.admin.name : '--'}</p>
+                                    <p>Email: {this.state.tourney.admin !== undefined ? this.state.tourney.admin.email : '--'}</p>
+                                    <p>Contacto: {this.state.tourney.admin !== undefined ? this.state.tourney.admin.phone_number : '--'}</p>
+                                </div>
+                            </Grid>
                         </Grid>
                     </div>
                 }

@@ -192,7 +192,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                         player1Code: user.user_code,
                         player2Code: colegaDeEquipa,
                         tournamentid: tourney.id,
-                        payed: (tourney.price === 0),
+                        payed: (tourney.price === '0.00' || tourney.price === '0.0' || tourney.price === '0'),
                     }, {
                         headers: {
                             Authorization: 'Bearer ' + storedAuth
@@ -221,7 +221,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         if(openDialogRemoveName !== undefined && openDialogRemoveName.trim() !== '')
         {
             setLoading(true);
-            console.log(chosenTeam.id);
+            //console.log(chosenTeam.id);
             axiosConfig.post('/deleteTeam', {
                 id: chosenTeam.id,
             }, {

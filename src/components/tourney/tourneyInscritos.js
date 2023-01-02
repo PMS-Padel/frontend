@@ -113,7 +113,7 @@ export default function TourneyInscritos({tourney, user, storedAuth}) {
         if(openDialogRemoveName !== undefined && openDialogRemoveName.trim() !== '')
         {
             setLoading(true);
-            console.log(chosenTeam.id);
+            //console.log(chosenTeam.id);
             axiosConfig.post('/deleteTeam', {
                 id: chosenTeam.id,
             }, {
