@@ -57,6 +57,12 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
     const [openDialog, setOpenDialog] = useState(false);
     const [nameTeam, setNameTeam] = useState(null);
     const [colegaDeEquipa, setColegaDeEquipa] = useState(null);
+    const [openDialogRemove, setOpenDialogRemove] = useState(false);
+    const [openDialogRemoveName, setOpenDialogRemoveName] = useState('');
+    const [chosenTeam, setChosenTeam] = useState({
+        id: '',
+        name: '',
+    });
 
     const [loading, setLoading] = React.useState(false);
     const [errorAlert, setErrorAlert] = useState({open: false, severity: 'error', errorStatus: '', description: 'Ocorreu um erro ao inscrever a equipa. Verifique e tente novamente.'});
@@ -211,6 +217,37 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
         }
     }
 
+    function removeTeam() {
+        if(openDialogRemoveName !== undefined && openDialogRemoveName.trim() !== '')
+        {
+            setLoading(true);
+            console.log(chosenTeam.id);
+            axiosConfig.post('/deleteTeam', {
+                id: chosenTeam.id,
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + storedAuth
+                }
+            })
+                .then(res => {
+                    setOpenDialogRemove(false);
+                    setLoading(false);
+                    setSuccessAlert({...successAlert, description: 'A equipa foi removida com sucesso!', open: true});
+                })
+                .catch(err => {
+                    setLoading(false);
+                    setErrorAlert({...errorAlert, description: 'Ocorreu um erro ao remover a equipa. Verifique e tente novamente.', open: true, errorStatus: err.code});
+                })
+        }
+    }
+    function handleRemoveTeam(team) {
+        setOpenDialogRemove(true);
+        setChosenTeam(team);
+    }
+    function handleCloseRemoveTeam() {
+        setOpenDialogRemove(false);
+    }
+
     function diasFalta() {
         let initDate = new Date(tourney.init_date);
         //let endDate = new Date(tourney.end_date);
@@ -266,6 +303,10 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
             {
                 value: 'F',
                 label: 'Feminino',
+            },
+            {
+                value: 'O',
+                label: 'Outro/a',
             }
         ];
     }
@@ -286,7 +327,7 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                 left: 0
             }}/>
             <div style={{backgroundColor:'white', position:'absolute', width:'20rem', height:'20rem', top:'100px', left:'150px', borderRadius: '5px'}}>
-                <img style={{width:'20rem', height:'20rem'}} src={tourney.file_url} alt={'Imagem acerca de ' + tourney.name}/>
+                <img style={{width:'20rem', height:'20rem', borderRadius: '1%'}} src={tourney.file_url} alt={'Imagem acerca de ' + tourney.name}/>
             </div>
             <DivChangeTextColor style={{backgroundColor:'white', position:'absolute', minWidth:'20rem', height:'20rem', top:'100px', right:'150px', textAlign:'center', borderRadius: '5px', objectFit: "cover"}}>
                 <h1 style={{fontSize:'2rem', marginTop:'1.4rem'}}>{tourney.name}</h1>
@@ -423,10 +464,43 @@ export default function TourneyHeader({tourney, user, MenuTourney, handleMenuTou
                             <Button onClick={inscreverEquipa}
                                 style={{position:'relative', marginTop:'2rem', backgroundColor:'#052F53',
                                 color:'white', borderRadius: '5px', textTransform: 'none'}}>{isSignedUp ? 'Mudar parceiro/a' : 'Inscrever equipa'}</Button>
+                            {isSignedUp &&
+                                <Button onClick={() => handleRemoveTeam({id: subbedTeamId, name: nameTeam})}
+                                        style={{
+                                            position: 'relative', marginTop: '2rem', marginLeft: '1rem', backgroundColor: '#530505',
+                                            color: 'white', borderRadius: '5px', textTransform: 'none'
+                                        }}>Cancelar inscrição</Button>
+                            }
                         </Grid>
                     </Grid>
                 </DialogContent>
-
+            </Dialog>
+            <Dialog open={openDialogRemove} width="25rem">
+                <DialogTitle>
+                    <div style={{ fontSize: '1.5em' }}>Remover equipa</div>
+                    <Button style={{position:'absolute',top:'1rem', right:'1rem',}} onClick={()=>{handleCloseRemoveTeam()}}><CloseIcon/></Button>
+                </DialogTitle>
+                <DialogContent style={{ justifyContent: 'center', textAlign: 'center' }}>
+                    <p>Insere o nome da equipa - {chosenTeam.name} - para confirmar a remoção.</p>
+                    <TextField
+                        required
+                        variant="outlined"
+                        id="confirmRemoveNameTeam"
+                        label="Nome da equipa"
+                        placeholder="Nome da equipa"
+                        style={{backgroundColor: '#FFFFFF', borderRadius: '5px', width:'20rem', marginTop:'1rem'}}
+                        onChange={(event) => setOpenDialogRemoveName(event.target.value)}
+                        error={openDialogRemoveName !== chosenTeam.name}
+                        helperText={openDialogRemoveName !== chosenTeam.name ? 'Inválido' : ''}
+                    />
+                    <Button onClick={handleCloseRemoveTeam}
+                            style={{position:'relative', marginLeft:'60%', marginTop:'3rem',
+                                backgroundColor:'#8E0909', color:'white', width:'15%', borderRadius: '5px',
+                                textTransform: 'none', marginRight:'2rem'}}>Cancelar</Button>
+                    <Button onClick={removeTeam} disabled={openDialogRemoveName !== chosenTeam.name}
+                            style={{position:'relative', marginTop:'3rem', backgroundColor:'#052F53',
+                                color:'white', width:'15%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
+                </DialogContent>
             </Dialog>
             <Container>
                 <nav>

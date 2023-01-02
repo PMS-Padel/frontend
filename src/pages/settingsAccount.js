@@ -92,6 +92,10 @@ export default class SettingsAccount extends Component {
             {
                 value: 'F',
                 label: 'Feminino',
+            },
+            {
+                value: 'O',
+                label: 'Outro/a',
             }
         ];
     }
@@ -350,18 +354,21 @@ export default class SettingsAccount extends Component {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={3}>
+                                    <Button onClick={() => this.setState({changedUser: this.state.user})} variant="contained"
+                                            style={{marginTop:'1rem', backgroundColor:'#052F53',
+                                                color:'white', borderRadius: '5px', textTransform: 'none', top:'0px'}}>Repor dados</Button>
                                     <TextField
                                         required
                                         id="password"
                                         label="Password atual"
                                         placeholder="Password atual"
                                         type="password"
-                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px'}}
+                                        style={{backgroundColor:'#FFFFFF', borderRadius: '5px', marginTop: '19px', top: '6px'}}
                                         onChange={(event) => {this.insertPassword(event.target.value)}}
                                         error={typeof helperTextPasswordLogin(this.state.setPassword) === 'string'}
                                         helperText={helperTextPasswordLogin(this.state.setPassword)}
                                     />
-                                    <Button onClick={this.updateAccount}
+                                    <Button onClick={this.updateAccount} variant="contained"
                                         style={{backgroundColor:'#052F53',
                                             color:'white', borderRadius: '5px', textTransform: 'none', marginTop: '19px', top: '6px' }}>Atualizar conta</Button>
                                 </Grid>
