@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useRef,} from "react";
 import {Button} from "@mui/material";
-
+import DatePicker from "react-multi-date-picker";
 import axiosConfig from "../../axiosConfig";
 
 export default function TourneyCalendario({tourney, storedAuth}) {
 
-
+    const [value, setValue] = useState(new Date());
 
     return(
         <>
@@ -22,7 +22,10 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         paddingLeft:'2rem',
                         color: "#052F53"}}>
 
-                
+                        <DatePicker value={value}
+                         onChange={setValue} 
+                         
+                         />
                     </div>
         </>
     )
