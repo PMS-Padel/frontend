@@ -50,7 +50,7 @@ export default class TourneyRow extends Component {
                     {
                         this.props.adminId !== undefined &&
                         this.state.tourneys
-                            .sort((a,b) => b.id - a.id)
+                            .sort((a,b) => new Date(b.init_date) - new Date(a.init_date))
                             .slice(0, (this.props.maxLength))
                             .filter((tourney) => tourney.user_id === this.props.adminId)
                             .map(function(tourney, index){
@@ -62,7 +62,7 @@ export default class TourneyRow extends Component {
                     {
                         this.props.userId !== undefined &&
                         this.state.tourneys
-                            .sort((a,b) => b.id - a.id)
+                            .sort((a,b) => new Date(b.init_date) - new Date(a.init_date))
                             .slice(0, (this.props.maxLength))
                             .filter(tournament => {
                                 return tournament.teams.some(team => {
@@ -78,7 +78,7 @@ export default class TourneyRow extends Component {
                     {
                         this.props.adminId === undefined && this.props.userId === undefined &&
                         this.state.tourneys
-                            .sort((a,b) => b.id - a.id)
+                            .sort((a,b) => new Date(b.init_date) - new Date(a.init_date))
                             .slice(0, (this.props.maxLength))
                             .map(function(tourney, index){
                             return <Grid item xs={3} key={index}>
