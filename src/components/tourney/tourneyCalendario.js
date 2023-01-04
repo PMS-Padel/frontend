@@ -58,7 +58,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
       }
 
 
-    const [props1, setProps] = useState(initialProps)
+    const [props, setProps] = useState(initialProps)
    
     const [value, setValue] = React.useState(moment(new Date()));
     const handleChange = (newValue) => {
@@ -91,6 +91,9 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                 setDataTeams(data)
                 setUpdate(true)
                 setDataTeamsLength(dataTeams.length)
+                console.log(initialProps)
+                console.log(props)
+
             })
             .catch((error) => false);
         },[tourney])
@@ -116,8 +119,10 @@ export default function TourneyCalendario({tourney, storedAuth}) {
     },[])
     */
 
-    function mostraTournamentCalendario(dataTeams, props1){
+    function mostraTournamentCalendario(dataTeams, props){
 
+        console.log(initialProps)
+        console.log(props)
         if(update){
             return(
                 <>
@@ -136,13 +141,14 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         color: "#052F53"}}>
                         
                         <Calendar 
-                        {...props1}
+                        {...props}
                         numberOfMonths={3}
                         multiple
                         value={value1}
                         onChange={setValue1}
                         plugins={[
-                            <DatePanel position="right" />,multiColors({position:'left'})
+                            <DatePanel position="right" />,
+                            multiColors({position:'left'})
                           ]}
                         /> 
                         <div style={{paddingTop:'1rem'}}>
@@ -233,7 +239,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
 
     return(
         <>
-            {mostraTournamentCalendario(dataTeams,props1)}
+            {mostraTournamentCalendario(dataTeams,props)}
         </>
     )
 }
