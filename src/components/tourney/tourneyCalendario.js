@@ -5,6 +5,13 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import moment from "moment";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+
 
 export default function TourneyCalendario({tourney, storedAuth}) {
     const [dataTeams, setDataTeams] = useState({});
@@ -17,7 +24,10 @@ export default function TourneyCalendario({tourney, storedAuth}) {
     const [teamId1, setTeamId1] = useState('');
     const [teamId2, setTeamId2] = useState('');
 
-
+    const [value, setValue] = React.useState(moment('2014-08-18T21:11:54'));
+    const handleChange = (newValue) => {
+        setValue(newValue);
+      };
 
 
     useEffect(() => {
@@ -136,17 +146,14 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         </NativeSelect>
                         </FormControl>
 
-                        <TextField 
-                        id="date" 
-                        type="date" 
-                        style={{paddingRight:'2rem'}}
-                        inputProps={undefined} />
-
-                        <TextField 
-                        id="time" 
-                        type="time" 
-                        style={{paddingRight:'2rem'}}
-                        inputProps={undefined} />
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <DateTimePicker
+                        label="Date&Time picker"
+                        value={value}
+                        onChange={handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                        />
+                        </LocalizationProvider>
 
 
                         <Button 
