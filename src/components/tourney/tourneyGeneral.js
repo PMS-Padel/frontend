@@ -63,7 +63,8 @@ export default class TourneyGeneral extends Component {
             maxplayers: this.state.changeTourney.max_players,
             price: this.state.changeTourney.price,
             location: this.state.changeTourney.location,
-            insurance: this.state.changeTourney.seguro
+            insurance: this.state.changeTourney.seguro,
+            file_url: this.state.changeTourney.file_url,
         }, {
             headers: {
                 Authorization: 'Bearer ' + this.props.storedAuth
