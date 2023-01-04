@@ -46,8 +46,8 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         color: "#052F53"}}>
                         
                         {dataTeams.slice(0, Math.ceil(dataTeams.length / 2)).map(()=>(
-                        <div>
-                        <FormControl sx={{width:'10rem'}}>
+                        <div style={{paddingTop:'1rem'}}>
+                        <FormControl sx={{width:'10rem', paddingRight:'2rem'}}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                             Team1
                         </InputLabel>
@@ -64,12 +64,13 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                             
                         </NativeSelect>
                         </FormControl>
-                        <FormControl sx={{width:'10rem'}}>
+                        <FormControl sx={{width:'10rem', paddingRight:'2rem'}}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                             Team2
                         </InputLabel>
                         <NativeSelect
                             defaultValue={30}
+
                             inputProps={{
                             name: 'age',
                             id: 'uncontrolled-native',
@@ -81,7 +82,17 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         </NativeSelect>
                         </FormControl>
 
-                        <TextField id="time" type="date" format="yyyy-mm-dd" inputProps={undefined} />
+                        <TextField 
+                        id="time" 
+                        type="date" 
+                        style={{paddingRight:'2rem'}}
+                        inputProps={undefined} />
+
+                        <Button 
+                        onClick={undefined}
+                        style={{position:'relative', backgroundColor:'#052F53',
+                        color:'white', width:'6%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
+
                         </div>
                     ))}
                     </div>
