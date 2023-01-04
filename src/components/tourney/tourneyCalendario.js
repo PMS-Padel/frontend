@@ -12,6 +12,8 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
+import { Calendar } from "react-multi-date-picker"
+
 
 export default function TourneyCalendario({tourney, storedAuth}) {
     const [dataTeams, setDataTeams] = useState({});
@@ -85,7 +87,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         paddingLeft:'2rem',
                         color: "#052F53"}}>
                         
-                        
+                        <Calendar /> 
                         <div style={{paddingTop:'1rem'}}>
                         <FormControl sx={{width:'10rem', paddingRight:'2rem'}}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -155,6 +157,8 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         renderInput={(params) => <TextField {...params} />}
                         />
                         </LocalizationProvider>
+
+                        
 
 
                         <Button 
