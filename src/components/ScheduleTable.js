@@ -1,6 +1,8 @@
 import React from 'react';
 
 const ScheduleTable = ({ hours, days, date }) => (
+<>
+
   <table style={{ borderCollapse: 'collapse' }}>
     <thead>
       <tr>
@@ -20,6 +22,7 @@ const ScheduleTable = ({ hours, days, date }) => (
       ))}
     </tbody>
   </table>
+</>
 );
 
 export default ScheduleTable;
