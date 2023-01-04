@@ -13,6 +13,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import DatePicker, { DateObject } from "react-multi-date-picker"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import DatePanel from "react-multi-date-picker/plugins/date_panel"
+import multiColors from "react-multi-date-picker/plugins/colors"
 
 import { Calendar } from "react-multi-date-picker"
 
@@ -28,6 +29,37 @@ export default function TourneyCalendario({tourney, storedAuth}) {
     const [teamId1, setTeamId1] = useState('');
     const [teamId2, setTeamId2] = useState('');
 
+
+    /*------------------------- React Multi Date Picker*/ 
+    const dateObject = new DateObject()
+
+    const toDateObject = day => new DateObject(dateObject).setDay(day)
+
+    const colors = {
+        green: [2, 10, 17].map(toDateObject),
+        blue: [5, 6, 14].map(toDateObject),
+        red: [13, 19, 25].map(toDateObject),
+        yellow: [15, 22, 28].map(toDateObject)
+      }
+
+      Object.keys(colors).forEach(color => {
+        colors[color].forEach((date, index) => {
+            colors[color][index].color = color
+        })
+      })
+      const initialProps = {
+        value: [
+          ...colors.green,
+          ...colors.blue,
+          ...colors.red,
+          ...colors.yellow
+        ], 
+        multiple: true
+      }
+
+
+    const [props1, setProps] = useState(initialProps)
+   
     const [value, setValue] = React.useState(moment(new Date()));
     const handleChange = (newValue) => {
         setValue(newValue);
@@ -43,6 +75,10 @@ export default function TourneyCalendario({tourney, storedAuth}) {
           30
         ].map(day => new DateObject().setDay(day))
       )
+
+
+
+      /*-------------------------*/ 
 
     useEffect(() => {
         axiosConfig.get(`getteams/${tourney.id}`,{
@@ -80,7 +116,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
     },[])
     */
 
-    function mostraTournamentCalendario(dataTeams,dataTeamsLength){
+    function mostraTournamentCalendario(dataTeams, props1){
 
         if(update){
             return(
@@ -100,12 +136,13 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         color: "#052F53"}}>
                         
                         <Calendar 
+                        {...props1}
                         numberOfMonths={3}
                         multiple
                         value={value1}
                         onChange={setValue1}
                         plugins={[
-                            <DatePanel position="right" />
+                            <DatePanel position="right" />,multiColors({position:'left'})
                           ]}
                         /> 
                         <div style={{paddingTop:'1rem'}}>
@@ -196,7 +233,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
 
     return(
         <>
-            {mostraTournamentCalendario(dataTeams,dataTeamsLength)}
+            {mostraTournamentCalendario(dataTeams,props1)}
         </>
     )
 }
