@@ -10,7 +10,9 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import DatePicker, { DateObject } from "react-multi-date-picker"
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import DatePanel from "react-multi-date-picker/plugins/date_panel"
 
 import { Calendar } from "react-multi-date-picker"
 
@@ -31,6 +33,16 @@ export default function TourneyCalendario({tourney, storedAuth}) {
         setValue(newValue);
       };
 
+      const [value1, setValue1] = useState(
+        [
+          5, 
+          10,
+          15,
+          20,
+          25,
+          30
+        ].map(day => new DateObject().setDay(day))
+      )
 
     useEffect(() => {
         axiosConfig.get(`getteams/${tourney.id}`,{
@@ -87,7 +99,15 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         paddingLeft:'2rem',
                         color: "#052F53"}}>
                         
-                        <Calendar /> 
+                        <Calendar 
+                        numberOfMonths={3}
+                        multiple
+                        value={value1}
+                        onChange={setValue1}
+                        plugins={[
+                            <DatePanel position="right" />
+                          ]}
+                        /> 
                         <div style={{paddingTop:'1rem'}}>
                         <FormControl sx={{width:'10rem', paddingRight:'2rem'}}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
