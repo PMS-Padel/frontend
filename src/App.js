@@ -14,6 +14,8 @@ import OrganizeTourney from "./pages/organizador/organizeTourney";
 import SettingsAccount from "./pages/settingsAccount";
 import TourneyPage from "./pages/pageTourney";
 
+import { DndProvider } from "react-dnd";
+
 function App() {
     const [loading, setLoading] = useState(false);
     const [storedAuth, setStoredAuth] = useState(localStorage.getItem('auth') ?? sessionStorage.getItem('auth'));
@@ -56,6 +58,7 @@ function App() {
     }
 
   return (
+
       <BrowserRouter>
         <Routes>
           <Route path = "/" element =
@@ -106,6 +109,7 @@ function App() {
                                      logoutAccount={logoutAccount} errorAlertLogout={errorAlertLogout} handleErrorAlertCloseLogout={handleErrorAlertCloseLogout}/>}/>
         </Routes>
       </BrowserRouter>
+
   );
 }
 
