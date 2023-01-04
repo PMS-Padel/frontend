@@ -319,6 +319,7 @@ export default class OrganizeTourney extends Component {
                                                     variant="outlined"
                                                     type="number"
                                                     inputProps={{
+                                                        min: 0,
                                                         step: 0.5,
                                                     }}
                                                     InputProps={{

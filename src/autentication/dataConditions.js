@@ -18,7 +18,7 @@ export function helperTextPassword(stringPassword) {
         '1 letra maiúscula, ' +
         'letra minúscula, ' +
         'dígito e ' +
-        'caracter especial (@$!%*?&)!';
+        'caracter especial (@$!%*?&_#+()-)!';
     if ((stringPassword.trim().length<8 || stringPassword.trim().length>30) && stringPassword.trim().length!==0) return 'A password deve estar entre 8 a 30 caracteres!';
     return null;
 }

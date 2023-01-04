@@ -63,7 +63,8 @@ export default class TourneyGeneral extends Component {
             maxplayers: this.state.changeTourney.max_players,
             price: this.state.changeTourney.price,
             location: this.state.changeTourney.location,
-            insurance: this.state.changeTourney.seguro
+            insurance: this.state.changeTourney.seguro,
+            file_url: this.state.changeTourney.file_url,
         }, {
             headers: {
                 Authorization: 'Bearer ' + this.props.storedAuth
@@ -296,7 +297,26 @@ export default class TourneyGeneral extends Component {
                                                 }
                                             />
                                         </Grid>
-
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                required
+                                                variant="outlined"
+                                                id="fileurl"
+                                                label="URL da Imagem"
+                                                placeholder="URL da Imagem"
+                                                style={{backgroundColor: '#FFFFFF', borderRadius: '5px'}}
+                                                value={this.state.changeTourney.file_url ?? ''}
+                                                onChange={(event) => {
+                                                    this.setState(prevState => ({
+                                                        changeTourney: {
+                                                            ...prevState.changeTourney,
+                                                            file_url: event.target.value
+                                                        }
+                                                    }))
+                                                }
+                                                }
+                                            />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={4} style={{paddingTop: '25px'}}>
