@@ -10,6 +10,15 @@ export default function TourneyCalendario({tourney, storedAuth}) {
     const [dataTeams, setDataTeams] = useState({});
     const [dataTeamsLength, setDataTeamsLength] = useState(0);
     const [update, setUpdate] = useState(false);
+    
+    const [campoID, setCampoId] = useState('');
+    const [start, setStart] = useState('');
+    const [day, setDay] = useState(new Date());
+    const [teamId1, setTeamId1] = useState('');
+    const [teamId2, setTeamId2] = useState('');
+
+
+
 
     useEffect(() => {
         axiosConfig.get(`getteams/${tourney.id}`,{
@@ -25,6 +34,27 @@ export default function TourneyCalendario({tourney, storedAuth}) {
             })
             .catch((error) => false);
         },[tourney])
+
+     /*   
+    useEffect(() =>{
+
+        axiosConfig.post(`creategame`,{
+            Campo_id: undefined,
+            start_at: undefined,
+            day: undefined,
+            team_id1: undefined,
+            team_id2: undefined,
+
+
+        },{
+            headers: {
+                Authorization: 'Bearer ' + storedAuth
+            }
+        })
+            .then(undefined)
+            .catch((error) => false);
+    },[])
+    */
 
     function mostraTournamentCalendario(dataTeams,dataTeamsLength){
 
@@ -45,7 +75,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         paddingLeft:'2rem',
                         color: "#052F53"}}>
                         
-                        {dataTeams.slice(0, Math.ceil(dataTeams.length / 2)).map(()=>(
+                        
                         <div style={{paddingTop:'1rem'}}>
                         <FormControl sx={{width:'10rem', paddingRight:'2rem'}}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -125,7 +155,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         color:'white', width:'6%', borderRadius: '5px', textTransform: 'none'}}>Confirmar</Button>
 
                         </div>
-                    ))}
+                    
                     </div>
                 </>
             )
