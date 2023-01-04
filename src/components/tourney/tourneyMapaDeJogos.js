@@ -64,7 +64,7 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                         </div>
                         <div style={{position:'absolute', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', left:'25rem', top:'0%'}}>
                             <h1>Semi-finais</h1>
-                        {dataTeams.map((ress)=>(
+                        {dataTeams.slice(0, Math.ceil(dataTeams.length / 2)).map((ress)=>(
                             <FormControl fullWidth style={{paddingTop:'2rem'}}>
                                 <InputLabel id={ress.id}>Team</InputLabel>
                                 <Select
@@ -83,7 +83,7 @@ export default function TourneyMapaDeJogos({tourney, storedAuth}) {
                         </div>
                         <div style={{position:'absolute', width:'8rem', paddingTop:'1rem', paddingBottom:'1rem', top:'0%', left:'43rem'}}>
                             <h1>Final</h1>
-                        {dataTeams.map((ress)=>(
+                        {dataTeams.slice(0, Math.ceil(dataTeams.length / 4)).map((ress)=>(
                             <FormControl fullWidth style={{paddingTop:'2rem'}}>
                                 <InputLabel id={ress.id}>Team</InputLabel>
                                 <Select
