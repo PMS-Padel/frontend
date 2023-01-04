@@ -248,7 +248,7 @@ export default class SettingsAccount extends Component {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
-                                                disabled={this.state.isSignedUp}
+                                                //disabled={this.state.isSignedUp}
                                                 InputProps={{
                                                     readOnly: this.state.isSignedUp,
                                                 }}
