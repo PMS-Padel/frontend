@@ -49,7 +49,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         <div>
                         <FormControl sx={{width:'10rem'}}>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                            Team
+                            Team1
                         </InputLabel>
                         <NativeSelect
                             defaultValue={30}
@@ -58,9 +58,26 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                             id: 'uncontrolled-native',
                             }}
                         >
-                            <option value={10}>Ten</option>
-                            <option value={20}>Twenty</option>
-                            <option value={30}>Thirty</option>
+                            {dataTeams.map((res)=>
+                            <option value={res.name}>{res.name}</option>
+                            )}
+                            
+                        </NativeSelect>
+                        </FormControl>
+                        <FormControl sx={{width:'10rem'}}>
+                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                            Team2
+                        </InputLabel>
+                        <NativeSelect
+                            defaultValue={30}
+                            inputProps={{
+                            name: 'age',
+                            id: 'uncontrolled-native',
+                            }}
+                        >
+                            {dataTeams.map((res)=>
+                            <option value={res.name}>{res.name}</option>
+                            )}
                         </NativeSelect>
                         </FormControl>
 
