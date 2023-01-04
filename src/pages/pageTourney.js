@@ -18,7 +18,7 @@ import TourneyGeneral from "../components/tourney/tourneyGeneral";
 import TourneyInscritos from "../components/tourney/tourneyInscritos";
 import TourneyMapaDeJogos from "../components/tourney/tourneyMapaDeJogos";
 import TourneyCalendario from "../components/tourney/tourneyCalendario";
-import TourneyResultados from "../components/tourney/tourneyResultados";
+import TourneyResultados from "../components/tourney/tourneyResultadosÇ";
 import { padding } from '@mui/system';
 
 export default class TourneyPage extends Component {
