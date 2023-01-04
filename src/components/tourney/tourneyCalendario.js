@@ -24,7 +24,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
     const [teamId1, setTeamId1] = useState('');
     const [teamId2, setTeamId2] = useState('');
 
-    const [value, setValue] = React.useState(moment('2014-08-18T21:11:54'));
+    const [value, setValue] = React.useState(moment(new Date()));
     const handleChange = (newValue) => {
         setValue(newValue);
       };
@@ -149,6 +149,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         <LocalizationProvider dateAdapter={AdapterMoment}>
                         <DateTimePicker
                         label="Date&Time picker"
+                        inputFormat="YYYY/MM/DD"
                         value={value}
                         onChange={handleChange}
                         renderInput={(params) => <TextField {...params} />}
