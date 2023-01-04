@@ -107,10 +107,17 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                         </FormControl>
 
                         <TextField 
-                        id="time" 
+                        id="date" 
                         type="date" 
                         style={{paddingRight:'2rem'}}
                         inputProps={undefined} />
+
+                        <TextField 
+                        id="time" 
+                        type="time" 
+                        style={{paddingRight:'2rem'}}
+                        inputProps={undefined} />
+
 
                         <Button 
                         onClick={undefined}
