@@ -9,7 +9,7 @@ function LoadingPopup({loading, borderRadius}) {
 
     return (
         <Backdrop
-            sx={{borderRadius: verifyBorderRadiusValue, color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+            sx={{borderRadius: verifyBorderRadiusValue, color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1200}}
             open={loading}>
             <CircularProgress color="inherit"/>
         </Backdrop>
