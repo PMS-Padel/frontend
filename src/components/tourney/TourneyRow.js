@@ -98,7 +98,7 @@ export default class TourneyRow extends Component {
         else
         {
             return (
-                <h1 style={{fontSize: "20px", color: "#052F53"}}>Carregando...</h1>
+                <h1 style={{fontSize: "20px", color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"}}>Carregando...</h1>
             )
         }
     }

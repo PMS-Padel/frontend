@@ -16,26 +16,17 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
 
     useEffect(() => {
         //console.log(tourney)
-        axiosConfig.get(`getteams/${tourney.id}`, {
-            headers: {
-                Authorization: 'Bearer ' + storedAuth
-            }
-        })
+        axiosConfig.get(`getteams/${tourney.id}`)
             .then((res) => {
                 let { data } = res;
                 setDataTeams(data)
                 //console.log(data)
             })
             .catch((error) => false);
-        axiosConfig.get(`get-tournament-games/${tourney.id}`, {
-            headers: {
-                Authorization: 'Bearer ' + storedAuth
-            }
-        })
+        axiosConfig.get(`get-tournament-games/${tourney.id}`)
             .then((res) => {
                 let { data } = res;
                 setGames(data)
-
                 setUpdate(true)
             })
             .catch((error) => false);
@@ -123,7 +114,6 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
                     color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"
                 }}>
                     {newGame()}
-
                 </div>
             )
         }

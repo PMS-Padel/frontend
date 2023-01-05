@@ -103,9 +103,9 @@ function NavBarAdmin({logoutAccount, goToAdminMenu}) {
                                     'aria-labelledby': 'icon-account',
                                 }}
                             >
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} onClick={handleCloseChangeMenu}>Menu Jogador</MenuItem>
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} disabled={window.location.pathname === "/settings"} onClick={handleCloseToSettings}>Definições</MenuItem>
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleCloseLogout}>Logout</MenuItem>
+                                <MenuItem sx={{ color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} onClick={handleCloseChangeMenu}>Menu Jogador</MenuItem>
+                                <MenuItem sx={{ color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} disabled={window.location.pathname === "/settings"} onClick={handleCloseToSettings}>Definições</MenuItem>
+                                <MenuItem sx={{ color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     </>

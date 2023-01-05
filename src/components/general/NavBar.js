@@ -122,9 +122,9 @@ function NavBar({storedAuth, logoutAccount, isAdmin, goToAdminMenu}) {
                                     'aria-labelledby': 'icon-account',
                                 }}
                             >
-                                {isAdmin && <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} onClick={handleCloseChangeMenu}>Menu Organizador</MenuItem>}
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} disabled={window.location.pathname === "/settings"} onClick={handleCloseToSettings}>Definições</MenuItem>
-                                <MenuItem sx={{ color: "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleCloseLogout}>Logout</MenuItem>
+                                {isAdmin && <MenuItem sx={{ color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} onClick={handleCloseChangeMenu}>Menu Organizador</MenuItem>}
+                                <MenuItem sx={{ color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", justifyContent: "center", fontWeight:'bold' }} divider={true} disabled={window.location.pathname === "/settings"} onClick={handleCloseToSettings}>Definições</MenuItem>
+                                <MenuItem sx={{ color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", justifyContent: "center", fontWeight:'bold' }} onClick={handleCloseLogout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     </>

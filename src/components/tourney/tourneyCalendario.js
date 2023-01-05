@@ -20,22 +20,14 @@ export default function TourneyCalendario({tourney, storedAuth}) {
 
     useEffect(() => {
         //console.log(tourney)
-        axiosConfig.get(`getteams/${tourney.id}`, {
-            headers: {
-                Authorization: 'Bearer ' + storedAuth
-            }
-        })
+        axiosConfig.get(`getteams/${tourney.id}`)
             .then((res) => {
                 let { data } = res;
                 setDataTeams(data)
                 //console.log(data)
             })
             .catch((error) => false);
-        axiosConfig.get(`get-tournament-games/${tourney.id}`, {
-            headers: {
-                Authorization: 'Bearer ' + storedAuth
-            }
-        })
+        axiosConfig.get(`get-tournament-games/${tourney.id}`)
             .then((res) => {
                 let { data } = res;
                 setGames(data)
@@ -61,7 +53,7 @@ export default function TourneyCalendario({tourney, storedAuth}) {
                 end: moment(new Date(moment(game.start_at).add('1', "hours")).toISOString().substring(0, 10) + ' ' +
                     new Date(moment(game.start_at).add('1', "hours")).toISOString().substring(11, 16)).toDate(),
                 title: game.team1.player1.name + ' | ' + game.team1.player2.name + ' vs ' + game.team2.player1.name + ' | ' + game.team2.player2.name + '\n'
-                    + ' -- Campo: ' + (game.campo_id === 1 ? 'Grupo São Roque' : 'Alberto Oculista'),
+                    + ' -- Campo: ' + game.campo.name,
             });
         })
         setEvents(resultGames);
