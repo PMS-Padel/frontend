@@ -15,7 +15,7 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
     const [games, setGames] = useState([])
 
     useEffect(() => {
-        console.log(tourney)
+        //console.log(tourney)
         axiosConfig.get(`getteams/${tourney.id}`, {
             headers: {
                 Authorization: 'Bearer ' + storedAuth
@@ -24,7 +24,7 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
             .then((res) => {
                 let { data } = res;
                 setDataTeams(data)
-                console.log(data)
+                //console.log(data)
             })
             .catch((error) => false);
         axiosConfig.get(`get-tournament-games/${tourney.id}`, {
@@ -66,13 +66,13 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
                 .then((res) => {
                     window.location.reload()
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => false);
         }
 
 
         return (<>
             {games?.map((game, index) => {
-                console.log(game)
+                //console.log(game)
                 return (
                     <div>
                         {(index === 0 || !moment(games[index - 1].start_at).isSame(moment(game.start_at), 'date')) && <h3>{moment(game.start_at).format("DD/MM/YYYY")}</h3>}
@@ -120,7 +120,7 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
                     left: 150,
                     backgroundColor: "#FFFFFF",
                     paddingLeft: '2rem',
-                    color: "#052F53"
+                    color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"
                 }}>
                     {newGame()}
 
@@ -139,9 +139,9 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
                     left: 150,
                     backgroundColor: "#FFFFFF",
                     paddingLeft: '2rem',
-                    color: "#052F53"
+                    color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53"
                 }}>
-                    <h1>Carregando TournamentBracket...</h1>
+                    <h1>Carregando mapa de jogos...</h1>
                 </div>
             )
         }
