@@ -224,12 +224,18 @@ export default function TourneyMapaDeJogos({ tourney, storedAuth }) {
                             Exportar para Excel
                         </Button>
                     </DownloadTableExcel>
-                    <Button variant="contained"
-                            onClick={() => handleAddTeam()}
-                            style={{textTransform: 'none', margin: "0px 1rem",
-                                backgroundColor: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53", marginTop: "2rem"}}>
-                        Adicionar jogo
-                    </Button>
+                    {!((new Date()).getTime() < (new Date(tourney.init_date)).getTime()) && localStorage.getItem('loginForm') === 'admin' &&
+                        <Button variant="contained"
+                                onClick={() => handleAddTeam()}
+                                style={{
+                                    textTransform: 'none',
+                                    margin: "0px 1rem",
+                                    backgroundColor: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53",
+                                    marginTop: "2rem"
+                                }}>
+                            Adicionar jogo
+                        </Button>
+                    }
                     <table ref={tableRef} style={{margin:'2rem', justifyContent:'center', textAlign: 'center',
                         color: localStorage.getItem('loginForm') === 'admin' ? "#530508" : "#052F53",}} hidden>
                         <thead>
